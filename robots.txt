@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ludobermejoes.github.io/corylus-web/sitemap.xml

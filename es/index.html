@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corylus — una herramienta de escritura donde tus palabras siguen siendo tuyas</title>
+<meta name="description" content="Una herramienta para escribir novela y obra larga. Cuaderno, corcho, esquema, biblia del guion, instantáneas, exportación a Word, PDF y EPUB, sobre archivos Markdown normales en una carpeta tuya. Sin cuenta, sin nube, sin suscripción.">
+<link rel="canonical" href="https://ludobermejoes.github.io/corylus-web/es/">
+<link rel="alternate" hreflang="en" href="https://ludobermejoes.github.io/corylus-web/">
+<link rel="alternate" hreflang="es" href="https://ludobermejoes.github.io/corylus-web/es/">
+<link rel="alternate" hreflang="x-default" href="https://ludobermejoes.github.io/corylus-web/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Corylus — una herramienta de escritura donde tus palabras siguen siendo tuyas">
+<meta property="og:description" content="Una herramienta para escribir novela y obra larga. Cuaderno, corcho, esquema, biblia del guion, instantáneas, exportación a Word, PDF y EPUB, sobre archivos Markdown normales en una carpeta tuya. Sin cuenta, sin nube, sin suscripción.">
+<meta property="og:url" content="https://ludobermejoes.github.io/corylus-web/es/">
+<meta property="og:image" content="https://ludobermejoes.github.io/corylus-web/assets/og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+
+<header class="site">
+  <div class="wrap row">
+    <a class="brand" href="../" aria-label="Corylus">
+      <img src="../assets/lockup.svg" alt="Corylus" width="232" height="64" class="only-light">
+      <img src="../assets/lockup-dark.svg" alt="Corylus" width="232" height="64" class="only-dark">
+    </a>
+    <nav><a href="#why">Por qué</a><a href="#features">Qué hace</a><a href="#private">Privacidad</a><a href="#get">Descargar</a><a class="lang" href="../" hreflang="en">English</a></nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap narrow">
+      <h1>Tu novela debería durar más que el programa con el que la escribiste.</h1>
+      <p class="lead">Corylus es una herramienta para obra larga: la organización de un estudio de escritura profesional, sobre archivos Markdown normales en una carpeta que es tuya.</p>
+      <p class="downloads">
+        <a class="btn" id="dl-mac" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.91.0_aarch64.dmg">
+          Descargar para macOS <span class="ver" data-ver-label="versión">versión 1.91.0</span>
+        </a>
+        <a class="btn ghost" id="dl-win" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.90.1_x64-setup.exe">
+          Descargar para Windows <span class="ver" data-ver-label="versión">versión 1.90.1</span>
+        </a>
+      </p>
+      <p class="note">Gratis. Sin cuenta. macOS, Windows, iPhone, iPad y Android.</p>
+    </div>
+  </section>
+
+  <section class="band" id="why">
+    <div class="wrap split">
+      <div>
+        <h2>Archivos en tu disco, no un formato que no puedes abrir</h2>
+        <p>Casi todos los programas para obra larga meten tu manuscrito en una base de datos, un paquete o una cuenta en la nube, y solo puedes llegar a él a través de la única aplicación que lo entiende. Eso va bien hasta que la aplicación deja de mantenerse, o cambia de precio, o cambias de ordenador.</p>
+        <p>Corylus guarda cada documento como un archivo Markdown normal, en una carpeta normal, en tu propio disco. No como opción de exportar: como el formato real. Abre la carpeta con la aplicación funcionando y ahí están tus capítulos, legibles en cualquier editor de texto. La base de datos que usa Corylus es una caché que reconstruye a partir de esos archivos, no el sitio donde vive tu obra.</p>
+        <blockquote>Si Corylus desapareciera mañana, toda tu obra seguiría siendo texto limpio, portable y legible dentro de veinte años.</blockquote>
+      </div>
+      <figure class="tree">
+        <pre>Mi novela.corylus/
+├── settings.json
+├── Manuscrito/
+│   ├── Capitulo I.md
+│   ├── Capitulo II.md
+│   └── Capitulo III.md
+├── StoryBible/
+│   ├── Personajes/
+│   └── Lugares/
+└── Snapshots/
+    └── Capitulo I/
+        └── 2026-11-02T09-14-22.md</pre>
+        <figcaption>Un proyecto de Corylus, tal y como lo ve tu gestor de archivos.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <h2>Qué hace</h2>
+      <ul class="grid"><li><h3>Cuaderno</h3><p>Carpetas, capítulos y escenas en un árbol que puedes reordenar arrastrando. Una novela son 200 piezas, no un documento.</p></li><li><h3>Corcho y esquema</h3><p>La misma estructura en fichas, o en una tabla de sinopsis, estados y recuento de palabras.</p></li><li><h3>Biblia del guion</h3><p>Personajes, lugares, objetos y notas, con relaciones, enlaces inversos y plantillas según el tipo de ficha.</p></li><li><h3>Instantáneas</h3><p>Cada versión de cada documento, con diferencias completas y vuelta atrás en un clic. Archivos con fecha, sin necesidad de Git.</p></li><li><h3>Compilar</h3><p>Monta el cuaderno en orden y exporta a Word, PDF o EPUB, con tipografía de verdad.</p></li><li><h3>Ortografía y gramática</h3><p>Corrector Hunspell con diccionario por proyecto, y un motor LanguageTool opcional que funciona en local.</p></li><li><h3>Lectura en voz alta</h3><p>Escucha tu prosa con las voces del sistema, o descarga voces naturales que funcionan en tu propia máquina.</p></li><li><h3>Tu propia sincronización</h3><p>Sincronización opcional con tu WebDAV, Dropbox o Drive. Escrituras atómicas y conscientes de conflictos. No hay servidor de Corylus.</p></li></ul>
+    </div>
+  </section>
+
+  <section class="band" id="private">
+    <div class="wrap">
+      <h2>Nada sale de tu máquina</h2>
+      <ul class="grid two"><li><h3>Sin cuenta</h3><p>No hay registro, porque no hay nada en lo que registrarse.</p></li><li><h3>Sin servidor</h3><p>Corylus no tiene backend. La sincronización, si la quieres, va a donde tú decidas.</p></li><li><h3>IA solo en local</h3><p>La gramática, las voces naturales y el asistente son descargas opcionales que funcionan en tu propio equipo. Tu manuscrito no se sube nunca, porque no hay ningún sitio al que subirlo.</p></li><li><h3>Formato abierto</h3><p>Cabecera YAML y Markdown. Legible en 2045 con un editor de texto.</p></li></ul>
+    </div>
+  </section>
+
+  <section id="langs">
+    <div class="wrap narrow">
+      <h2>En español e inglés</h2>
+      <p>Interfaz, corrector ortográfico, gramática, diccionario de sinónimos y voces de lectura, en los dos idiomas, no un menú traducido. Casi todos los programas de escritura tratan el español como un añadido.</p>
+    </div>
+  </section>
+
+  <section class="band" id="get">
+    <div class="wrap narrow">
+      <h2>Consigue Corylus</h2>
+      <p class="downloads">
+        <a class="btn" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.91.0_aarch64.dmg">Descargar para macOS</a>
+        <a class="btn ghost" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.90.1_x64-setup.exe">Descargar para Windows</a>
+      </p>
+      <p class="note">Las versiones de iPhone, iPad y Android existen y están probadas en dispositivos reales, pero todavía no están en las tiendas: eso requiere cuentas de desarrollador. Puedes compilarlas desde el código, o esperar a las tiendas.</p>
+      <p class="note">Corylus todavía no está notarizada. macOS dirá que no se puede verificar al desarrollador: haz clic derecho en Corylus.app, elige Abrir, y Abrir otra vez. Una vez por descarga. Arreglarlo de verdad cuesta 99 $ al año, y es lo primero que paga el apoyo.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap row">
+    <p><img src="../assets/mark.svg" alt="" width="28" height="28" aria-hidden="true"> Corylus es el nombre botánico del avellano, el viejo árbol europeo de la escritura y la sabiduría.</p>
+    <nav>
+      <a href="https://github.com/LudoBermejoES/corylus" rel="noopener">Código fuente</a>
+      <a href="https://github.com/LudoBermejoES/corylus-releases" rel="noopener">Todas las versiones</a>
+      <a class="lang" href="../">English</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

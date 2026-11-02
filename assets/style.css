@@ -1,0 +1,130 @@
+/* Corylus site. Tokens from corylus-corpo/brand/tokens.css. */
+:root {
+  --ink: #14211B; --leaf: #2E6A4A; --leaf-lite: #6FBF8F;
+  --hazel: #B06A2C; --hazel-lite: #E0A164; --bark: #6B5847;
+  --parchment: #F7F3EA; --mist: #DCE3DC; --night: #0E1713;
+
+  --fg: var(--ink); --fg-muted: var(--bark);
+  --bg: var(--parchment); --surface: #FFFFFF;
+  --band: #EFEADF; --border: var(--mist);
+  --accent: var(--leaf); --on-accent: var(--parchment);
+
+  --display: Literata, "Iowan Old Style", Georgia, serif;
+  --body: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --measure: 66ch;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fg: var(--parchment); --fg-muted: #A8B3A8;
+    --bg: var(--night); --surface: #16221C;
+    --band: #121D18; --border: #27352C;
+    --accent: var(--leaf-lite); --on-accent: var(--night);
+  }
+}
+:root[data-theme="dark"] {
+  --fg: var(--parchment); --fg-muted: #A8B3A8;
+  --bg: var(--night); --surface: #16221C;
+  --band: #121D18; --border: #27352C;
+  --accent: var(--leaf-lite); --on-accent: var(--night);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+h1 { font-size: clamp(2rem, 5.2vw, 3.05rem); margin: 0 0 .6em; text-wrap: balance; }
+h2 { font-size: clamp(1.6rem, 3.4vw, 1.95rem); margin: 0 0 .7em; text-wrap: balance; }
+h3 { font-size: 1.125rem; margin: 0 0 .35em; }
+p  { margin: 0 0 1em; max-width: var(--measure); }
+a  { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--accent); color: var(--on-accent); padding: .6rem 1rem; z-index: 10;
+}
+.skip:focus { left: .5rem; top: .5rem; }
+
+.wrap { width: min(1080px, 100% - 2rem); margin-inline: auto; }
+.wrap.narrow { width: min(760px, 100% - 2rem); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+header.site { border-bottom: 1px solid var(--border); padding: .75rem 0; }
+header.site nav { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+header.site nav a { color: var(--fg-muted); text-decoration: none; font-weight: 600; font-size: .95rem; }
+header.site nav a:hover, header.site nav a:focus-visible { color: var(--accent); text-decoration: underline; }
+.brand { display: inline-flex; }
+.brand img { height: 42px; width: auto; display: block; }
+.lang {
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: .2rem .7rem; color: var(--fg) !important;
+}
+
+section { padding: clamp(2.5rem, 6vw, 4.5rem) 0; }
+.band { background: var(--band); border-block: 1px solid var(--border); }
+
+.hero { padding-top: clamp(3rem, 8vw, 6rem); }
+.lead { font-size: 1.25rem; color: var(--fg-muted); }
+
+.downloads { display: flex; gap: .75rem; flex-wrap: wrap; margin: 1.75rem 0 1rem; max-width: none; }
+.btn {
+  display: inline-flex; flex-direction: column; align-items: flex-start;
+  background: var(--accent); color: var(--on-accent);
+  padding: .7rem 1.25rem; border-radius: 8px;
+  font-weight: 600; text-decoration: none; border: 1px solid var(--accent);
+}
+.btn:hover, .btn:focus-visible { filter: brightness(1.08); text-decoration: none; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.ver { font-weight: 400; font-size: .8rem; opacity: .85; font-variant-numeric: tabular-nums lining-nums; }
+.note { color: var(--fg-muted); font-size: .95rem; }
+
+.split { display: grid; gap: clamp(1.5rem, 4vw, 3rem); grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 860px) { .split { grid-template-columns: 1.15fr .85fr; } }
+
+blockquote {
+  margin: 1.5rem 0 0; padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+  font-family: var(--display); font-size: 1.15rem; max-width: var(--measure);
+}
+
+.tree { margin: 0; }
+.tree pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1rem; margin: 0; overflow-x: auto;
+  font-family: var(--mono); font-size: .8rem; line-height: 1.6; color: var(--fg);
+}
+.tree figcaption { color: var(--fg-muted); font-size: .85rem; margin-top: .6rem; }
+
+.grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem 2rem; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 940px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 620px) { .grid.two { grid-template-columns: repeat(2, 1fr); } }
+.grid h3 { color: var(--accent); }
+.grid p { font-size: .95rem; color: var(--fg-muted); margin: 0; }
+
+footer.site { border-top: 1px solid var(--border); padding: 2rem 0; color: var(--fg-muted); font-size: .9rem; }
+footer.site p { display: flex; align-items: center; gap: .6rem; margin: 0; max-width: 52ch; }
+footer.site nav { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+footer.site a { color: var(--fg-muted); }
+
+/* The lockup comes in two colourways; show whichever matches the theme.
+   These need the element selector: `.brand img` would otherwise outrank a
+   bare `.only-dark` and both lockups would render side by side. */
+img.only-dark { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) img.only-dark { display: block; }
+  :root:not([data-theme="light"]) img.only-light { display: none; }
+}
+:root[data-theme="dark"] img.only-dark { display: block; }
+:root[data-theme="dark"] img.only-light { display: none; }
