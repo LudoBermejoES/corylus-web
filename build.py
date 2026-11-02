@@ -16,7 +16,7 @@ RELEASES_RAW = "https://raw.githubusercontent.com/LudoBermejoES/corylus-releases
 
 # Fill this in once the Patreon page exists; the support section hides itself
 # while it is empty, so the site never ships a dead link.
-PATREON = ""
+PATREON = "https://www.patreon.com/c/corylus"
 
 # Fallbacks, used only if the live manifest cannot be fetched. Keep in step with
 # whatever is actually published.
@@ -103,9 +103,17 @@ STRINGS = {
             "app, and then for the time to keep building it."
         ),
         "support_cta": "Become a supporter",
+        "support_costs_h": "What support pays for",
+        "support_costs": [
+            ("$99 / year", "Apple Developer Program. This is what removes the \u201cdeveloper cannot be verified\u201d warning on macOS, and the only sane way to get iPhone and iPad builds to testers."),
+            ("$200\u2013400 / year", "A Windows code-signing certificate, so SmartScreen stops telling people the installer is suspicious."),
+            ("$25 once", "The Google Play developer account."),
+            ("Then: time", "Corylus is currently built in the gaps around other work."),
+        ],
         "get_h": "Get Corylus",
         "foot_src": "Source code",
         "foot_rel": "All releases",
+        "foot_priv": "Privacy",
         "foot_note": "Corylus is the botanical name of the hazel — the old European tree of writing and wisdom.",
     },
     "es": {
@@ -190,9 +198,17 @@ STRINGS = {
             "una aplicación de verdad, y después el tiempo para seguir construyéndola."
         ),
         "support_cta": "Hazte mecenas",
+        "support_costs_h": "Qu\u00e9 paga el apoyo",
+        "support_costs": [
+            ("99 $ al a\u00f1o", "Programa de desarrollador de Apple. Es lo que quita el aviso de \u00abno se puede verificar al desarrollador\u00bb en macOS, y la \u00fanica forma sensata de hacer llegar versiones de iPhone y iPad a quien las prueba."),
+            ("200\u2013400 $ al a\u00f1o", "Un certificado de firma para Windows, para que SmartScreen deje de decir que el instalador es sospechoso."),
+            ("25 $ una vez", "La cuenta de desarrollador de Google Play."),
+            ("Y despu\u00e9s: tiempo", "Corylus se construye ahora en los ratos que deja otro trabajo."),
+        ],
         "get_h": "Consigue Corylus",
         "foot_src": "Código fuente",
         "foot_rel": "Todas las versiones",
+        "foot_priv": "Privacidad",
         "foot_note": "Corylus es el nombre botánico del avellano, el viejo árbol europeo de la escritura y la sabiduría.",
     },
 }
@@ -245,12 +261,17 @@ def page(t):
 
     support = ""
     if PATREON:
+        costs = "".join(
+            f"<li><h3>{esc(a)}</h3><p>{esc(b)}</p></li>" for a, b in t["support_costs"]
+        )
         support = f"""
     <section class="band" id="support">
       <div class="wrap narrow">
         <h2>{esc(t['support_h'])}</h2>
         <p>{esc(t['support_p'])}</p>
-        <p><a class="btn" href="{PATREON}" rel="noopener">{esc(t['support_cta'])}</a></p>
+        <h3 class="costs-h">{esc(t['support_costs_h'])}</h3>
+        <ul class="grid two costs">{costs}</ul>
+        <p class="cta"><a class="btn" href="{PATREON}" rel="noopener">{esc(t['support_cta'])}</a></p>
       </div>
     </section>"""
 
@@ -266,6 +287,8 @@ def page(t):
 <link rel="alternate" hreflang="es" href="{alt_es}">
 <link rel="alternate" hreflang="x-default" href="{alt_en}">
 <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F7F3EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{esc(t['title'])}">
 <meta property="og:description" content="{esc(t['description'])}">
@@ -365,6 +388,7 @@ def page(t):
     <nav>
       <a href="{REPO}" rel="noopener">{esc(t['foot_src'])}</a>
       <a href="https://github.com/LudoBermejoES/corylus-releases" rel="noopener">{esc(t['foot_rel'])}</a>
+      <a href="{p}{'es/privacy/' if t['lang'] == 'es' else 'privacy/'}">{esc(t['foot_priv'])}</a>
       <a class="lang" href="{other_href}">{esc(other_label)}</a>
     </nav>
   </div>
@@ -376,12 +400,95 @@ def page(t):
 """
 
 
+PRIVACY = {
+    "en": {
+        "lang": "en", "dir_prefix": "../", "other": ("../es/privacy/", "Espa\u00f1ol"),
+        "title": "Privacy \u2014 Corylus",
+        "description": "Corylus collects nothing. No accounts, no telemetry, no analytics, no server.",
+        "h": "Privacy", "updated": "Last updated 2 November 2026.",
+        "lead": "Corylus collects no personal data. This page explains what that means in practice, and names every third party your device talks to because of something Corylus does.",
+        "sections": [('What Corylus collects', ['Nothing.', 'Corylus is a desktop and mobile writing application. It has no user accounts, no telemetry, no analytics and no crash reporting. There is no Corylus server for it to send anything to. Your documents are plain Markdown files in a folder you chose on your own device, and they stay there.']), ('Optional downloads', ['Some features are optional downloads: a grammar engine, natural read-aloud voices, dictionaries and thesauruses. When you choose to install one, your device fetches it from Hugging Face or GitHub. Those providers see the request, as they would for any download. Corylus sends them nothing about you or your writing, and the components run entirely on your own machine once installed.']), ('Synchronisation', ["Sync is optional and off by default. If you turn it on, your files go to a destination you configure and control — your own WebDAV server, Dropbox or Google Drive. Corylus is not a party to that transfer and keeps no copy. Your credentials for that service are stored in your operating system's keychain, never in the project and never transmitted anywhere else."]), ('Updates', ['On desktop, Corylus checks a static file on GitHub to see whether a newer version exists. That request reaches GitHub, which sees your IP address as it would for any web request. The check sends no identifier of any kind, and it can be switched off in Settings.']), ('This website', ['This site is hosted on GitHub Pages. It sets no cookies and runs no analytics. GitHub records server logs, including IP addresses, under its own privacy policy. The site loads fonts from Google Fonts, which means Google serves those font files and sees the request.']), ('Children', ['Corylus is not directed at children and collects no information from anyone, of any age.']), ('Changes', ['If this policy changes, the new version appears on this page with a new date. Since Corylus collects nothing, a change here would most likely mean a new optional component with its own download source.']), ('Contact', ["Questions about this policy: open an issue on the project's GitHub repository."])],
+        "back": "Back to Corylus",
+    },
+    "es": {
+        "lang": "es", "dir_prefix": "../../", "other": ("../../privacy/", "English"),
+        "title": "Privacidad \u2014 Corylus",
+        "description": "Corylus no recoge nada. Sin cuentas, sin telemetr\u00eda, sin anal\u00edtica, sin servidor.",
+        "h": "Privacidad", "updated": "\u00daltima actualizaci\u00f3n: 2 de noviembre de 2026.",
+        "lead": "Corylus no recoge datos personales. Esta p\u00e1gina explica qu\u00e9 significa eso en la pr\u00e1ctica y nombra a cada tercero con el que tu dispositivo habla por algo que haga Corylus.",
+        "sections": [('Qué recoge Corylus', ['Nada.', 'Corylus es una aplicación de escritura para ordenador y móvil. No tiene cuentas de usuario, ni telemetría, ni analítica, ni informes de fallos. No hay ningún servidor de Corylus al que enviar nada. Tus documentos son archivos Markdown normales en una carpeta que tú elegiste, en tu propio dispositivo, y ahí se quedan.']), ('Descargas opcionales', ['Algunas funciones son descargas opcionales: un motor gramatical, voces naturales para la lectura en voz alta, diccionarios y sinónimos. Cuando decides instalar una, tu dispositivo la descarga de Hugging Face o de GitHub. Esos proveedores ven la petición, como en cualquier descarga. Corylus no les envía nada sobre ti ni sobre lo que escribes, y una vez instalados los componentes funcionan íntegramente en tu propia máquina.']), ('Sincronización', ['La sincronización es opcional y está desactivada por defecto. Si la activas, tus archivos van a un destino que tú configuras y controlas: tu propio servidor WebDAV, tu Dropbox o tu Google Drive. Corylus no interviene en esa transferencia ni guarda copia alguna. Las credenciales de ese servicio se guardan en el llavero de tu sistema operativo, nunca en el proyecto y nunca se envían a ningún otro sitio.']), ('Actualizaciones', ['En el escritorio, Corylus consulta un archivo estático en GitHub para saber si hay una versión más nueva. Esa petición llega a GitHub, que ve tu dirección IP como en cualquier petición web. La consulta no envía ningún identificador y se puede desactivar en los ajustes.']), ('Esta web', ['Este sitio está alojado en GitHub Pages. No pone cookies ni usa analítica. GitHub guarda registros de servidor, con direcciones IP incluidas, según su propia política de privacidad. La web carga tipografías de Google Fonts, así que Google sirve esos archivos y ve la petición.']), ('Menores', ['Corylus no se dirige a menores y no recoge información de nadie, de ninguna edad.']), ('Cambios', ['Si esta política cambia, la nueva versión aparecerá en esta página con una fecha nueva. Como Corylus no recoge nada, un cambio aquí significaría casi con seguridad un componente opcional nuevo con su propio origen de descarga.']), ('Contacto', ['Dudas sobre esta política: abre una incidencia en el repositorio del proyecto en GitHub.'])],
+        "back": "Volver a Corylus",
+    },
+}
+
+
+def privacy(t):
+    p = t["dir_prefix"]
+    other_href, other_label = t["other"]
+    body = "".join(
+        f"<h2>{esc(h)}</h2>" + "".join(f"<p>{esc(x)}</p>" for x in paras)
+        for h, paras in t["sections"]
+    )
+    canonical = SITE + ("/es/privacy/" if t["lang"] == "es" else "/privacy/")
+    return f"""<!doctype html>
+<html lang="{t['lang']}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(t['title'])}</title>
+<meta name="description" content="{esc(t['description'])}">
+<meta name="theme-color" content="#F7F3EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="{canonical}">
+<link rel="alternate" hreflang="en" href="{SITE}/privacy/">
+<link rel="alternate" hreflang="es" href="{SITE}/es/privacy/">
+<link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="{p}assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap row">
+    <a class="brand" href="{p}" aria-label="Corylus">
+      <img src="{p}assets/lockup.svg" alt="Corylus" width="232" height="64" class="only-light">
+      <img src="{p}assets/lockup-dark.svg" alt="Corylus" width="232" height="64" class="only-dark">
+    </a>
+    <nav><a href="{p}">{esc(t['back'])}</a><a class="lang" href="{other_href}">{esc(other_label)}</a></nav>
+  </div>
+</header>
+<main id="main">
+  <section class="hero">
+    <div class="wrap narrow">
+      <h1>{esc(t['h'])}</h1>
+      <p class="lead">{esc(t['lead'])}</p>
+      <p class="note">{esc(t['updated'])}</p>
+    </div>
+  </section>
+  <section>
+    <div class="wrap narrow prose">{body}</div>
+  </section>
+</main>
+<footer class="site">
+  <div class="wrap row">
+    <p><img src="{p}assets/mark.svg" alt="" width="28" height="28" aria-hidden="true"> Corylus</p>
+    <nav><a href="{REPO}" rel="noopener">GitHub</a><a class="lang" href="{other_href}">{other_label}</a></nav>
+  </div>
+</footer>
+</body>
+</html>
+"""
+
+
 if __name__ == "__main__":
     out = {
         os.path.join(HERE, "index.html"): page(STRINGS["en"]),
         os.path.join(HERE, "es", "index.html"): page(STRINGS["es"]),
+        os.path.join(HERE, "privacy", "index.html"): privacy(PRIVACY["en"]),
+        os.path.join(HERE, "es", "privacy", "index.html"): privacy(PRIVACY["es"]),
     }
-    os.makedirs(os.path.join(HERE, "es"), exist_ok=True)
+    for d in ("es", "privacy", "es/privacy"):
+        os.makedirs(os.path.join(HERE, d), exist_ok=True)
     for path, body in out.items():
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(body)

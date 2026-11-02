@@ -128,3 +128,10 @@ img.only-dark { display: none; }
 }
 :root[data-theme="dark"] img.only-dark { display: block; }
 :root[data-theme="dark"] img.only-light { display: none; }
+
+.costs-h { font-family: var(--display); font-size: 1.05rem; margin: 2rem 0 .8rem; color: var(--fg); }
+.costs h3 { font-variant-numeric: tabular-nums lining-nums; }
+.cta { margin-top: 2rem; }
+
+.prose h2 { font-size: 1.3rem; margin: 2rem 0 .5rem; }
+.prose p { margin: 0 0 .9em; }

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy — Corylus</title>
+<meta name="description" content="Corylus collects nothing. No accounts, no telemetry, no analytics, no server.">
+<meta name="theme-color" content="#F7F3EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://ludobermejoes.github.io/corylus-web/privacy/">
+<link rel="alternate" hreflang="en" href="https://ludobermejoes.github.io/corylus-web/privacy/">
+<link rel="alternate" hreflang="es" href="https://ludobermejoes.github.io/corylus-web/es/privacy/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap row">
+    <a class="brand" href="../" aria-label="Corylus">
+      <img src="../assets/lockup.svg" alt="Corylus" width="232" height="64" class="only-light">
+      <img src="../assets/lockup-dark.svg" alt="Corylus" width="232" height="64" class="only-dark">
+    </a>
+    <nav><a href="../">Back to Corylus</a><a class="lang" href="../es/privacy/">Español</a></nav>
+  </div>
+</header>
+<main id="main">
+  <section class="hero">
+    <div class="wrap narrow">
+      <h1>Privacy</h1>
+      <p class="lead">Corylus collects no personal data. This page explains what that means in practice, and names every third party your device talks to because of something Corylus does.</p>
+      <p class="note">Last updated 2 November 2026.</p>
+    </div>
+  </section>
+  <section>
+    <div class="wrap narrow prose"><h2>What Corylus collects</h2><p>Nothing.</p><p>Corylus is a desktop and mobile writing application. It has no user accounts, no telemetry, no analytics and no crash reporting. There is no Corylus server for it to send anything to. Your documents are plain Markdown files in a folder you chose on your own device, and they stay there.</p><h2>Optional downloads</h2><p>Some features are optional downloads: a grammar engine, natural read-aloud voices, dictionaries and thesauruses. When you choose to install one, your device fetches it from Hugging Face or GitHub. Those providers see the request, as they would for any download. Corylus sends them nothing about you or your writing, and the components run entirely on your own machine once installed.</p><h2>Synchronisation</h2><p>Sync is optional and off by default. If you turn it on, your files go to a destination you configure and control — your own WebDAV server, Dropbox or Google Drive. Corylus is not a party to that transfer and keeps no copy. Your credentials for that service are stored in your operating system&#x27;s keychain, never in the project and never transmitted anywhere else.</p><h2>Updates</h2><p>On desktop, Corylus checks a static file on GitHub to see whether a newer version exists. That request reaches GitHub, which sees your IP address as it would for any web request. The check sends no identifier of any kind, and it can be switched off in Settings.</p><h2>This website</h2><p>This site is hosted on GitHub Pages. It sets no cookies and runs no analytics. GitHub records server logs, including IP addresses, under its own privacy policy. The site loads fonts from Google Fonts, which means Google serves those font files and sees the request.</p><h2>Children</h2><p>Corylus is not directed at children and collects no information from anyone, of any age.</p><h2>Changes</h2><p>If this policy changes, the new version appears on this page with a new date. Since Corylus collects nothing, a change here would most likely mean a new optional component with its own download source.</p><h2>Contact</h2><p>Questions about this policy: open an issue on the project&#x27;s GitHub repository.</p></div>
+  </section>
+</main>
+<footer class="site">
+  <div class="wrap row">
+    <p><img src="../assets/mark.svg" alt="" width="28" height="28" aria-hidden="true"> Corylus</p>
+    <nav><a href="https://github.com/LudoBermejoES/corylus" rel="noopener">GitHub</a><a class="lang" href="../es/privacy/">Español</a></nav>
+  </div>
+</footer>
+</body>
+</html>

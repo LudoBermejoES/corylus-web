@@ -11,4 +11,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ludobermejoes.github.io/corylus-web/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://ludobermejoes.github.io/corylus-web/es/"/>
   </url>
+  <url>
+    <loc>https://ludobermejoes.github.io/corylus-web/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludobermejoes.github.io/corylus-web/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludobermejoes.github.io/corylus-web/es/privacy/"/>
+  </url>
+  <url>
+    <loc>https://ludobermejoes.github.io/corylus-web/es/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludobermejoes.github.io/corylus-web/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludobermejoes.github.io/corylus-web/es/privacy/"/>
+  </url>
 </urlset>
