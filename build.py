@@ -18,9 +18,31 @@ RELEASES_RAW = "https://raw.githubusercontent.com/LudoBermejoES/corylus-releases
 # while it is empty, so the site never ships a dead link.
 PATREON = "https://www.patreon.com/c/corylus"
 
-# Fallbacks, used only if the live manifest cannot be fetched. Keep in step with
-# whatever is actually published.
-FALLBACK = {"mac": "1.91.0", "win": "1.90.1"}
+# The versions baked into the HTML, used when JavaScript is off: site.js rewrites
+# the links from the live manifests for everyone else. Fetched at build time so
+# they cannot quietly rot - they had drifted two releases behind before this.
+# Offline, the last known values below are used and the build says so.
+_FALLBACK_LAST_KNOWN = {"mac": "1.91.1", "win": "1.91.1"}
+
+
+def _published_versions():
+    import json as _json
+    import urllib.request
+
+    out = dict(_FALLBACK_LAST_KNOWN)
+    for key, manifest in (("mac", "latest-darwin-aarch64.json"),
+                          ("win", "latest-windows-x86_64.json")):
+        try:
+            with urllib.request.urlopen(f"{RELEASES_RAW}/{manifest}", timeout=10) as r:
+                version = _json.load(r)["version"]
+            if version:
+                out[key] = version
+        except Exception as exc:
+            print(f"  ! {manifest}: {exc} — using {out[key]}")
+    return out
+
+
+FALLBACK = _published_versions()
 
 STRINGS = {
     "en": {
