@@ -135,3 +135,13 @@ img.only-dark { display: none; }
 
 .prose h2 { font-size: 1.3rem; margin: 2rem 0 .5rem; }
 .prose p { margin: 0 0 .9em; }
+
+/* Video and screenshots. A dark app shot on a light page needs a border, not a
+   shadow: the shadow reads as a drop on parchment, the border as a frame. */
+.media { margin: 2.5rem 0 0; }
+.media video, .media img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid var(--border); border-radius: 10px; background: var(--night);
+}
+.media figcaption { color: var(--fg-muted); font-size: .9rem; margin-top: .7rem; }
+.media.wide { margin-top: 2rem; }

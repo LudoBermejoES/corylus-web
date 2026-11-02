@@ -73,6 +73,9 @@ STRINGS = {
             "portable, future-proof text."
         ),
         "tree_cap": "A Corylus project, as your file manager sees it.",
+        "video_cap": "What Corylus is, in a minute and a bit.",
+        "shot_files_cap": "The same chapter in Corylus, and as the file on your disk.",
+        "shot_editor_cap": "The editor, the binder, and a chapter's own metadata.",
         "features_h": "What it does",
         "features": [
             ("Binder", "Folders, chapters and scenes in a tree you can drag around. A novel is 200 pieces, not one document."),
@@ -167,6 +170,9 @@ STRINGS = {
             "portable y legible dentro de veinte años."
         ),
         "tree_cap": "Un proyecto de Corylus, tal y como lo ve tu gestor de archivos.",
+        "video_cap": "Qué es Corylus, en poco más de un minuto.",
+        "shot_files_cap": "El mismo capítulo en Corylus, y como archivo en tu disco.",
+        "shot_editor_cap": "El editor, el cuaderno y los metadatos de un capítulo.",
         "features_h": "Qué hace",
         "features": [
             ("Cuaderno", "Carpetas, capítulos y escenas en un árbol que puedes reordenar arrastrando. Una novela son 200 piezas, no un documento."),
@@ -330,6 +336,15 @@ def page(t):
       </p>
       <p class="note">{esc(t['hero_note'])}</p>
     </div>
+    <div class="wrap">
+      <figure class="media">
+        <video controls preload="none" poster="{p}assets/trailer-poster.jpg" width="1920" height="1080">
+          <source src="{p}assets/corylus-trailer.mp4" type="video/mp4">
+          <track kind="captions" src="{p}assets/corylus-trailer.vtt" srclang="en" label="English" default>
+        </video>
+        <figcaption>{esc(t['video_cap'])}</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="band" id="why">
@@ -345,11 +360,21 @@ def page(t):
         <figcaption>{esc(t['tree_cap'])}</figcaption>
       </figure>
     </div>
+    <div class="wrap">
+      <figure class="media wide">
+        <img src="{p}assets/files-on-disk.png" alt="{esc(t['shot_files_cap'])}" width="1800" height="878" loading="lazy">
+        <figcaption>{esc(t['shot_files_cap'])}</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section id="features">
     <div class="wrap">
       <h2>{esc(t['features_h'])}</h2>
+      <figure class="media">
+        <img src="{p}assets/editor.png" alt="{esc(t['shot_editor_cap'])}" width="1500" height="900" loading="lazy">
+        <figcaption>{esc(t['shot_editor_cap'])}</figcaption>
+      </figure>
       <ul class="grid">{features}</ul>
     </div>
   </section>
