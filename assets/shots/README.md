@@ -1,6 +1,6 @@
 # Website screenshots
 
-Real captures of the Corylus app, 2944x1656 (a 1472x828 viewport at 2x), taken
+Real captures of the Corylus app as WebP, 2208x1242 (a 1472x828 viewport at 1.5x), taken
 from the e2e dev build with `web/tools/shots.mjs`. The copy refers to them by id.
 
 | id | What it shows |
@@ -48,19 +48,12 @@ node shots.mjs                 # every shot
 node shots.mjs editor themes   # just these ids
 ```
 
-The script leaves the app light, English, with every analysis off. Then shrink the
-PNGs to a 256-colour palette (about half the size, text stays sharp), from WSL:
+The script leaves the app light, English, with every analysis off.
 
-```sh
-cd web/assets/shots; mkdir -p /tmp/q
-for f in *.png; do
-  ffmpeg -loglevel error -y -i "$f" -filter_complex \
-    "[0]split[a][b];[a]palettegen=max_colors=256:stats_mode=full[p];[b][p]paletteuse=dither=sierra2_4a" \
-    -compression_level 100 -pred mixed "/tmp/q/$f" && cp "/tmp/q/$f" "$f"
-done
-```
-
-The 24 shots come to about 5 MB this way (9.6 MB straight from the app).
+Each shot is written straight from WebView2 as lossy WebP, quality 85, rendered
+at 1.5x (2208x1242). No post-processing step. `SHOTS_SCALE=2` renders at 2x
+(2944x1656) instead. The script also turns off LCD (ClearType) text antialiasing
+while it captures, so letter edges carry no colour fringes. Total for the 24 shots: about 2.7 MB.
 
 Side effects, all inside the e2e app's own data: `grammar` starts LanguageTool,
 `sync` starts the rclone engine (it never connects), `ambient-sounds` installs the

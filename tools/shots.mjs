@@ -1,4 +1,4 @@
-// Website screenshots of the real Corylus app (web/assets/shots/<id>.png).
+// Website screenshots of the real Corylus app (web/assets/shots/<id>.webp).
 //
 // Run on Windows, against the e2e dev build started with
 // WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222:
@@ -44,6 +44,7 @@ async function openProject(page, root) {
   await page.waitForSelector('.binder', 15000);
   // The binder store can keep the previous project's tree; reload it from disk.
   await run(page, `const b = ${STORE('binder')}; if (b && b.load) await b.load();
+    if (b && b.loadMeta) await b.loadMeta();  // the tab bar's project word total reads these
     const pm = ${STORE('projectMeta')}; if (pm) await pm.load();
     const t = ${STORE('storyBibleTree')}; if (t) { try { await t.loadBibleTree(); await t.loadEntries(); } catch (e) {} }`);
   await sleep(1500);
@@ -131,6 +132,19 @@ async function seed(page) {
   await addChapters(page, 'Manuscrito', SPANISH.chapters);
   await setMeta(page, SPANISH_META);
   console.log('seeded', LIBRO);
+
+  // Every save through write_document_cmd indexes the document with a word count of 0;
+  // only a full rebuild (an empty index) counts words. Drop each book's index while
+  // it is closed so the next open rebuilds it, or the tab bar shows "Project: 0 / …".
+  dropIndex(BOOK);
+  await openProject(page, BOOK);
+  dropIndex(LIBRO);
+}
+
+function dropIndex(root) {
+  const marker = fs.readdirSync(root).find((f) => f.startsWith('.corylus-id-'));
+  const dir = path.join(process.env.APPDATA, 'com.corylus.app.e2e', 'projects', marker.slice('.corylus-id-'.length));
+  try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) { console.log(`could not drop the index of ${root}: ${e.message}`); }
 }
 
 // ── Driving the app ──────────────────────────────────────────────────────────
@@ -148,6 +162,7 @@ async function reset(page, { theme = 'system-light', canvas = 'white', locale = 
     ['closeSettings','closeCompile','closeStatistics','closeAmbientMixer','closePalette','closeImport']
       .forEach((f) => { try { ui[f](); } catch (e) {} });
     ${JSON.stringify(ANALYSES)}.forEach((k) => { s[k] = false; });
+    s.grammarEnabled = false;  // LanguageTool squiggles only in the grammar shot
     s.locale = ${JSON.stringify(locale)};
     try { window.__i18n.global.locale.value = ${JSON.stringify(locale)}; } catch (e) {}
     th.applyChrome(${JSON.stringify(theme)}); th.applyCanvas(${JSON.stringify(canvas)});
@@ -349,6 +364,7 @@ const SHOTS = {
       await invoke('lt_start');
       for (let i = 0; i < 90; i++) { if ((await invoke('lt_get_status')).kind === 'ready' && await ok()) return; await new Promise((r) => setTimeout(r, 2000)); }
       throw new Error('LanguageTool did not come up');`, 300000);
+    await page.evaluate(`${STORE('settings')}.grammarEnabled = true`);
     // The check runs when a document loads; a load that raced the engine's start gets none, so reopen.
     for (let i = 0; ; i++) {
       await page.evaluate(`${STORE('tabs')}.closeAll()`);
@@ -526,6 +542,16 @@ const SHOTS = {
   },
 };
 
+/** Windows renders text with ClearType colour fringes; a 256-colour palette turns
+ *  those into yellow smudges. A composited #app layer makes Chromium use greyscale
+ *  antialiasing for the capture only. */
+async function grayscaleText(page, on) {
+  await page.evaluate(`(() => { let s = document.getElementById('shot-aa');
+    if (${on} && !s) { s = document.createElement('style'); s.id = 'shot-aa';
+      s.textContent = '#app { will-change: transform; }'; document.head.appendChild(s); }
+    if (!${on} && s) s.remove(); return 'ok'; })()`);
+}
+
 async function poll(page, expr, ms) {
   const end = Date.now() + ms;
   while (Date.now() < end) { if (await page.evaluate(expr)) return; await sleep(1000); }
@@ -540,6 +566,30 @@ async function rightClickWord(page, word) {
     const r = range.getBoundingClientRect();
     pm.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, view: window, clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 }));
     return 'ok'; })()`);
+}
+
+/** WebP straight from WebView2, at the 2x viewport app.mjs sets (lossy, quality 85).
+ *  A second CDP session: app.mjs's own capture only does PNG. */
+// 1.5x rendered natively (2208x1242): as sharp as 2x for the site, a quarter smaller.
+const SCALE = Number(process.env.SHOTS_SCALE || 1.5);
+async function webp(port = Number(process.env.CORYLUS_VIDEO_CDP_PORT || 9222)) {
+  const targets = await (await fetch(`http://127.0.0.1:${port}/json`)).json();
+  const t = targets.find((x) => x.type === 'page' && /localhost:1420|tauri\.localhost/.test(x.url));
+  const ws = new WebSocket(t.webSocketDebuggerUrl);
+  await new Promise((ok, fail) => { ws.onopen = ok; ws.onerror = fail; });
+  let n = 0;
+  const send = (method, params) => new Promise((ok) => {
+    const id = ++n;
+    ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id === id) ok(m); };
+    ws.send(JSON.stringify({ id, method, params }));
+  });
+  // The metrics override is per CDP session, so this one needs its own.
+  await send('Emulation.setDeviceMetricsOverride', { width: 1472, height: 828, deviceScaleFactor: SCALE, mobile: false });
+  await sleep(400);
+  const r = await send('Page.captureScreenshot', { format: 'webp', quality: 85 });
+  ws.close();
+  if (!r.result) throw new Error(`WebP capture failed: ${JSON.stringify(r.error)}`);
+  return Buffer.from(r.result.data, 'base64');
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -560,14 +610,17 @@ try {
       if (current !== want) { await openProject(page, want); current = want; }
       try {
         await SHOTS[id](page);
+        await grayscaleText(page, true);
         await sleep(700);
-        fs.writeFileSync(path.join(OUT, `${id}.png`), await page.screenshot());
+        fs.writeFileSync(path.join(OUT, `${id}.webp`), await webp());
+        await grayscaleText(page, false);
         console.log(`ok   ${id}`);
       } catch (e) {
         console.log(`FAIL ${id}: ${e.message}`);
       }
     }
     await reset(page);
+    await page.evaluate(`(() => { const s = ${STORE('settings')}; s.grammarEnabled = true; s.commentAuthor = 'You'; return 'ok'; })()`);
   }
 } finally {
   close();

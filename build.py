@@ -566,14 +566,34 @@ def png_size(path):
     return struct.unpack(">II", head[16:24])
 
 
+def webp_size(path):
+    """(width, height) of a WebP file, read from its header (VP8, VP8L or VP8X)."""
+    with open(path, "rb") as f:
+        head = f.read(30)
+    assert head[:4] == b"RIFF" and head[8:12] == b"WEBP", f"{path} is not a WebP"
+    kind = head[12:16]
+    if kind == b"VP8 ":
+        w, h = struct.unpack("<HH", head[26:30])
+        return w & 0x3FFF, h & 0x3FFF
+    if kind == b"VP8L":
+        b = head[21:25]
+        bits = b[0] | b[1] << 8 | b[2] << 16 | b[3] << 24
+        return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1
+    if kind == b"VP8X":
+        return (int.from_bytes(head[24:27], "little") + 1,
+                int.from_bytes(head[27:30], "little") + 1)
+    raise ValueError(f"{path}: unknown WebP chunk {kind!r}")
+
+
 def shot_img(p, sid, alt, lazy=True):
-    """<img> for assets/shots/<sid>.png, or "" while that capture has not landed."""
-    path = os.path.join(HERE, "assets", "shots", f"{sid}.png")
-    if not os.path.exists(path):
-        return ""
-    w, h = png_size(path)
-    loading = ' loading="lazy"' if lazy else ""
-    return f'<img src="{p}assets/shots/{sid}.png" alt="{esc(alt)}" width="{w}" height="{h}"{loading}>'
+    """<img> for assets/shots/<sid>.webp (or .png), or "" while that capture has not landed."""
+    for ext, size in (("webp", webp_size), ("png", png_size)):
+        path = os.path.join(HERE, "assets", "shots", f"{sid}.{ext}")
+        if os.path.exists(path):
+            w, h = size(path)
+            loading = ' loading="lazy"' if lazy else ""
+            return f'<img src="{p}assets/shots/{sid}.{ext}" alt="{esc(alt)}" width="{w}" height="{h}"{loading}>'
+    return ""
 
 
 def tour(t, p):
