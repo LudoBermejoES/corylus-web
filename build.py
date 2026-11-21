@@ -26,19 +26,40 @@ _FALLBACK_LAST_KNOWN = {"mac": "1.91.1", "win": "1.91.1"}
 
 
 def _published_versions():
+    """Copy each platform's update manifest into the site root, byte for byte, and
+    return the versions they carry.
+
+    The app's updater asks https://corylus.ludobermejo.es/latest-<target>-<arch>.json
+    first (releases repo second), so this copy is what publishes an update on the
+    domain. It reads the local ../releases checkout when there is one — exactly
+    what was just pushed — and fetches the raw URL otherwise, which a CDN may
+    serve a few minutes stale."""
+    import glob
     import json as _json
     import urllib.request
 
+    local = os.path.join(HERE, "..", "releases")
+    names = sorted({os.path.basename(p) for p in glob.glob(os.path.join(local, "latest-*-*.json"))}
+                   | {"latest-darwin-aarch64.json", "latest-windows-x86_64.json"})
     out = dict(_FALLBACK_LAST_KNOWN)
-    for key, manifest in (("mac", "latest-darwin-aarch64.json"),
-                          ("win", "latest-windows-x86_64.json")):
+    for name in names:
         try:
-            with urllib.request.urlopen(f"{RELEASES_RAW}/{manifest}", timeout=10) as r:
-                version = _json.load(r)["version"]
-            if version:
-                out[key] = version
+            src = os.path.join(local, name)
+            if os.path.exists(src):
+                with open(src, "rb") as f:
+                    raw = f.read()
+            else:
+                with urllib.request.urlopen(f"{RELEASES_RAW}/{name}", timeout=10) as r:
+                    raw = r.read()
+            version = _json.loads(raw)["version"]
         except Exception as exc:
-            print(f"  ! {manifest}: {exc} — using {out[key]}")
+            print(f"  ! {name}: {exc} — not copied")
+            continue
+        with open(os.path.join(HERE, name), "wb") as f:
+            f.write(raw)
+        key = {"latest-darwin-aarch64.json": "mac", "latest-windows-x86_64.json": "win"}.get(name)
+        if key and version:
+            out[key] = version
     return out
 
 

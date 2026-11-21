@@ -1,0 +1,11 @@
+{
+  "version": "1.92.3",
+  "notes": "The background video in distraction-free mode no longer stops for good. It could be paused by the system at any moment - when another window covered Corylus, when a piece of the file was slow to arrive, or when memory ran short - and nothing ever started it again, so the only cure was leaving distraction-free mode and coming back. It now notices and resumes on its own, and writes down why it stopped.\n\nA dropped connection no longer breaks cloud sync for the rest of the day. A transfer interrupted by a lost network could keep running invisibly and hold the remote folder open, so every sync afterwards queued behind it and timed out - for hours, without a word. Corylus now spots that, stops trying, tells you plainly that the project is not syncing, and gives you a button to start it again. Losing the network for a moment is also reported as being offline, which it is, instead of as an error.\n\nWhen something goes wrong behind the scenes, the reason is now written down. Until now a whole class of failures recorded the words \\u201cobject Object\\u201d and nothing else, which meant a problem could repeat hundreds of times in a day and leave no trace of its cause.\n\nmacOS: Corylus is not notarized yet, so Gatekeeper may say the app cannot be opened because the developer cannot be verified. Right-click (or Control-click) Corylus.app, choose Open, then Open again. Only needed once per downloaded copy.",
+  "pub_date": "2026-11-20T19:01:07Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTWm43WXlwQi9Mb3orTDJoZ2ExWVZOZjB3OE1zVnNWV1QybmhpbnVFT1orNmNHdXZiaHVJbEFJdVZnMTBLaDR0ZUNUR2NIeU9XcWhSVktyeG90S0orbjNHZHM2d0tET1FjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MjAxMjU3CWZpbGU6Q29yeWx1cy5hcHAudGFyLmd6CXZlcnNpb246MS45Mi4zCkpFOE0vcjVkbUc0bDUzbmgyVnQyZkJMdWdHODQ4QUdYeVd4MnJ6SGJ6bkhQZEo4YnloTVJJai9NZm1WSjFzYmhqSDVUa1BTWWNrLzFsdUV3cHFKOUJnPT0K",
+      "url": "https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.92.3_aarch64.app.tar.gz"
+    }
+  }
+}
