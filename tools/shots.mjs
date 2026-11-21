@@ -4,6 +4,7 @@
 // WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222:
 //   node shots.mjs --seed        build the demo books under C:\tmp\corylus-site
 //   node shots.mjs [ids…]        capture every shot, or just the ids given
+//   add --lang es to either      the Spanish book and interface, into shots/es/
 //
 // Only ever opens the demo books it builds itself.
 import fs from 'node:fs';
@@ -11,12 +12,27 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { connect, prepareApp, STORE } from '../../.claude/skills/corylus-video/assets/motor/lib/app.mjs';
 import { CHAPTERS, ROUGH, SPARK_FIRST_DRAFT, SPANISH } from './shots-content.mjs';
+import * as ESB from './shots-content-es.mjs';
+
+const ARGS = process.argv.slice(2);
+const LANG = ARGS.includes('--lang') ? ARGS[ARGS.indexOf('--lang') + 1] : 'en';
+const ES = LANG === 'es';
+// The words the shots point at in the English book; the Spanish book maps titles and these.
+const EN_T = {
+  repeated: 'night', thesaurus: 'happier', grammar: 'have', diffAnchor: 'stormy',
+  commentQuote: 'rather let me say such the words of fate',
+  commentText: 'Too knowing this early? Let the reader feel the fate before Victor names it.',
+  commentReply: 'Agreed. Cut the aside and keep "the words of fate".',
+  commentAuthor: 'Margaret', me: 'You',
+  backupLabel: 'Before the read-through', snapFirst: 'First draft', snapSecond: 'After the read-through',
+};
+const T = (k) => (ES && ESB.T[k] !== undefined ? ESB.T[k] : EN_T[k] !== undefined ? EN_T[k] : k);
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, '../..');
-const OUT = path.join(REPO, 'web/assets/shots');
+const OUT = path.join(REPO, 'web/assets/shots', ES ? 'es' : '');
 const SITE = 'C:\\tmp\\corylus-site';
-const BOOK = path.join(SITE, 'Frankenstein.corylus');
+const BOOK = path.join(SITE, ES ? 'Frankenstein (es).corylus' : 'Frankenstein.corylus');
 const LIBRO = path.join(SITE, 'El faro de Arnela.corylus');
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -141,6 +157,56 @@ async function seed(page) {
   dropIndex(LIBRO);
 }
 
+async function seedEs(page) {
+  fs.mkdirSync(SITE, { recursive: true });
+  if (fs.existsSync(BOOK)) fs.rmSync(BOOK, { recursive: true });
+  await run(page, `await invoke('create_project_cmd', { path: ${JSON.stringify(BOOK)}, name: ${JSON.stringify(ESB.BOOK_NAME)} });`);
+  await openProject(page, BOOK);
+  await setMeta(page, { default_language: 'es', labels: ESB.LABELS, statuses: ESB.STATUSES, word_target: 80000 });
+
+  // Story Bible: bare entries, covers, then the fields (as the English seed does).
+  const IMG = path.join(REPO, 'doc/img');
+  const ref = {};
+  const entries = [...ESB.CHARACTERS.map((c) => ['Character', c]), ...ESB.LOCATIONS.map((l) => ['Location', l]), ['Theme', ESB.THEME]];
+  for (const [type, e] of entries) {
+    ref[e.title] = await run(page, `const c = await invoke('create_story_entry_cmd', { args: { entryType: ${JSON.stringify(type)}, title: ${JSON.stringify(e.title)} } });
+      return { ulid: c.ulid, relPath: c.relPath };`);
+  }
+  for (const [type, e] of entries) {
+    const { title, synopsis, cover, ...fields } = e;
+    const extra = { type, ...fields };
+    if (cover) {
+      const bytes = Array.from(fs.readFileSync(path.join(IMG, cover)));
+      extra.cover = await run(page, `return (await invoke('storybible_save_asset_cmd', { args: { bytes: ${JSON.stringify(bytes)}, ext: 'png' } })).relPath;`, 120000);
+    }
+    await run(page, `await invoke('write_document_cmd', { args: { path: ${JSON.stringify(ref[title].relPath)},
+      meta: { id: ${JSON.stringify(ref[title].ulid)}, title: ${JSON.stringify(title)}, synopsis: ${JSON.stringify(synopsis)}, extra: ${JSON.stringify(extra)} },
+      body: '', expected_hash: '' } });`);
+  }
+  // Relationships last (a later frontmatter write would drop them), one call per source.
+  const bySource = {};
+  for (const [from, to, relType, fwd, rev] of ESB.RELATIONSHIPS) {
+    (bySource[from] ||= []).push({ toUlid: ref[to].ulid, relType, forwardLabel: fwd, reverseLabel: rev });
+  }
+  for (const [from, rels] of Object.entries(bySource)) {
+    await run(page, `await invoke('set_relationships_cmd', { args: { fromUlid: ${JSON.stringify(ref[from].ulid)}, relationships: ${JSON.stringify(rels)} } });`);
+  }
+
+  const docs = await addChapters(page, ESB.T['Manuscript'], ESB.CHAPTERS);
+  Object.assign(docs, await addChapters(page, ESB.T['Drafts'], [ESB.ROUGH]));
+  const spark = docs[ESB.T['The Spark']];
+  const cur = ESB.CHAPTERS.find((c) => c.title === ESB.T['The Spark']);
+  await run(page, `
+    const s = ${JSON.stringify(spark)}, c = ${JSON.stringify(cur)};
+    const meta = { id: s.ulid, title: c.title, synopsis: c.synopsis, label: c.label, status: c.status };
+    await invoke('write_document_cmd', { args: { path: s.path, meta, body: ${JSON.stringify(ESB.SPARK_FIRST_DRAFT)}, expected_hash: '' } });
+    await invoke('create_snapshot_cmd', { ulid: s.ulid, label: ${JSON.stringify(ESB.T.snapFirst)} });
+    await invoke('write_document_cmd', { args: { path: s.path, meta, body: c.body, expected_hash: '' } });
+    await invoke('create_snapshot_cmd', { ulid: s.ulid, label: ${JSON.stringify(ESB.T.snapSecond)} });`);
+  await run(page, `const t = ${STORE('storyBibleTree')}; await t.loadBibleTree(); await t.loadEntries(); await ${STORE('binder')}.load();`);
+  console.log('seeded', BOOK);
+}
+
 function dropIndex(root) {
   const marker = fs.readdirSync(root).find((f) => f.startsWith('.corylus-id-'));
   const dir = path.join(process.env.APPDATA, 'com.corylus.app.e2e', 'projects', marker.slice('.corylus-id-'.length));
@@ -155,7 +221,7 @@ const ANALYSES = ['repetitionEnabled', 'rhymeEnabled', 'adjectiveEnabled', 'adve
   'multipleSpacesEnabled'];
 
 /** A clean, light, English app: no dialogs, no analyses, no modes. */
-async function reset(page, { theme = 'system-light', canvas = 'white', locale = 'en' } = {}) {
+async function reset(page, { theme = 'system-light', canvas = 'white', locale = LANG } = {}) {
   await prepareApp(page);
   await page.evaluate(`(() => {
     const ui = ${STORE('ui')}, s = ${STORE('settings')}, th = ${STORE('theming')}, pm = ${STORE('projectMeta')};
@@ -163,6 +229,8 @@ async function reset(page, { theme = 'system-light', canvas = 'white', locale = 
       .forEach((f) => { try { ui[f](); } catch (e) {} });
     ${JSON.stringify(ANALYSES)}.forEach((k) => { s[k] = false; });
     s.grammarEnabled = false;  // LanguageTool squiggles only in the grammar shot
+    // Names the bundled dictionary lacks; the planted misspelling stays flagged.
+    try { ${JSON.stringify(ES ? ['Elizabeth', 'Londres', 'Ingolstadt', 'Walton', 'Clerval', 'Lacey', 'Frankenstein', 'Margarita', 'Ginebra'] : [])}.forEach((w) => ${STORE('spellcheck')}.ignore(w)); } catch (e) {}
     s.locale = ${JSON.stringify(locale)};
     try { window.__i18n.global.locale.value = ${JSON.stringify(locale)}; } catch (e) {}
     th.applyChrome(${JSON.stringify(theme)}); th.applyCanvas(${JSON.stringify(canvas)});
@@ -188,6 +256,7 @@ async function inspector(page, tab) {
 
 /** Open a binder node (document tab, or just select a folder). */
 async function open(page, title) {
+  title = T(title);
   const r = await page.evaluate(`(() => {
     const binder = ${STORE('binder')}, tabs = ${STORE('tabs')};
     const n = binder.nodes.find((x) => x.title === ${JSON.stringify(title)} && !String(x.disk_path || '').startsWith('StoryBible'));
@@ -222,6 +291,7 @@ async function expandBinder(page) {
 const RETRATO = `Array.from(document.querySelectorAll('img')).some((i) => i.complete && i.naturalWidth > 80 && i.offsetParent && i.getBoundingClientRect().width > 60)`;
 
 async function openBible(page, title) {
+  title = T(title);
   await run(page, `
     const sbt = ${STORE('storyBibleTree')}, tabs = ${STORE('tabs')}, es = ${STORE('storyBibleEntry')};
     const m = document.querySelector('.mode-btn--active'); if (m) m.click();
@@ -265,12 +335,12 @@ const SHOTS = {
   'relationship-map': async (page) => {
     await reset(page);
     await inspector(page, null);
-    const titles = ['Victor Frankenstein', 'The Creature', 'Elizabeth Lavenza', 'Villa Frankenstein'];
+    const titles = ['Victor Frankenstein', 'The Creature', 'Elizabeth Lavenza', 'Villa Frankenstein'].map(T);
     const ulids = await page.evaluate(`JSON.stringify(${JSON.stringify(titles)}.map((t) => (${STORE('storyBibleTree')}.bibleNodes.find((n) => n.title === t) || {}).ulid))`).then(JSON.parse);
     // Reuse the canvas from an earlier run, so re-captures do not pile them up.
     const canvasUlid = await run(page, `
       const tabs = ${STORE('tabs')}, canvas = ${STORE('storyBibleCanvas')};
-      const name = 'Character Map';
+      const name = ${JSON.stringify(T('Character Map'))};
       let c = (await invoke('list_binder')).find((n) => n.kind === 'canvas' && n.title === name && !n.trashed);
       const fresh = !c;
       if (!c) c = await invoke('create_node', { args: { parent_ulid: null, kind: 'canvas', title: name, canvas_kind: 'relationship-map' } });
@@ -309,7 +379,9 @@ const SHOTS = {
     await page.evaluate(`(() => { window.dispatchEvent(new KeyboardEvent('keydown', { key: 'C', code: 'KeyC', ctrlKey: true, shiftKey: true, bubbles: true })); return 'ok'; })()`);
     await sleep(2500);
     // Land between two chapters, so the shot shows the seam.
-    await page.evaluate(`(() => { const h = Array.from(document.querySelectorAll('.continuous-view h1, .continuous-view h2, [class*="continuous"] [class*="title"]'))[1];
+    // Land on the seam between the first two chapters. Each chapter starts at an <hr>;
+    // its title is drawn by CSS, so there is no heading element to find.
+    await page.evaluate(`(() => { const h = document.querySelectorAll('.continuous-view .ProseMirror > hr')[1];
       if (h) h.scrollIntoView({ block: 'center' }); return !!h; })()`);
     await sleep(800);
   },
@@ -319,7 +391,7 @@ const SHOTS = {
     await analyses(page, ['repetitionEnabled']);
     await open(page, 'The Spark (rough draft)');
     await page.waitForSelector('.repetition-mark', 8000);
-    await page.evaluate(`(() => { const el = Array.from(document.querySelectorAll('.repetition-mark')).find((e) => /night/i.test(e.textContent)) || document.querySelector('.repetition-mark');
+    await page.evaluate(`(() => { const el = Array.from(document.querySelectorAll('.repetition-mark')).find((e) => e.textContent.toLowerCase() === ${JSON.stringify(T('repeated'))}) || document.querySelector('.repetition-mark');
       const r = el.getBoundingClientRect();
       el.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 })); return 'ok'; })()`);
     await page.waitForSelector('.analysis-tooltip', 5000).catch(() => {});
@@ -349,7 +421,13 @@ const SHOTS = {
     await reset(page);
     await inspector(page, null);
     await open(page, 'By the Lake');
-    await rightClickWord(page, 'happier');
+    // The Spanish thesaurus is a download; fetch it into the e2e app the first time.
+    await run(page, `
+      if ((await invoke('thesaurus_get_status', { lang: ${JSON.stringify(LANG)} })).kind === 'ready') return;
+      await invoke('thesaurus_install', { lang: ${JSON.stringify(LANG)} });
+      for (let i = 0; i < 300; i++) { if ((await invoke('thesaurus_get_status', { lang: ${JSON.stringify(LANG)} })).kind === 'ready') return; await new Promise((r) => setTimeout(r, 2000)); }
+      throw new Error('thesaurus did not install');`, 700000);
+    await rightClickWord(page, T('thesaurus'));
     await page.waitForSelector('.spell-context-menu', 5000);
     await sleep(1500);
   },
@@ -373,7 +451,7 @@ const SHOTS = {
     }
     await sleep(1000);
     await page.evaluate(`(() => { const all = Array.from(document.querySelectorAll('.grammar-error'));
-      const el = all.find((e) => e.textContent.trim() === 'have') || all[0];
+      const el = all.find((e) => e.textContent.trim() === ${JSON.stringify(T('grammar'))}) || all[0];
       const r = el.getBoundingClientRect();
       el.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, view: window, clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 })); return 'ok'; })()`);
     await sleep(1500);
@@ -417,17 +495,17 @@ const SHOTS = {
     await reset(page);
     await open(page, 'The Spark');
     await inspector(page, 'snapshots');
-    await run(page, `const b = ${STORE('binder')}; const n = b.nodes.find((x) => x.title === 'The Spark'); await ${STORE('snapshot')}.loadSnapshots(n.ulid);`);
+    await run(page, `const b = ${STORE('binder')}; const n = b.nodes.find((x) => x.title === ${JSON.stringify(T('The Spark'))}); await ${STORE('snapshot')}.loadSnapshots(n.ulid);`);
     await page.waitForSelector('.snapshot-item', 8000);
     await page.evaluate(`(() => { const items = document.querySelectorAll('.snapshot-item');
-      const it = Array.from(items).find((i) => i.textContent.includes('First draft'));
+      const it = Array.from(items).find((i) => i.textContent.includes(${JSON.stringify(T('snapFirst'))}));
       const btn = it && it.querySelector('.snapshot-item__actions .btn--sm'); if (btn) btn.click(); return !!btn; })()`);
     await page.waitForSelector('.snapshot-panel__diff', 8000).catch(() => {});
     await sleep(1000);
     // The diff opens on the front matter; scroll to where the prose changes.
     await page.evaluate(`(() => { const d = document.querySelector('.snapshot-panel__diff');
       const w = document.createTreeWalker(d, NodeFilter.SHOW_TEXT); let n;
-      while ((n = w.nextNode())) if (n.textContent.includes('stormy')) {
+      while ((n = w.nextNode())) if (n.textContent.includes(${JSON.stringify(T('diffAnchor'))})) {
         const el = n.parentElement; let p = el.parentElement;
         while (p && p.scrollHeight <= p.clientHeight + 2) p = p.parentElement;
         if (p) p.scrollTop += el.getBoundingClientRect().top - p.getBoundingClientRect().top - 60;
@@ -462,14 +540,14 @@ const SHOTS = {
       // What addCommentToSelection does, but with the comment's text filled in.
       await run(page, `
         const ed = window.__tiptap__, cs = ${STORE('comments')}, b = ${STORE('binder')};
-        const node = b.nodes.find((x) => x.title === 'The University');
-        const q = 'rather let me say such the words of fate';
+        const node = b.nodes.find((x) => x.title === ${JSON.stringify(T('The University'))});
+        const q = ${JSON.stringify(T('commentQuote'))};
         let from = -1;
         ed.state.doc.descendants((n, pos) => { if (from < 0 && n.isText) { const i = n.text.indexOf(q); if (i >= 0) from = pos + i; } });
         ed.chain().setTextSelection({ from, to: from + q.length }).setMark('comment', { id: '01M7SHOTC0MMENT0000000001' }).run();
         const at = new Date().toISOString();
-        await cs.addComment(node.ulid, '01M7SHOTC0MMENT0000000001', q, 'Too knowing this early? Let the reader feel the fate before Victor names it.', 'Margaret', at);
-        await cs.addReply('01M7SHOTC0MMENT0000000001', 'Agreed. Cut the aside and keep "the words of fate".', 'You', at);
+        await cs.addComment(node.ulid, '01M7SHOTC0MMENT0000000001', q, ${JSON.stringify(T('commentText'))}, ${JSON.stringify(T('commentAuthor'))}, at);
+        await cs.addReply('01M7SHOTC0MMENT0000000001', ${JSON.stringify(T('commentReply'))}, ${JSON.stringify(T('me'))}, at);
         if (window.__docSave__) await window.__docSave__();`);
       await sleep(1500);
       // Reopen so the comment highlight is drawn from the saved file.
@@ -489,7 +567,7 @@ const SHOTS = {
     await page.click('[data-testid="settings-cat-cloud"]').catch(() => {});
     await sleep(1500);
     if (!(await page.evaluate(`!!document.querySelector('[data-testid="cloud-provider-select"]')`))) {
-      await page.evaluate(`(() => { const b = Array.from(document.querySelectorAll('[data-testid="cloud-rclone-card"] button')).find((x) => /start/i.test(x.textContent)); if (b) b.click(); return !!b; })()`);
+      await page.evaluate(`(() => { const b = document.querySelector('[data-testid="cloud-rclone-start-btn"]'); if (b) b.click(); return !!b; })()`);
       await poll(page, `!!document.querySelector('[data-testid="cloud-provider-select"]')`, 60000);
       await sleep(800);
     }
@@ -504,7 +582,7 @@ const SHOTS = {
     // Backups are named by the second; space them out or they overwrite each other.
     // Retention keeps one backup per stretch of time, so a burst of three leaves one: make it a named one.
     const latest = await run(page, `const b = await invoke('list_backups'); return b.length ? b[0].label : null;`);
-    if (latest !== 'Before the read-through') await run(page, `await invoke('run_backup_cmd', { label: 'Before the read-through' });`);
+    if (latest !== T('backupLabel')) await run(page, `await invoke('run_backup_cmd', { label: ${JSON.stringify(T('backupLabel'))} });`);
     await open(page, 'Letter I');
     await page.evaluate(`(() => { const ui = ${STORE('ui')}; ui.openSettings(); ui.openSettingsCategory('snapshots'); return 'ok'; })()`);
     await sleep(500);
@@ -594,10 +672,10 @@ async function webp(port = Number(process.env.CORYLUS_VIDEO_CDP_PORT || 9222)) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
-const args = process.argv.slice(2);
+const args = ARGS.filter((a, i) => a !== '--lang' && ARGS[i - 1] !== '--lang');
 const { page, close } = await connect();
 try {
-  if (args.includes('--seed')) await seed(page);
+  if (args.includes('--seed')) await (ES ? seedEs(page) : seed(page));
   else if (args[0] === '--eval') console.log(await page.evaluate(fs.readFileSync(args[1], 'utf8')));
   else if (args[0] === '--run') console.log(JSON.stringify(await run(page, fs.readFileSync(args[1], 'utf8')), null, 1));
   else {
@@ -606,6 +684,8 @@ try {
     let current = null;
     for (const id of ids) {
       if (!SHOTS[id]) { console.log(`unknown id ${id}`); continue; }
+      // The English "spanish" shot already shows the Spanish interface and book.
+      if (ES && id === 'spanish') { console.log('skip spanish (the English set covers it)'); continue; }
       const want = id === 'spanish' ? LIBRO : BOOK;
       if (current !== want) { await openProject(page, want); current = want; }
       try {
@@ -619,7 +699,7 @@ try {
         console.log(`FAIL ${id}: ${e.message}`);
       }
     }
-    await reset(page);
+    await reset(page, { locale: 'en' });
     await page.evaluate(`(() => { const s = ${STORE('settings')}; s.grammarEnabled = true; s.commentAuthor = 'You'; return 'ok'; })()`);
   }
 } finally {

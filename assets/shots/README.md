@@ -48,7 +48,26 @@ node shots.mjs                 # every shot
 node shots.mjs editor themes   # just these ids
 ```
 
-The script leaves the app light, English, with every analysis off.
+## Spanish set (`es/`)
+
+`es/<id>.webp` are the same shots for the Spanish site: Spanish interface and a Spanish
+book, `C:\tmp\corylus-site\Frankenstein (es).corylus` (Frankenstein retold in Spanish so
+the four demo portraits fit; prose, Story Bible and relationship labels such as
+"creador de" / "creado por" in `web/tools/shots-content-es.mjs`). The page prefers these
+and falls back to the English shot per id. There is no `es/spanish.webp`: the English
+`spanish` shot already shows the Spanish interface, so the fallback covers it.
+
+```powershell
+node shots.mjs --lang es --seed   # (re)build the Spanish book
+node shots.mjs --lang es          # every shot into es/
+```
+
+The Spanish thesaurus is a download; the `thesaurus` shot installs it into the e2e app on
+first run. Proper names the bundled Spanish dictionary lacks (Elizabeth, Londres…) are
+ignored for the session so only the planted misspelling ("inmediatamante") is flagged.
+The run always ends with the app back in English.
+
+The script leaves the app light, English, with every analysis off. 23 Spanish shots: about 2.6 MB.
 
 Each shot is written straight from WebView2 as lossy WebP, quality 85, rendered
 at 1.5x (2208x1242). No post-processing step. `SHOTS_SCALE=2` renders at 2x
