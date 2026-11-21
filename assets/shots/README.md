@@ -1,0 +1,59 @@
+# Website screenshots
+
+Real captures of the Corylus app, 2944x1656 (a 1472x828 viewport at 2x), taken
+from the e2e dev build with `web/tools/shots.mjs`. The copy refers to them by id.
+
+| id | What it shows |
+|---|---|
+| `editor` | Hero. Binder with the Manuscript and Drafts folders (labels, status badges), the chapter "By the Lake" in the Novela preset, the inspector with synopsis, label and status. |
+| `corkboard` | The Manuscript folder as index cards: synopsis, label colour bar, status. |
+| `outliner` | The same folder as outliner rows: title, synopsis, label, status, words. |
+| `continuous` | The six chapters read as one scroll. |
+| `story-bible-entry` | Victor Frankenstein's character sheet: portrait, role, want/need, ghost-to-truth spine, goal/motivation/conflict. |
+| `relationship-map` | Relationship map: four portrait cards, edges labelled "creator of", "lives at", "betrothed to". |
+| `analysis-repetition` | Repeated words highlighted in a rough draft, with the hover tooltip ("night" appears 3 times). |
+| `analysis-structure` | Same sentence openings and a run of equal-length sentences marked. |
+| `analysis-style` | Adverbs, gerunds and adjectives marked in colour. |
+| `rhyme` | End rhymes underlined (light / bright / sight / white / night). |
+| `thesaurus` | Right-click on "beheld": the Synonyms menu. |
+| `grammar` | LanguageTool flagging "He have waited", with its suggestion menu. |
+| `distraction-free` | Distraction-free mode over a background video, with the HUD (width, opacity, text size, fullscreen). |
+| `ambient-sounds` | The ambient sounds mixer. |
+| `snapshots` | The Snapshots tab: three snapshots and the diff of "First draft" against the current text. |
+| `compile` | The compile dialog: scope tree, status filter, format, Word / PDF / EPUB. |
+| `read-aloud` | Read aloud paused on the first sentence: highlighted sentence and the player bar. |
+| `comments` | A comment thread on a highlighted passage. |
+| `sync` | Settings > Cloud Sync, the provider list open (pCloud, Google Drive, Dropbox, OneDrive, Box, Amazon S3…). |
+| `backups` | Settings > Snapshots & Backups: interval, last backup, backup history with Restore. |
+| `themes` | The chapter "The Spark" in the Catppuccin Mocha theme with the Night page. |
+| `spanish` | The interface in Spanish, with a Spanish chapter ("I. La llegada") and its inspector. |
+| `statistics` | Project Statistics for the Manuscript folder: words, pages, reading time, word frequency. |
+| `methodology` | The Methodology Wizard: plot-structure and character methods. |
+
+## Re-capturing
+
+The demo books are built by the script, never a real project:
+`C:\tmp\corylus-site\Frankenstein.corylus` (the e2e demo seed's Story Bible plus six
+chapters, a rough draft, snapshots) and `C:\tmp\corylus-site\El faro de Arnela.corylus`
+(Spanish). The prose lives in `web/tools/shots-content.mjs`.
+
+On Windows, with the dev app running with the e2e bridge and the WebView2 debug port
+(`WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222`, as the video
+engine needs):
+
+```powershell
+cd C:\code\corylus\web\tools
+node shots.mjs --seed          # (re)build both demo books
+node shots.mjs                 # every shot
+node shots.mjs editor themes   # just these ids
+```
+
+Then shrink them (lossless, palette-free) from WSL or any shell with ffmpeg + oxipng/pngquant
+as preferred. The script leaves the app light, English, with every analysis off.
+
+Side effects, all inside the e2e app's own data: `grammar` starts LanguageTool,
+`sync` starts the rclone engine (it never connects), `ambient-sounds` installs the
+sound pack on first run, `distraction-free` stores a background video
+(`assets/distractionfree-wallpaper/videos/abstract/18849-297379170_medium.webm`),
+`read-aloud` plays about two seconds of audio, and `backups` writes up to three
+backups to `C:\tmp\corylus-site\Corylus backups`.

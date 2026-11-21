@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Corylus — a writing tool that treats your words as yours</title>
-<meta name="description" content="A writing tool for novels and long work. Binder, corkboard, outliner, story bible, snapshots, export to Word, PDF and EPUB — built on plain Markdown files in an ordinary folder. No account, no cloud, no subscription.">
+<script src="assets/lang.js"></script>
+<title>Corylus: a writing app for novels, kept in plain files on your disk</title>
+<meta name="description" content="A free writing app for novels and other long work, for Mac and Windows. Every chapter is a plain Markdown file in a folder of your own. Binder, corkboard, outliner, Story Bible, checks for repeated words and monotonous sentences, distraction-free mode, snapshots, and export to Word, PDF and EPUB. No account.">
 <link rel="canonical" href="https://corylus.ludobermejo.es/">
 <link rel="alternate" hreflang="en" href="https://corylus.ludobermejo.es/">
 <link rel="alternate" hreflang="es" href="https://corylus.ludobermejo.es/es/">
@@ -13,8 +14,8 @@
 <meta name="theme-color" content="#F7F3EA" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1713" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Corylus — a writing tool that treats your words as yours">
-<meta property="og:description" content="A writing tool for novels and long work. Binder, corkboard, outliner, story bible, snapshots, export to Word, PDF and EPUB — built on plain Markdown files in an ordinary folder. No account, no cloud, no subscription.">
+<meta property="og:title" content="Corylus: a writing app for novels, kept in plain files on your disk">
+<meta property="og:description" content="A free writing app for novels and other long work, for Mac and Windows. Every chapter is a plain Markdown file in a folder of your own. Binder, corkboard, outliner, Story Bible, checks for repeated words and monotonous sentences, distraction-free mode, snapshots, and export to Word, PDF and EPUB. No account.">
 <meta property="og:url" content="https://corylus.ludobermejo.es/">
 <meta property="og:image" content="https://corylus.ludobermejo.es/assets/og.png">
 <meta property="og:locale" content="en_GB">
@@ -33,7 +34,7 @@
       <img src="assets/lockup.svg" alt="Corylus" width="232" height="64" class="only-light">
       <img src="assets/lockup-dark.svg" alt="Corylus" width="232" height="64" class="only-dark">
     </a>
-    <nav><a href="#why">Why</a><a href="#features">Features</a><a href="#private">Privacy</a><a href="#get">Download</a><a class="lang" href="es/" hreflang="es">Español</a></nav>
+    <nav><a href="#why">Why</a><a href="#tour">Features</a><a href="#private">Privacy</a><a href="#get">Download</a><a class="lang" href="es/" hreflang="es">Español</a></nav>
   </div>
 </header>
 
@@ -41,36 +42,31 @@
 
   <section class="hero">
     <div class="wrap narrow">
-      <h1>Your novel should outlive the app you wrote it in.</h1>
-      <p class="lead">Corylus is a writing tool for long work — the organisation of a professional writing studio, built on plain Markdown files in a folder you own.</p>
+      <h1>Corylus is the writing app I always wanted to make.</h1>
+      <p class="lead">It keeps every chapter as a plain text file in a folder of your own, and it helps you revise what you write. It points out repeated words, runs of sentences with the same length or the same opening, and paragraphs that turn monotonous.</p>
+      <p>It has a distraction-free mode with background video and ambient sounds, so it&#x27;s just you and the text. It works offline, and if you want, you can sync your projects with Dropbox, pCloud or Google Drive. It&#x27;s in English and Spanish, for Mac and Windows. And it&#x27;s free!</p>
       <p class="downloads">
         <a class="btn" id="dl-mac" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.92.3_aarch64.dmg">
-          Download for macOS <span class="ver" data-ver-label="version">version 1.92.3</span>
+          Download for Mac <span class="ver" data-ver-label="version">version 1.92.3</span>
         </a>
         <a class="btn ghost" id="dl-win" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.92.3_x64-setup.exe">
           Download for Windows <span class="ver" data-ver-label="version">version 1.92.3</span>
         </a>
       </p>
-      <p class="note">Free. No account. macOS, Windows, iPhone, iPad and Android.</p>
+      <p class="note">No account and no subscription. The Mac version needs Apple silicon (M1 or later).</p>
     </div>
     <div class="wrap">
-      <figure class="media">
-        <video controls preload="none" poster="assets/trailer-poster.jpg" width="1920" height="1080">
-          <source src="assets/corylus-trailer.mp4" type="video/mp4">
-          <track kind="captions" src="assets/corylus-trailer.vtt" srclang="en" label="English" default>
-        </video>
-        <figcaption>What Corylus is, in a minute and a bit.</figcaption>
-      </figure>
+      <figure class="media"><img src="assets/shots/editor.png" alt="Corylus with a novel open: the Binder of chapters on the left, a chapter in the middle, and the Inspector with its synopsis, label and status on the right." width="2944" height="1656"></figure>
     </div>
   </section>
 
   <section class="band" id="why">
     <div class="wrap split">
       <div>
-        <h2>Files on disk, not a format you cannot open</h2>
-        <p>Most writing software for long work puts your manuscript into a database, a bundle, or a cloud account, and you can only reach it through the one application that understands it. That is fine until the application stops being maintained, or changes its pricing, or you change computers.</p>
-        <p>Corylus keeps every document as a plain Markdown file in a normal folder on your own disk. Not as an export option — as the live format. Open the folder while the app is running and your chapters are there, readable in any text editor. The database Corylus uses is a cache it rebuilds from those files, not where your work lives.</p>
-        <blockquote>If Corylus vanished tomorrow, your entire body of work would still be clean, portable, future-proof text.</blockquote>
+        <h2>Every chapter is a file on your disk</h2>
+        <p>Most writing software for long work keeps your manuscript in a database, a bundle or a cloud account, and only that one application can open it. That works until the application stops being maintained, changes its price, or will not run on your next computer.</p>
+        <p>Corylus keeps each document as a plain Markdown file in an ordinary folder. That is the format it works in every day, so there is nothing to export. Open the folder while Corylus is running and your chapters are there, readable in any text editor. Corylus also keeps a search index, and rebuilds it from those files whenever it needs to.</p>
+        <blockquote>If Corylus vanished tomorrow, your work would still be plain Markdown files in an ordinary folder, and any text editor opens them.</blockquote>
       </div>
       <figure class="tree">
         <pre>My novel.corylus/
@@ -82,9 +78,10 @@
 ├── StoryBible/
 │   ├── Characters/
 │   └── Places/
-└── Snapshots/
-    └── Chapter I/
-        └── 2026-11-02T09-14-22.md</pre>
+└── .corylus/
+    └── snapshots/
+        └── 01JCB7R2M8X4QYV3T9K5N6PZ0A/
+            └── 2026-11-02T09-14-22.md</pre>
         <figcaption>A Corylus project, as your file manager sees it.</figcaption>
       </figure>
     </div>
@@ -96,49 +93,118 @@
     </div>
   </section>
 
-  <section id="features">
+  <section class="tour-head" id="tour">
+    <div class="wrap narrow">
+      <h2>Everything Corylus does</h2>
+      <p>A tour of the whole app. All of it is in the free download. A few parts, such as grammar and the natural voices, are extra downloads you choose from inside Corylus.</p>
+    </div>
+  </section>
+
+  <section class="group" id="writing">
     <div class="wrap">
-      <h2>What it does</h2>
-      <figure class="media">
-        <img src="assets/editor.png" alt="The editor, the binder, and a chapter&#x27;s own metadata." width="1500" height="900" loading="lazy">
-        <figcaption>The editor, the binder, and a chapter&#x27;s own metadata.</figcaption>
-      </figure>
-      <ul class="grid"><li><h3>Binder</h3><p>Folders, chapters and scenes in a tree you can drag around. A novel is 200 pieces, not one document.</p></li><li><h3>Corkboard &amp; outliner</h3><p>The same structure as index cards or as a table of synopses, statuses and word counts.</p></li><li><h3>Story Bible</h3><p>Characters, places, objects and notes, with relationships, backlinks and templates for the kind of thing each one is.</p></li><li><h3>Snapshots</h3><p>Every draft of every document, with a full diff and one-click rollback. Plain timestamped files — no Git required.</p></li><li><h3>Compile</h3><p>Assemble the binder in order and export to Word, PDF or EPUB, with real typography.</p></li><li><h3>Spelling &amp; grammar</h3><p>Hunspell spell-check with a per-project dictionary, and an optional LanguageTool engine that runs locally.</p></li><li><h3>Read aloud</h3><p>Hear your prose in your system's voices, or download natural neural voices that run on your own machine.</p></li><li><h3>Your own sync</h3><p>Optional sync to your WebDAV, Dropbox or Drive. Atomic, conflict-aware writes. There is no Corylus server.</p></li></ul>
+      <h2>Writing a book in pieces</h2>
+      <p class="lead">In Corylus a novel is a tree of folders, chapters and scenes in the Binder, on the left. Every piece is a file of its own.</p>
+      <div class="feature"><div><h3>Continuous text</h3><p>Select a folder, or a handful of chapters, and read them as one long page. You can edit there as well, and each chapter is still saved to its own file.</p></div><figure class="feature-shot"><img src="assets/shots/continuous.png" alt="Several chapters shown one after another on a single scrolling page, each under a divider with its title." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Comments</h3><p>Select a passage and leave a note on it. Reply to it, resolve it or delete it. The comment follows its passage as you edit. Its text is kept in a separate file, so the chapter holds only an invisible marker where the comment sits.</p></div><figure class="feature-shot"><img src="assets/shots/comments.png" alt="A passage highlighted in a chapter, with its comment shown in the comments panel beside it." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Word counts and targets</h3><p>Give a chapter or the whole book a word target and watch the progress as you write, along with the words you have added this session. Project Statistics counts words, sentences and paragraphs, estimates pages and reading time, and lists the words you use most.</p></div><figure class="feature-shot"><img src="assets/shots/statistics.png" alt="The Project Statistics window, with word, sentence and paragraph counts, page and reading-time estimates, and a list of the most frequent words." width="2944" height="1656" loading="lazy"></figure></div>
+      <ul class="grid two"><li><h3>Binder, tabs and split panes</h3><p>Drag chapters and scenes to put them in order. Open several at once in tabs, split the window to keep your notes beside a chapter, or pull a tab out into a window of its own.</p></li><li><h3>Synopsis, label and status</h3><p>Each chapter carries a synopsis, notes, a label and a status, edited in the Inspector on the right. They are stored at the top of the chapter&#x27;s own file, where any text editor can read them.</p></li><li><h3>Find and search</h3><p>Find and replace inside a chapter, matching case or whole words if you want. Search the whole project for a phrase, with or without accents, and narrow the results by label, status or folder.</p></li><li><h3>Dashes and quotes as you type</h3><p>Two hyphens become a dash and three dots an ellipsis. Straight quotes curl as you type, and in a Spanish document they become « ». One undo gives you back exactly what you typed.</p></li></ul>
+    </div>
+  </section>
+  <section class="group band" id="structure">
+    <div class="wrap">
+      <h2>Seeing the shape of the book</h2>
+      <p class="lead">The Corkboard and the Outliner show the same chapters from further away, in the Binder&#x27;s order.</p>
+      <div class="feature"><div><h3>Corkboard</h3><p>A folder&#x27;s chapters as index cards in a grid, each with its title and synopsis, or its opening lines if it has no synopsis yet.</p></div><figure class="feature-shot"><img src="assets/shots/corkboard.png" alt="The Corkboard: a folder&#x27;s chapters as index cards, each with a title and a short synopsis." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Outliner</h3><p>The same chapters as a table with their title, synopsis, label, status and word count. Change any of them right there in the table.</p></div><figure class="feature-shot"><img src="assets/shots/outliner.png" alt="The Outliner: one row per chapter, with columns for title, synopsis, label, status and word count." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Methodology wizard</h3><p>Pick a story structure, such as three acts, Save the Cat or the hero&#x27;s journey, and Corylus sets it up in the Story Bible as a folder with one entry per beat. Mark each beat done and link the scenes that carry it. There are methods for characters, scenes, themes and worldbuilding as well.</p></div><figure class="feature-shot"><img src="assets/shots/methodology.png" alt="The methodology wizard, with a list of story structures and a preview of the one selected." width="2944" height="1656" loading="lazy"></figure></div>
+      
+    </div>
+  </section>
+  <section class="group" id="bible">
+    <div class="wrap">
+      <h2>The Story Bible</h2>
+      <p class="lead">Characters, places, objects, organisations, plots, scenes, themes, timeline events, lore and research. Each kind of entry has fields of its own, and every entry is a Markdown file in the project&#x27;s StoryBible folder.</p>
+      <div class="feature"><div><h3>Entries with portraits</h3><p>Give a character a portrait and fill in what matters: what they want and what they need, the wound, the lie they believe, the arc. Type [[ to link to any other entry by name. Links survive renames, and every entry lists the places that mention it.</p></div><figure class="feature-shot"><img src="assets/shots/story-bible-entry.png" alt="A character entry in the Story Bible, with a portrait on the left and fields such as Want vs. Need beside it." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Relationships with both names</h3><p>A relationship is written once and appears on both entries, and each end can have its own name: “creator of” from Victor, “created by” from the Creature. On a relationship map the lines are drawn from the entries themselves, so the map and the entries always agree. There are scene corkboards and mood boards for images too.</p></div><figure class="feature-shot"><img src="assets/shots/relationship-map.png" alt="A relationship map: character cards with portraits, joined by lines labelled with the relationship, such as “creator of”." width="2944" height="1656" loading="lazy"></figure></div>
+      <ul class="grid two"><li><h3>Notes you already have</h3><p>Drop a Word, OpenDocument, RTF, HTML, Markdown or plain text file on the Story Bible and it becomes an entry, formatting and images included. Tag entries, nest tags such as faction/rebels, and filter the tree by them.</p></li></ul>
+    </div>
+  </section>
+  <section class="group band" id="revise">
+    <div class="wrap">
+      <h2>Help with revising</h2>
+      <p class="lead">These checks mark the text and explain each mark when you hover over it. Every check has its own switch, so you turn on only the ones you want. They work in English and Spanish and run on your computer. Most need language data that downloads once, and Corylus offers it when you switch the check on.</p>
+      <div class="feature"><div><h3>Repeated words</h3><p>Corylus marks a word that comes back too soon, and counts the forms of a word together: “forest” and “forests”, “walk” and “walked”. You decide how near is too near and which words never count.</p></div><figure class="feature-shot"><img src="assets/shots/analysis-repetition.png" alt="A paragraph with several repeated words underlined." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Monotonous sentences</h3><p>Corylus can highlight three or more sentences in a row that open the same way or share the same build, stretches of sentences of nearly equal length, and paragraphs heavy with nouns. It also looks for stacked prepositions and filter words such as “she saw” and “he felt”, and in English for piles of “-ing” openers and of “as” and “but”.</p></div><figure class="feature-shot"><img src="assets/shots/analysis-structure.png" alt="A passage with a run of sentences highlighted as monotonous." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Adverbs, adjectives and gerunds</h3><p>Highlight the adverbs, the adjectives or the gerunds to see where the prose leans on them. Project Statistics gives their density across the whole book.</p></div><figure class="feature-shot"><img src="assets/shots/analysis-style.png" alt="A paragraph with its adverbs, adjectives and gerunds highlighted." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Accidental rhymes</h3><p>Corylus underlines words close together that rhyme, the kind of echo you only notice when the text is read aloud. In Spanish it tells full rhyme from assonance, and you choose which to look for.</p></div><figure class="feature-shot"><img src="assets/shots/rhyme.png" alt="A paragraph with pairs of rhyming words underlined." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Synonyms on right-click</h3><p>Right-click a word to see its synonyms and antonyms, and click one to put it in. A dictionary card lists them by meaning, with definitions. The thesaurus is built from Wiktionary, in English and Spanish.</p></div><figure class="feature-shot"><img src="assets/shots/thesaurus.png" alt="The right-click menu on a word, listing synonyms to replace it with." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Grammar</h3><p>Grammar and style checking by LanguageTool, in English and Spanish. It downloads once, then runs on your computer without a connection. It needs Java, and Corylus fetches a small Java runtime if your computer has none.</p></div><figure class="feature-shot"><img src="assets/shots/grammar.png" alt="A sentence with a grammar mark and LanguageTool&#x27;s suggested correction." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Read aloud</h3><p>Corylus reads your text sentence by sentence, from the cursor or from a selection, and highlights the sentence it is on. Use your system&#x27;s voices, or download natural voices for English and Spanish that run on your computer. You can also save the reading as a WAV file.</p></div><figure class="feature-shot"><img src="assets/shots/read-aloud.png" alt="The read-aloud player, with the sentence being read highlighted in the chapter." width="2944" height="1656" loading="lazy"></figure></div>
+      <ul class="grid two"><li><h3>Spelling</h3><p>Spell-checking with Hunspell, plus a dictionary in each project for your characters&#x27; names and the words you invent.</p></li></ul>
+    </div>
+  </section>
+  <section class="group" id="environment">
+    <div class="wrap">
+      <h2>Just you and the text</h2>
+      <p class="lead">Corylus can hide everything but the page, set a video behind it and play the rain while you write.</p>
+      <div class="feature"><div><h3>Distraction-free mode</h3><p>One shortcut hides the Binder, the toolbar and the panels and takes the window full screen. Put a looping video or a picture of your own behind a translucent page and choose how much of it shows through. There is a gallery of backgrounds to download. Esc brings everything back.</p></div><figure class="feature-shot"><img src="assets/shots/distraction-free.png" alt="Distraction-free mode: a chapter on a translucent page over a background video, with the floating control bar." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Ambient sounds</h3><p>A mixer of background sounds: rain, waves, café chatter and many more, each at its own volume. Save the mixes you like, and play or stop them from the toolbar, in distraction-free mode too. The sounds are a single download.</p></div><figure class="feature-shot"><img src="assets/shots/ambient-sounds.png" alt="The Ambient Sounds mixer, with sounds grouped by category and a volume slider for each." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Themes and typography</h3><p>Pick a colour theme for the window, among them Nord, Solarized, Dracula and two high-contrast ones, and a separate page colour: white, sepia, parchment or night. Typography presets set the font, spacing and indents, from modern block paragraphs to a double-spaced manuscript for submissions, and you can make your own. None of this changes your files.</p></div><figure class="feature-shot"><img src="assets/shots/themes.png" alt="A chapter shown in a different colour theme." width="2944" height="1656" loading="lazy"></figure></div>
+      <ul class="grid two"><li><h3>Focus and typewriter scrolling</h3><p>Focus mode dims everything except the sentence or the paragraph you are in. Typewriter scrolling keeps the line you are typing in the middle of the screen.</p></li></ul>
+    </div>
+  </section>
+  <section class="group band" id="safety">
+    <div class="wrap">
+      <h2>Your files, and copies of them</h2>
+      <p class="lead">Your project is a folder you chose. Corylus adds copies of its own, in ordinary formats you can open without it.</p>
+      <div class="feature"><div><h3>Snapshots</h3><p>While you work on a chapter, Corylus keeps a copy of it every ten minutes, and you can take one yourself at any moment and give it a name. Compare any two to see what changed, or go back to one. Each snapshot is a plain text file inside the project.</p></div><figure class="feature-shot"><img src="assets/shots/snapshots.png" alt="The Snapshots panel: a list of saved versions of a chapter, and two of them compared with the changes marked." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Backups</h3><p>Corylus backs the whole project up as a ZIP file on a schedule you set and keeps the most recent ones. Settings lists them, and Restore puts the one you pick in a new folder, never over the files you have. A copy of each backup can go to your cloud account as well.</p></div><figure class="feature-shot"><img src="assets/shots/backups.png" alt="Settings, Snapshots &amp; Backups: a list of backup files with their dates, and a Restore button." width="2944" height="1656" loading="lazy"></figure></div><div class="feature"><div><h3>Sync with your own cloud</h3><p>If you write on more than one computer, connect your own pCloud, Google Drive, Dropbox, OneDrive, Box or Amazon S3 account and Corylus keeps the project in step on each. When two computers change the same chapter, neither version is lost. Your files go straight to your account, with no Corylus server in between.</p></div><figure class="feature-shot"><img src="assets/shots/sync.png" alt="Settings, Cloud sync: the providers you can connect, among them pCloud, Google Drive and Dropbox." width="2944" height="1656" loading="lazy"></figure></div>
+      <ul class="grid two"><li><h3>Moving in and moving around</h3><p>Import a manuscript from Scrivener, Word, EPUB or HTML into a new project. Save a whole project as a single .cory file to take it to another computer, where a double-click opens it.</p></li></ul>
+    </div>
+  </section>
+  <section class="group" id="finish">
+    <div class="wrap">
+      <h2>When the book is done</h2>
+      
+      <div class="feature"><div><h3>Compile to Word, PDF or EPUB</h3><p>Compile puts the chapters together in Binder order. Tick the parts that go in, leave out chapters by status, choose a format and export a Word document, a PDF or an EPUB. Chapter titles, scene separators, headers, footers and page numbers are set in the same dialog. Corylus needs no other program to do it.</p></div><figure class="feature-shot"><img src="assets/shots/compile.png" alt="The Compile dialog, with the parts of the book to include, the format, and the choice of Word, PDF or EPUB." width="2944" height="1656" loading="lazy"></figure></div>
+      
+    </div>
+  </section>
+  <section class="group band" id="languages">
+    <div class="wrap">
+      <h2>In English and Spanish</h2>
+      
+      <div class="feature"><div><h3>Spanish as a first language</h3><p>The interface, spell-check, grammar, thesaurus, repetition and rhyme checks and the read-aloud voices all work in both languages. Each document has its own language, so a Spanish novel gets Spanish quotes, Spanish hyphenation and Spanish checks while the menus stay in English, or the other way round.</p></div><figure class="feature-shot"><img src="assets/shots/spanish.png" alt="Corylus with its interface in Spanish and a chapter in Spanish open." width="2944" height="1656" loading="lazy"></figure></div>
+      
+    </div>
+  </section>
+  <section class="group" id="extras">
+    <div class="wrap">
+      <h2>Optional extras that use AI</h2>
+      <p class="lead">Two parts of Corylus use AI. Both stay off until you install them, and everything above works without them.</p>
+      
+      <ul class="grid two"><li><h3>A local assistant</h3><p>An assistant panel that answers questions about your own book, using a Qwen3 model that runs on your computer through Ollama. It is a large download, about 4 to 8 GB, and it cannot change your text.</p></li><li><h3>AI apps, through MCP</h3><p>If you use an AI app that supports MCP, such as Claude Desktop or Claude Code, you can let it read your project and, if you allow it, edit it. You choose per project: nothing, read only, ask before each change, or change freely. Corylus takes a snapshot before every change and keeps a log where you can undo any of them. What the app reads goes to that app&#x27;s own service, under its terms.</p></li></ul>
     </div>
   </section>
 
   <section class="band" id="private">
     <div class="wrap">
-      <h2>Nothing leaves your machine</h2>
-      <ul class="grid two"><li><h3>No account</h3><p>There is no sign-up, because there is nothing to sign up to.</p></li><li><h3>No server</h3><p>Corylus has no backend. Sync, if you want it, goes somewhere you control.</p></li><li><h3>Local AI only</h3><p>Grammar, natural voices and the assistant are optional downloads that run on your own hardware. Your manuscript is never uploaded, because there is nowhere to upload it to.</p></li><li><h3>Open format</h3><p>YAML front matter and Markdown. Readable in 2045 with a text editor.</p></li></ul>
+      <h2>What stays on your computer</h2>
+      <ul class="grid two"><li><h3>No account</h3><p>There is nothing to sign up for. Corylus has no server of its own, so there is nowhere for an account to live.</p></li><li><h3>The AI runs on your computer</h3><p>Grammar, the natural voices and the assistant are optional downloads. Once installed they run on your computer, and the text they check, read or answer about stays there.</p></li><li><h3>What does go online</h3><p>Sync, if you turn it on, sends the project to the cloud account you chose. Some system voices are online ones, and the voice list marks them “(online)”. Corylus checks for a new version at start-up, which you can switch off in Settings. Optional downloads come from their publishers&#x27; servers. If you connect an AI app such as Claude Desktop, it reads what you allow, project by project.</p></li><li><h3>Open format</h3><p>Markdown, with a short YAML header at the top of each file. Any text editor opens it.</p></li></ul>
     </div>
   </section>
 
-  <section id="langs">
+  <section class="maker" id="maker">
     <div class="wrap narrow">
-      <h2>In English and Spanish</h2>
-      <p>Interface, spell-check, grammar, thesaurus and reading voices — in both languages, not a translated menu bar. Most writing software treats Spanish as an afterthought.</p>
+      <h2>Who makes it</h2>
+      <p>I&#x27;m Ludo Bermejo, and I make Corylus on my own, with a lot of help from AI coding tools. I lead software teams for a living and write fiction. My science-fiction story “Azul” won the 2023 Premio Domingo Santos, awarded by the Asociación Pórtico and announced at HispaCon. Corylus is the app I built to write my own novels in.</p>
     </div>
   </section>
 
     <section class="band" id="support">
       <div class="wrap narrow">
-        <h2>Support the work</h2>
-        <p>Corylus is built by one person and is free, with nothing behind a paywall. Support pays for the developer certificates that make it install like a real app, and then for the time to keep building it.</p>
+        <h2>Support Corylus</h2>
+        <p>Corylus is free, and every feature is in the free app. One person builds it. Support on Ko-fi pays for the certificates that let it install without warnings and for the store accounts the phone versions need. After that, it pays for time.</p>
         <h3 class="costs-h">What support pays for</h3>
-        <ul class="grid two costs"><li><h3>$99 / year</h3><p>Apple Developer Program. This is what removes the “developer cannot be verified” warning on macOS, and the only sane way to get iPhone and iPad builds to testers.</p></li><li><h3>$200–400 / year</h3><p>A Windows code-signing certificate, so SmartScreen stops telling people the installer is suspicious.</p></li><li><h3>$25 once</h3><p>The Google Play developer account.</p></li><li><h3>Then: time</h3><p>Corylus is currently built in the gaps around other work.</p></li></ul>
-        <p class="cta"><a class="btn" href="https://www.patreon.com/c/corylus" rel="noopener">Become a supporter</a></p>
+        <ul class="grid two costs"><li><h3>$99 a year</h3><p>The Apple Developer Program. It removes the “developer cannot be verified” warning on the Mac, and it is what puts the iPhone and iPad versions in the App Store.</p></li><li><h3>About €210 a year</h3><p>A Windows code-signing certificate. Windows warns about any installer from an unknown publisher; a signed one builds trust with every download until the warning stops.</p></li><li><h3>$25 once</h3><p>The Google Play developer account, which the Android version needs to reach the store.</p></li><li><h3>Then: time</h3><p>Corylus is built in the hours left over from a day job.</p></li></ul>
+        <p class="cta"><a class="btn" href="https://ko-fi.com/corylus" rel="noopener">Support Corylus on Ko-fi</a></p>
       </div>
     </section>
   <section class="band" id="get">
     <div class="wrap narrow">
-      <h2>Get Corylus</h2>
+      <h2>Download Corylus</h2>
       <p class="downloads">
-        <a class="btn" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.92.3_aarch64.dmg">Download for macOS</a>
+        <a class="btn" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.92.3_aarch64.dmg">Download for Mac</a>
         <a class="btn ghost" href="https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main/Corylus_1.92.3_x64-setup.exe">Download for Windows</a>
       </p>
-      <p class="note">iPhone, iPad and Android builds exist and are tested on real devices, but are not on the stores yet — that needs developer accounts. Build them from source, or wait for the stores.</p>
-      <p class="note">Corylus is not notarized yet. macOS will say the developer cannot be verified: right-click Corylus.app, choose Open, then Open again. Once per download. Fixing that properly costs $99 a year, which is the first thing support pays for.</p>
+      <p class="note">iPhone, iPad and Android versions exist and run on real devices, but they are not in any app store yet. They are coming.</p>
+      <p class="note">Corylus is not notarized by Apple yet, so the first time you open it macOS says the developer cannot be verified. Right-click Corylus.app, choose Open, then Open again. On macOS 15 or later, go to System Settings, then Privacy &amp; Security, and click Open Anyway. You only do this once per download.</p>
     </div>
   </section>
 
@@ -146,9 +212,8 @@
 
 <footer class="site">
   <div class="wrap row">
-    <p><img src="assets/mark.svg" alt="" width="28" height="28" aria-hidden="true"> Corylus is the botanical name of the hazel — the old European tree of writing and wisdom.</p>
+    <p><img src="assets/mark.svg" alt="" width="28" height="28" aria-hidden="true"> Corylus is the botanical name of the hazel, the old European tree of writing and wisdom.</p>
     <nav>
-      <a href="https://github.com/LudoBermejoES/corylus" rel="noopener">Source code</a>
       <a href="https://github.com/LudoBermejoES/corylus-releases" rel="noopener">All releases</a>
       <a href="privacy/">Privacy</a>
       <a class="lang" href="es/">Español</a>
