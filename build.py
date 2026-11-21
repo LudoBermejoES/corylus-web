@@ -306,8 +306,7 @@ STRINGS = {
         "foot_note": "Corylus is the botanical name of the hazel, the old European tree of writing and wisdom.",
         "maker_h": "Who makes it",
         "maker_p": (
-            "I'm Ludo Bermejo, and I make Corylus on my own, with a lot of help from AI coding "
-            "tools. I lead software teams for a living and write fiction. My science-fiction "
+            "I'm Ludo Bermejo, and I make Corylus on my own. I lead software teams for a living and write fiction. My science-fiction "
             "story “Azul” won the 2023 Premio Domingo Santos, awarded by the Asociación Pórtico "
             "and announced at HispaCon. Corylus is the app I built to write my own novels in."
         ),
@@ -531,8 +530,7 @@ STRINGS = {
         "foot_note": "Corylus es el nombre botánico del avellano, el viejo árbol europeo de la escritura y la sabiduría.",
         "maker_h": "Quién lo hace",
         "maker_p": (
-            "Soy Ludo Bermejo y hago Corylus yo solo, con mucha ayuda de herramientas de "
-            "programación con IA. Dirijo equipos de software y escribo ficción. Mi relato de "
+            "Soy Ludo Bermejo y hago Corylus yo solo. Dirijo equipos de software y escribo ficción. Mi relato de "
             "ciencia ficción «Azul» ganó el Premio Domingo Santos 2023, que concede la "
             "Asociación Pórtico; el fallo se anunció en la HispaCon. Corylus es el programa "
             "que me hice para escribir mis propias novelas."
@@ -866,6 +864,7 @@ PRIVACY = {
                 "This site is hosted on GitHub Pages. It sets no cookies and runs no analytics. GitHub keeps server logs, including IP addresses, under its own privacy policy. The site loads its fonts from Google Fonts, so Google serves those files and sees the request. The download buttons ask GitHub for the current version number. If you pick a language with the site’s language link, your browser stores that choice on your device.",
             ]),
             ("Children", ["Corylus is not directed at children and collects no information from anyone, of any age."]),
+            ("Contact", ["Questions about this page, or anything else: ludobermejo@gmail.com."]),
             ("Changes", ["If this policy changes, the new version appears on this page with a new date. Since Corylus collects nothing, a change here would most likely mean a new optional component with its own download source."]),
         ],
         "back": "Back to Corylus",
@@ -896,6 +895,7 @@ PRIVACY = {
                 "Este sitio está alojado en GitHub Pages. No pone cookies ni usa analítica. GitHub guarda registros de servidor, con direcciones IP incluidas, según su propia política de privacidad. La web carga sus tipografías de Google Fonts, así que Google sirve esos archivos y ve la petición. Los botones de descarga consultan a GitHub el número de la versión actual. Si eliges idioma con el enlace de idioma de la web, tu navegador guarda esa elección en tu dispositivo.",
             ]),
             ("Menores", ["Corylus no se dirige a menores y no recoge información de nadie, de ninguna edad."]),
+            ("Contacto", ["Para dudas sobre esta página, o sobre cualquier otra cosa: ludobermejo@gmail.com."]),
             ("Cambios", ["Si esta política cambia, la nueva versión aparecerá en esta página con una fecha nueva. Como Corylus no recoge nada, un cambio aquí significaría casi con seguridad un componente opcional nuevo con su propio origen de descarga."]),
         ],
         "back": "Volver a Corylus",
