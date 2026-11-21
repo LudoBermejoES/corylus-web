@@ -118,7 +118,7 @@ STRINGS = {
             "projects with Dropbox, pCloud or Google Drive. It's in English and Spanish, for "
             "Mac and Windows. And it's free!"
         ),
-        "hero_note": "No account and no subscription. The Mac version needs Apple silicon (M1 or later).",
+        "hero_note": "No account and no subscription. The Mac version needs Apple silicon (M1 or later). Corylus also runs on iPhone, iPad and Android, but those versions are not in the app stores yet.",
         "hero_alt": (
             "Corylus with a novel open: the Binder of chapters on the left, a chapter in the "
             "middle, and the Inspector with its synopsis, label and status on the right."
@@ -127,8 +127,10 @@ STRINGS = {
         "dl_win": "Download for Windows",
         "dl_ver": "version",
         "dl_mobile": (
-            "iPhone, iPad and Android versions exist and run on real devices, but they are "
-            "not in any app store yet. They are coming."
+            "Corylus already runs on iPhone, iPad and Android: the same app, opening the same "
+            "project folders. I can't hand those versions out yet, because the App Store and "
+            "Google Play need developer accounts I don't have yet. Paying for them is part of "
+            "what support on Ko-fi is for."
         ),
         "dl_gatekeeper": (
             "Corylus is not notarized by Apple yet, so the first time you open it macOS says "
@@ -331,7 +333,7 @@ STRINGS = {
             "con Dropbox, pCloud o Google Drive. Está en español e inglés, para Mac y Windows. "
             "¡Y es gratis!"
         ),
-        "hero_note": "Sin cuenta y sin suscripción. La versión de Mac necesita un chip de Apple (M1 o posterior).",
+        "hero_note": "Sin cuenta y sin suscripción. La versión de Mac necesita un chip de Apple (M1 o posterior). Corylus también funciona en iPhone, iPad y Android, pero esas versiones aún no están en las tiendas.",
         "hero_alt": (
             "Corylus con una novela abierta: la Carpeta con los capítulos a la izquierda, un "
             "capítulo en el centro y, a la derecha, el Inspector con la sinopsis, la etiqueta y "
@@ -341,8 +343,10 @@ STRINGS = {
         "dl_win": "Descargar para Windows",
         "dl_ver": "versión",
         "dl_mobile": (
-            "Las versiones de iPhone, iPad y Android ya existen y funcionan en dispositivos "
-            "reales, pero todavía no están en ninguna tienda de aplicaciones. Están en camino."
+            "Corylus ya funciona en iPhone, iPad y Android: la misma aplicación, abriendo las "
+            "mismas carpetas de proyecto. Todavía no puedo repartir esas versiones, porque la "
+            "App Store y Google Play piden cuentas de desarrollador que aún no tengo. Pagarlas "
+            "es parte de lo que cubre el apoyo en Ko-fi."
         ),
         "dl_gatekeeper": (
             "Corylus todavía no está notarizado por Apple, así que la primera vez que lo abras "
