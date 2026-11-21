@@ -106,6 +106,9 @@ STRINGS = {
         ),
         "skip": "Skip to content",
         "nav": [("#why", "Why"), ("#tour", "Features"), ("#private", "Privacy"), ("#get", "Download")],
+        "nav_kofi": "Support Corylus",
+        "hero_kofi": "Corylus is free. If it earns a place in your work, you can support it on Ko-fi: it pays for the licences that let it install without warnings.",
+        "hero_kofi_link": "See what support pays for",
         "hero_h": "Corylus is the writing app I always wanted to make.",
         "hero_p": (
             "It keeps every chapter as a plain text file in a folder of your own, and it helps "
@@ -323,6 +326,9 @@ STRINGS = {
         ),
         "skip": "Ir al contenido",
         "nav": [("#why", "Por qué"), ("#tour", "Qué hace"), ("#private", "Privacidad"), ("#get", "Descargar")],
+        "nav_kofi": "Apoya Corylus",
+        "hero_kofi": "Corylus es gratis. Si te sirve, puedes apoyarlo en Ko-fi: paga las licencias para que se instale sin avisos.",
+        "hero_kofi_link": "Mira qué paga el apoyo",
         "hero_h": "Corylus es el editor que siempre quise crear.",
         "hero_p": (
             "Guarda cada capítulo como un archivo de texto normal, en una carpeta tuya, y además "
@@ -666,6 +672,11 @@ def page(t):
         f'<img src="{p}assets/editor.png" alt="{esc(t["hero_alt"])}" width="1500" height="900">'
     )
 
+    kofi_nav = (f'<a class="kofi" href="{KOFI}" rel="noopener" target="_blank">'
+                f'<span aria-hidden="true">♥</span> {esc(t["nav_kofi"])}</a>') if KOFI else ""
+    kofi_hero = (f'<p class="kofi-line">{esc(t["hero_kofi"])} '
+                 f'<a href="#support">{esc(t["hero_kofi_link"])}</a></p>') if KOFI else ""
+
     # Always shown: the costs explain why support is asked for; only the button
     # waits for the Ko-fi address.
     costs = "".join(
@@ -720,7 +731,7 @@ def page(t):
       <img src="{p}assets/lockup.svg" alt="Corylus" width="232" height="64" class="only-light">
       <img src="{p}assets/lockup-dark.svg" alt="Corylus" width="232" height="64" class="only-dark">
     </a>
-    <nav>{nav}<a class="lang" href="{other_href}" hreflang="{'en' if t['lang'] == 'es' else 'es'}">{esc(other_label)}</a></nav>
+    <nav>{nav}{kofi_nav}<a class="lang" href="{other_href}" hreflang="{'en' if t['lang'] == 'es' else 'es'}">{esc(other_label)}</a></nav>
   </div>
 </header>
 
@@ -740,6 +751,7 @@ def page(t):
         </a>
       </p>
       <p class="note">{esc(t['hero_note'])}</p>
+      {kofi_hero}
     </div>
     <div class="wrap">
       <figure class="media">{hero_img}</figure>

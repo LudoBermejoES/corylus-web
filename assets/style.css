@@ -168,7 +168,7 @@ footer.site .lang { padding-inline: .9rem; }
    the headline down by 80px. The page is one scroll, so keep only the last
    anchor (Download) and the language switch on one row. */
 @media (max-width: 599px) {
-  header.site nav a:not(.lang):not(:nth-last-child(2)) { display: none; }
+  header.site nav a:not(.lang):not(.kofi) { display: none; }
   .brand img { height: 36px; }
 }
 
@@ -279,3 +279,24 @@ dialog.lightbox figcaption {
 .md-file figcaption { padding: .8rem 1rem .4rem; font-family: var(--serif, Literata, Georgia, serif); color: #6FBF8F; }
 .md-file figcaption span { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .8rem; color: #A8B3A8; }
 .md-file pre { margin: 0; padding: .6rem 1rem 1rem; font-size: .82rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* Ko-fi: a filled pill in the header (visible on phones too) and one quiet
+   line under the download buttons, where people meet the warnings it pays for. */
+header.site nav a.kofi {
+  background: var(--accent); color: var(--on-accent) !important;
+  border-radius: 999px; padding: .35rem .95rem; min-height: 44px;
+  display: inline-flex; align-items: center; gap: .35rem; text-decoration: none;
+}
+header.site nav a.kofi:hover, header.site nav a.kofi:focus-visible { filter: brightness(1.08); text-decoration: none; color: var(--on-accent) !important; }
+.kofi-line { color: var(--fg-muted); font-size: .95rem; max-width: 60ch; }
+@media (max-width: 599px) {
+  header.site nav { gap: .6rem; }
+  header.site nav a.kofi { padding: .3rem .75rem; font-size: .9rem; }
+}
+@media (max-width: 599px) {
+  header.site .row { flex-wrap: nowrap; }
+  header.site .brand img { height: 30px; }
+  header.site nav { flex-wrap: nowrap; }
+  header.site nav a.kofi { font-size: .85rem; padding: .3rem .65rem; white-space: nowrap; }
+  header.site nav a.lang { padding-inline: .6rem !important; }
+}
