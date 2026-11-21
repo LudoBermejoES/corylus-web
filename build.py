@@ -10,7 +10,7 @@ import html
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = "https://ludobermejoes.github.io/corylus-web"
+SITE = "https://corylus.ludobermejo.es"
 REPO = "https://github.com/LudoBermejoES/corylus"
 RELEASES_RAW = "https://raw.githubusercontent.com/LudoBermejoES/corylus-releases/main"
 

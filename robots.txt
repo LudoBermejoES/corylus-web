@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://ludobermejoes.github.io/corylus-web/sitemap.xml
+Sitemap: https://corylus.ludobermejo.es/sitemap.xml

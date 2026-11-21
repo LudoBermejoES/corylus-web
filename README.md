@@ -5,7 +5,7 @@ tool that treats your words as yours. A static, bilingual GitHub Pages site whos
 job is to explain Corylus well enough that someone downloads it, and to support
 it.
 
-**Live:** https://ludobermejoes.github.io/corylus-web/
+**Live:** https://corylus.ludobermejo.es/
 
 ## Editing the copy
 
