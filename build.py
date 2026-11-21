@@ -158,6 +158,9 @@ STRINGS = {
         ),
         "tree_cap": "A Corylus project, as your file manager sees it.",
         "shot_files_cap": "The same chapter in Corylus, and as the file on your disk.",
+        "disk_h": "The same chapter, twice.",
+        "disk_p": "On the left, Corylus. On the right, the same chapter as the file on your disk, which any text editor opens.",
+        "disk_file": ("By the Lake.md", "Manuscript/"),
         "tour_h": "Everything Corylus does",
         "tour_p": (
             "A tour of the whole app. All of it is in the free download. A few parts, such as "
@@ -375,6 +378,9 @@ STRINGS = {
         ),
         "tree_cap": "Un proyecto de Corylus, tal y como lo ve tu gestor de archivos.",
         "shot_files_cap": "El mismo capítulo en Corylus, y como archivo en tu disco.",
+        "disk_h": "El mismo capítulo, dos veces.",
+        "disk_p": "A la izquierda, Corylus. A la derecha, el mismo capítulo como archivo en tu disco, que se abre con cualquier editor de texto.",
+        "disk_file": ("Junto al lago.md", "Manuscrito/"),
         "tour_h": "Todo lo que hace Corylus",
         "tour_p": (
             "Un recorrido por todo el programa. Todo viene en la descarga gratuita. Algunas "
@@ -589,6 +595,14 @@ def webp_size(path):
     raise ValueError(f"{path}: unknown WebP chunk {kind!r}")
 
 
+def md_excerpt(name, paragraphs=2):
+    """The real file shown on the site: its front matter and first paragraphs, as on disk."""
+    text = open(os.path.join(HERE, "assets", "files", name), encoding="utf-8").read()
+    head, _, body = text.partition("\n---\n")
+    paras = [x for x in body.strip().split("\n\n") if x.strip()][:paragraphs]
+    return head + "\n---\n\n" + "\n\n".join(p.strip() for p in paras) + "\n\n…"
+
+
 def shot_img(p, sid, alt, lazy=True, lang="en"):
     """<img> for a screenshot: assets/shots/<lang>/<sid> first for Spanish (the app in
     Spanish), then the English one; WebP before PNG. "" while no capture has landed."""
@@ -746,10 +760,17 @@ def page(t):
       </figure>
     </div>
     <div class="wrap">
-      <figure class="media wide">
-        <img src="{p}assets/files-on-disk.png" alt="{esc(t['shot_files_cap'])}" width="1800" height="878" loading="lazy">
-        <figcaption>{esc(t['shot_files_cap'])}</figcaption>
-      </figure>
+      <div class="disk-pair">
+        <h3>{esc(t['disk_h'])}</h3>
+        <p>{esc(t['disk_p'])}</p>
+        <div class="disk-cols">
+          <figure class="feature-shot">{shot_img(p, "editor", t['shot_files_cap'], lang=t['lang'])}</figure>
+          <figure class="md-file">
+            <figcaption><strong>{esc(t['disk_file'][0])}</strong><span>{esc(t['disk_file'][1])}</span></figcaption>
+            <pre>{esc(md_excerpt(t['disk_file'][0]))}</pre>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
