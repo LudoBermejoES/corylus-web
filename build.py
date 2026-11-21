@@ -585,14 +585,18 @@ def webp_size(path):
     raise ValueError(f"{path}: unknown WebP chunk {kind!r}")
 
 
-def shot_img(p, sid, alt, lazy=True):
-    """<img> for assets/shots/<sid>.webp (or .png), or "" while that capture has not landed."""
-    for ext, size in (("webp", webp_size), ("png", png_size)):
-        path = os.path.join(HERE, "assets", "shots", f"{sid}.{ext}")
-        if os.path.exists(path):
-            w, h = size(path)
-            loading = ' loading="lazy"' if lazy else ""
-            return f'<img src="{p}assets/shots/{sid}.{ext}" alt="{esc(alt)}" width="{w}" height="{h}"{loading}>'
+def shot_img(p, sid, alt, lazy=True, lang="en"):
+    """<img> for a screenshot: assets/shots/<lang>/<sid> first for Spanish (the app in
+    Spanish), then the English one; WebP before PNG. "" while no capture has landed."""
+    dirs = ([lang] if lang != "en" else []) + [""]
+    for sub in dirs:
+        for ext, size in (("webp", webp_size), ("png", png_size)):
+            rel = "/".join(x for x in ("assets", "shots", sub, f"{sid}.{ext}") if x)
+            path = os.path.join(HERE, *rel.split("/"))
+            if os.path.exists(path):
+                w, h = size(path)
+                loading = ' loading="lazy"' if lazy else ""
+                return f'<img src="{p}{rel}" alt="{esc(alt)}" width="{w}" height="{h}"{loading}>'
     return ""
 
 
@@ -603,7 +607,7 @@ def tour(t, p):
         rows, rest = [], []
         for key, sid in items:
             title, body, *alt = t["feats"][key]
-            img = shot_img(p, sid, alt[0]) if sid else ""
+            img = shot_img(p, sid, alt[0], lang=t["lang"]) if sid else ""
             text = f"<h3>{esc(title)}</h3><p>{esc(body)}</p>"
             if img:
                 rows.append(f'<div class="feature"><div>{text}</div><figure class="feature-shot">{img}</figure></div>')
@@ -637,7 +641,7 @@ def page(t):
     canonical = alt_es if t["lang"] == "es" else alt_en
 
     # The hero falls back to the older editor screenshot until the new capture lands.
-    hero_img = shot_img(p, "editor", t["hero_alt"], lazy=False) or (
+    hero_img = shot_img(p, "editor", t["hero_alt"], lazy=False, lang=t["lang"]) or (
         f'<img src="{p}assets/editor.png" alt="{esc(t["hero_alt"])}" width="1500" height="900">'
     )
 
