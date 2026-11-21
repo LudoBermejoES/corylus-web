@@ -15,10 +15,10 @@ from the e2e dev build with `web/tools/shots.mjs`. The copy refers to them by id
 | `analysis-structure` | Same sentence openings and a run of equal-length sentences marked. |
 | `analysis-style` | Adverbs, gerunds and adjectives marked in colour. |
 | `rhyme` | End rhymes underlined (light / bright / sight / white / night). |
-| `thesaurus` | Right-click on "beheld": the Synonyms menu. |
+| `thesaurus` | Right-click on "happier": the Synonyms (and Antonyms) menu. |
 | `grammar` | LanguageTool flagging "He have waited", with its suggestion menu. |
 | `distraction-free` | Distraction-free mode over a background video, with the HUD (width, opacity, text size, fullscreen). |
-| `ambient-sounds` | The ambient sounds mixer. |
+| `ambient-sounds` | The ambient sounds mixer: presets, and a mix of Rain on Window and Campfire (paused). |
 | `snapshots` | The Snapshots tab: three snapshots and the diff of "First draft" against the current text. |
 | `compile` | The compile dialog: scope tree, status filter, format, Word / PDF / EPUB. |
 | `read-aloud` | Read aloud paused on the first sentence: highlighted sentence and the player bar. |
@@ -48,8 +48,19 @@ node shots.mjs                 # every shot
 node shots.mjs editor themes   # just these ids
 ```
 
-Then shrink them (lossless, palette-free) from WSL or any shell with ffmpeg + oxipng/pngquant
-as preferred. The script leaves the app light, English, with every analysis off.
+The script leaves the app light, English, with every analysis off. Then shrink the
+PNGs to a 256-colour palette (about half the size, text stays sharp), from WSL:
+
+```sh
+cd web/assets/shots; mkdir -p /tmp/q
+for f in *.png; do
+  ffmpeg -loglevel error -y -i "$f" -filter_complex \
+    "[0]split[a][b];[a]palettegen=max_colors=256:stats_mode=full[p];[b][p]paletteuse=dither=sierra2_4a" \
+    -compression_level 100 -pred mixed "/tmp/q/$f" && cp "/tmp/q/$f" "$f"
+done
+```
+
+The 24 shots come to about 5 MB this way (9.6 MB straight from the app).
 
 Side effects, all inside the e2e app's own data: `grammar` starts LanguageTool,
 `sync` starts the rclone engine (it never connects), `ambient-sounds` installs the

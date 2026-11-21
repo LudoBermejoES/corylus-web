@@ -31,7 +31,7 @@ async function run(page, body, timeout = 60000) {
       .then((v) => { window.${k} = { v: v === undefined ? null : v }; })
       .catch((e) => { window.${k} = { e: String(e && (e.message || JSON.stringify(e)) || e) }; });
     return 'fired'; })()`);
-  await page.waitForFunction(`!window.${k}.busy`, timeout);
+  await poll(page, `!window.${k}.busy`, timeout);  // the bridge caps one wait at 30 s
   const r = JSON.parse(await page.evaluate(`JSON.stringify(window.${k})`));
   if (r.e) throw new Error(r.e);
   return r.v;
@@ -341,11 +341,20 @@ const SHOTS = {
   grammar: async (page) => {
     await reset(page);
     await inspector(page, null);
-    await run(page, `const s = await invoke('lt_get_status'); if (s.kind !== 'ready') await invoke('lt_start');`, 120000);
-    await poll(page, `(window.__ltok = window.__ltok || (window.__TAURI__.core.invoke('lt_get_status').then((s) => { window.__ltkind = s.kind; window.__ltok = null; }), 1)) && window.__ltkind === 'ready'`, 120000);
-    await page.waitForFunction(`window.__TAURI__ && true`, 1000);
-    await open(page, 'The Spark (rough draft)');
-    await poll(page, `!!document.querySelector('.grammar-error')`, 120000);
+    // Status can say "ready" while the server no longer answers; a real check is the only test.
+    await run(page, `
+      const ok = async () => { try { await invoke('check_grammar', { text: 'He have waited.', lang: 'en' }); return true; } catch (e) { return false; } };
+      if ((await invoke('lt_get_status')).kind === 'ready' && await ok()) return;
+      try { await invoke('lt_stop'); } catch (e) {}
+      await invoke('lt_start');
+      for (let i = 0; i < 90; i++) { if ((await invoke('lt_get_status')).kind === 'ready' && await ok()) return; await new Promise((r) => setTimeout(r, 2000)); }
+      throw new Error('LanguageTool did not come up');`, 300000);
+    // The check runs when a document loads; a load that raced the engine's start gets none, so reopen.
+    for (let i = 0; ; i++) {
+      await page.evaluate(`${STORE('tabs')}.closeAll()`);
+      await open(page, 'The Spark (rough draft)');
+      try { await poll(page, `!!document.querySelector('.grammar-error')`, 30000); break; } catch (e) { if (i === 3) throw e; }
+    }
     await sleep(1000);
     await page.evaluate(`(() => { const all = Array.from(document.querySelectorAll('.grammar-error'));
       const el = all.find((e) => e.textContent.trim() === 'have') || all[0];
