@@ -600,7 +600,10 @@ def shot_img(p, sid, alt, lazy=True, lang="en"):
             if os.path.exists(path):
                 w, h = size(path)
                 loading = ' loading="lazy"' if lazy else ""
-                return f'<img src="{p}{rel}" alt="{esc(alt)}" width="{w}" height="{h}"{loading}>'
+                # A link to the full image: the lightbox in site.js opens it in place,
+                # and without JavaScript the browser simply shows the image.
+                return (f'<a class="zoom" href="{p}{rel}">'
+                        f'<img src="{p}{rel}" alt="{esc(alt)}" width="{w}" height="{h}"{loading}></a>')
     return ""
 
 

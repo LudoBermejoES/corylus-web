@@ -26,3 +26,33 @@
       .catch(function () { /* the fallback link in the HTML stands */ });
   });
 })();
+
+/* Lightbox: a screenshot opens large over the page. Each one is already a link
+ * to the full image, so without JavaScript (or with a modifier key) the browser
+ * just opens it; <dialog> gives Escape, focus handling and a backdrop for free. */
+(function () {
+  "use strict";
+  if (typeof HTMLDialogElement !== "function") return;
+  var es = document.documentElement.lang === "es";
+  var dlg = document.createElement("dialog");
+  dlg.className = "lightbox";
+  dlg.innerHTML =
+    '<button type="button" class="lightbox-close" aria-label="' + (es ? "Cerrar" : "Close") + '">✕</button>' +
+    '<figure><img alt=""><figcaption></figcaption></figure>';
+  document.body.appendChild(dlg);
+  var img = dlg.querySelector("img"), cap = dlg.querySelector("figcaption");
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a.zoom");
+    if (!a || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    var thumb = a.querySelector("img");
+    img.src = a.getAttribute("href");
+    img.alt = thumb ? thumb.alt : "";
+    cap.textContent = img.alt;
+    dlg.showModal();
+  });
+  // Any click closes it: on the image, the backdrop or the button.
+  dlg.addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("close", function () { img.removeAttribute("src"); });
+})();
