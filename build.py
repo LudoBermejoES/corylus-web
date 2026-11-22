@@ -100,7 +100,7 @@ VIDEOS = {
     "safety":     {"en": ("hZ1cwTO7igA", "4:12"), "es": ("8y8laprSBSA", "5:13")},
     "structure":  {"en": ("N-0uLr5TS2s", "3:41"), "es": ("J0I9Ukqst14", "4:16")},
     "revise":     {"en": ("obfF5Uef2rQ", "2:22"), "es": ("b4rsl6WUxsw", "3:00")},
-    "support":    {"en": ("qkOYZW6D9UA", "2:10"), "es": ("1AALrm2ANbs", "2:41")},
+    "support":    {"en": ("I2qQx5kCSQU", "2:27"), "es": ("18i34szblOA", "3:00")},
     "bible":      {"en": ("P4cMXc4OirQ", "3:34"), "es": ("u6rPogkU30Q", "4:12")},
     "environment": {"en": ("kN2WJV-iD6Y", "2:34"), "es": ("uVxwszwxb-U", "3:01")},
     "finish":     {"en": ("0gLDxraAzQ4", "1:26"), "es": ("3u5rcd4sC4w", "1:42")},
@@ -213,7 +213,7 @@ STRINGS = {
             "safety": ("Four ways to lose a book", "Four failures, from the app disappearing to a dead computer, and what is still on your disk after each one."),
             "finish": ("Compile", "The book put back together in Binder order and exported to Word, PDF or EPUB, inside Corylus, with nothing else to install."),
             "extras": ("The optional AI parts", "The assistant that runs on your computer, and how an AI app such as Claude connects to a project, with a permission you set per project. Both stay off until you install them."),
-            "support": ("Workshop diary 2: the map that deleted its own lines", "Up to version 1.93.3. A relationship map could delete relationships from your files when you moved a card. This is why, and how it was fixed."),
+            "support": ("Workshop diary 3: the video that stopped on its last frame", "From 1.94 to 1.96.2. The video behind the page in distraction-free mode could freeze, or stop on its last frame. It took three releases to catch."),
         },
         "tour_h": "Everything Corylus does",
         "tour_p": (
@@ -460,7 +460,7 @@ STRINGS = {
             "finish": ("Compilar", "Las piezas juntas otra vez en el orden de la Carpeta y exportadas a Word, PDF o EPUB, dentro de Corylus y sin instalar nada más."),
             "languages": ("En español", "Repeticiones contadas por la raíz, rima consonante y asonante, comillas angulares y comprobaciones que solo existen en español."),
             "extras": ("Las partes opcionales con IA", "El asistente que funciona en tu ordenador, y cómo se conecta a un proyecto una aplicación de IA como Claude, con el permiso que tú das proyecto a proyecto. Las dos están apagadas hasta que las instalas."),
-            "support": ("Diario de taller 2: el mapa que borraba sus propias líneas", "Hasta la versión 1.93.3. Un mapa de relaciones podía borrar relaciones de tus archivos al mover una tarjeta. Por qué pasaba y cómo se arregló."),
+            "support": ("Diario de taller 3: el vídeo parado en su último fotograma", "De la 1.94 a la 1.96.2. El vídeo de detrás de la página en el modo sin distracciones podía congelarse, o quedarse en su último fotograma. Atraparlo costó tres versiones."),
         },
         "tour_h": "Todo lo que hace Corylus",
         "tour_p": (

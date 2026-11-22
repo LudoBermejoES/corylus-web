@@ -24,7 +24,7 @@ from the e2e dev build with `web/tools/shots.mjs`. The copy refers to them by id
 | `read-aloud` | Read aloud paused on the first sentence: highlighted sentence and the player bar. |
 | `comments` | A comment thread on a highlighted passage. |
 | `sync` | Settings > Cloud Sync, the provider list open (pCloud, Google Drive, Dropbox, OneDrive, Box, Amazon S3…). |
-| `backups` | Settings > Snapshots & Backups: interval, last backup, backup history with Restore. |
+| `backups` | Settings > Backups & Snapshots: interval, last backup, backup history with Restore. |
 | `themes` | The chapter "The Spark" in the Catppuccin Mocha theme with the Night page. |
 | `spanish` | The interface in Spanish, with a Spanish chapter ("I. La llegada") and its inspector. |
 | `statistics` | Project Statistics for the Manuscript folder: words, pages, reading time, word frequency. |
