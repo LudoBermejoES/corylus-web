@@ -32,6 +32,7 @@ assets/
   site.js         Resolves download links against the live release manifests
   lockup*.svg     Logo, light and dark
   mark.svg        Mark, used in the footer
+  videos/<lang>/  Poster per video (WebP, 1280x720), see Videos below
   favicon.svg     Small mark (three text lines, legible at 16px)
   og.png          1200x630 social preview
 robots.txt, sitemap.xml, .nojekyll
@@ -51,13 +52,8 @@ whenever it is convenient, not urgently.
 
 ## Before launch
 
-- [ ] Set `PATREON` in `build.py`. The support section renders only when it is
-      non-empty, so the site never ships a dead link — but that also means the
-      ask is currently invisible.
-- [ ] Add screenshots. The page argues entirely in prose right now. The one image
-      that matters is the manuscript in the app beside the same text as a `.md`
-      file in the file manager — see
-      [`corylus-corpo/social/asset-specs.md`](https://github.com/LudoBermejoES/corylus-corpo/blob/main/social/asset-specs.md).
+- [x] Ko-fi: `KOFI` in `build.py` is set; the support section renders from it.
+- [ ] Re-shoot `sync.webp` and `backups.webp` (EN and ES): they predate the 1.94 Settings redesign.
 - [ ] If a custom domain is ever added, put it in `CNAME` and update `SITE` in
       `build.py`, plus `robots.txt` and `sitemap.xml`.
 
@@ -66,3 +62,17 @@ whenever it is convenient, not urgently.
 Colours, type and logo rules come from
 [corylus-corpo](https://github.com/LudoBermejoES/corylus-corpo). Do not invent new
 ones here; change them there and copy across.
+
+## Videos
+
+`VIDEOS` in `build.py` holds each slot's YouTube id and length per language; a slot
+with no id for a language renders nothing, so video 12 (`extras`) goes live by
+filling in its two ids. Copy is in `STRINGS[lang]["videos"]`. Posters are local, so
+the page asks YouTube for nothing until someone presses play (`site.js` then swaps
+in a youtube-nocookie iframe). Plan and privacy rules: `VIDEO-PLAN.md`.
+
+Posters come from the masters, frame at 0.4 s (before the burned-in subtitle):
+
+```sh
+ffmpeg -ss 0.4 -i <master>.mp4 -frames:v 1 -vf scale=1280:720 -c:v libwebp -quality 80 assets/videos/<lang>/<slot>.webp
+```

@@ -92,6 +92,33 @@ TOUR = [
     ("extras", [("assistant", None), ("mcp", None)]),
 ]
 
+# Videos: slot -> {lang: (YouTube id, length)}. A slot with no id for a language
+# renders nothing there, so video 12 ("extras") goes live by filling in its two ids.
+# Posters are local: assets/videos/<lang>/<slot>.webp (see README.md).
+VIDEOS = {
+    "hero":       {"en": ("fz2q5GGS75w", "1:25"), "es": ("NrK_Sep8m0g", "1:44")},
+    "safety":     {"en": ("hZ1cwTO7igA", "4:12"), "es": ("8y8laprSBSA", "5:13")},
+    "structure":  {"en": ("N-0uLr5TS2s", "3:41"), "es": ("J0I9Ukqst14", "4:16")},
+    "revise":     {"en": ("obfF5Uef2rQ", "2:22"), "es": ("b4rsl6WUxsw", "3:00")},
+    "support":    {"en": ("qkOYZW6D9UA", "2:10"), "es": ("1AALrm2ANbs", "2:41")},
+    "bible":      {"en": ("P4cMXc4OirQ", "3:34"), "es": ("u6rPogkU30Q", "4:12")},
+    "environment": {"en": ("kN2WJV-iD6Y", "2:34"), "es": ("uVxwszwxb-U", "3:01")},
+    "finish":     {"en": ("0gLDxraAzQ4", "1:26"), "es": ("3u5rcd4sC4w", "1:42")},
+    "writing":    {"en": ("jqCa2NjBkWo", "1:42"), "es": ("AQ-8G3jMrxM", "2:03")},
+    "languages":  {"es": ("LZ2FLWUHbE4", "2:30")},
+    "read-aloud": {"en": ("ZA-lxCCVUzM", "1:00"), "es": ("QPjC2yXTsQk", "1:08")},
+    "extras":     {},
+}
+PLAYLIST = {"en": "PLM2yuZIkkOv4", "es": "PLAx-paBq5bo8"}
+EN_SPANISH_VIDEO = "LZ2FLWUHbE4"  # linked, not embedded, from the English "languages" group
+# The "Watch the tour" list: series order, as (slot, in-page anchor). The diary (support)
+# has its own place and is not in it.
+TOUR_VIDEOS = [("hero", "hero-video"), ("safety", "safety"), ("structure", "structure"),
+               ("revise", "revise"), ("bible", "bible"), ("environment", "environment"),
+               ("finish", "finish"), ("writing", "writing"), ("languages", "languages"),
+               ("read-aloud", "read-aloud"), ("extras", "extras")]
+GALLERY = "https://ludobermejoes.github.io/corylus-distractionfree-wallpaper"
+
 STRINGS = {
     "en": {
         "lang": "en",
@@ -164,6 +191,30 @@ STRINGS = {
         "disk_h": "The same chapter, twice.",
         "disk_p": "On the left, Corylus. On the right, the same chapter as the file on your disk, which any text editor opens.",
         "disk_file": ("By the Lake.md", "Manuscript/"),
+        "video_play": "Play “{t}” (loads YouTube)",
+        "video_note": "The video plays from YouTube, which loads only when you press play.",
+        "video_watch": "Watch on YouTube",
+        "videos_h": "Watch the tour",
+        "videos_p": "Short videos, one part of Corylus each, filmed on demo books. Each one also sits next to the part of this page it shows. I wrote them; the narrator is a synthetic voice.",
+        "videos_playlist": "Open the playlist on YouTube",
+        "videos_link": "The whole tour: {n} short videos",
+        "support_video_h": "From the workshop",
+        "support_video_p": "Now and then I film what I built, what broke and what is still not right. The latest:",
+        "es_video_link": "There is also a video about writing in Spanish, narrated in Spanish.",
+        "gallery_link": "Open the background gallery",
+        "videos": {
+            "hero": ("The trailer", "The trailer: one chapter in Corylus, the same chapter as a file on disk, and the rest of the app in a minute and a half."),
+            "writing": ("The desk", "Tabs and split panes, comments, a search of the whole book and word targets: the part you use every day."),
+            "structure": ("Two hundred pieces", "Binder, corkboard and outliner over the same plain files, and how to bring a book in from Scrivener or Word."),
+            "bible": ("The Story Bible", "Characters, places and their relationships, filmed with the cast of Frankenstein. The map draws its lines from the entries, so the two cannot disagree."),
+            "revise": ("When you stop seeing your words", "The marks for repeated words, monotonous rhythm and accidental rhyme. Each one is off until you switch it on, and none of them rewrites a word."),
+            "read-aloud": ("Read aloud", "Corylus reads your chapter one sentence at a time and keeps that sentence lit. One minute."),
+            "environment": ("Just you and the text", "Distraction-free mode, a video behind the page, ambient sounds, focus mode and themes. Escape brings everything back."),
+            "safety": ("Four ways to lose a book", "Four failures, from the app disappearing to a dead computer, and what is still on your disk after each one."),
+            "finish": ("Compile", "The book put back together in Binder order and exported to Word, PDF or EPUB, inside Corylus, with nothing else to install."),
+            "extras": ("The optional AI parts", "The assistant that runs on your computer, and how an AI app such as Claude connects to a project, with a permission you set per project. Both stay off until you install them."),
+            "support": ("Workshop diary 2: the map that deleted its own lines", "Up to version 1.93.3. A relationship map could delete relationships from your files when you moved a card. This is why, and how it was fixed."),
+        },
         "tour_h": "Everything Corylus does",
         "tour_p": (
             "A tour of the whole app. All of it is in the free download. A few parts, such as "
@@ -246,7 +297,7 @@ STRINGS = {
                            "Corylus reads your text sentence by sentence, from the cursor or from a selection, and highlights the sentence it is on. Use your system's voices, or download natural voices for English and Spanish that run on your computer. You can also save the reading as a WAV file.",
                            "The read-aloud player, with the sentence being read highlighted in the chapter."),
             "distraction-free": ("Distraction-free mode",
-                                 "One shortcut hides the Binder, the toolbar and the panels and takes the window full screen. Put a looping video or a picture of your own behind a translucent page and choose how much of it shows through. There is a gallery of backgrounds to download. Esc brings everything back.",
+                                 "One shortcut hides the Binder, the toolbar and the panels and takes the window full screen. Put a looping video or a picture of your own behind a translucent page and choose how much of it shows through. There is a gallery of backgrounds, and its “Add to Corylus” button shows the size, credit and licence and asks before it downloads anything. Esc brings everything back.",
                                  "Distraction-free mode: a chapter on a translucent page over a background video, with the floating control bar."),
             "ambient-sounds": ("Ambient sounds",
                                "A mixer of background sounds: rain, waves, café chatter and many more, each at its own volume. Save the mixes you like, and play or stop them from the toolbar, in distraction-free mode too. The sounds are a single download.",
@@ -261,10 +312,10 @@ STRINGS = {
                           "The Snapshots panel: a list of saved versions of a chapter, and two of them compared with the changes marked."),
             "backups": ("Backups",
                         "Corylus backs the whole project up as a ZIP file on a schedule you set and keeps the most recent ones. Settings lists them, and Restore puts the one you pick in a new folder, never over the files you have. A copy of each backup can go to your cloud account as well.",
-                        "Settings, Snapshots & Backups: a list of backup files with their dates, and a Restore button."),
+                        "Settings, Backups & Snapshots: a list of backup files with their dates, and a Restore button."),
             "sync": ("Sync with your own cloud",
                      "If you write on more than one computer, connect your own pCloud, Google Drive, Dropbox, OneDrive, Box or Amazon S3 account and Corylus keeps the project in step on each. When two computers change the same chapter, neither version is lost. Your files go straight to your account, with no Corylus server in between.",
-                     "Settings, Cloud sync: the providers you can connect, among them pCloud, Google Drive and Dropbox."),
+                     "Settings, Cloud Sync: the providers you can connect, among them pCloud, Google Drive and Dropbox."),
             "moving": ("Moving in and moving around",
                        "Import a manuscript from Scrivener, Word, EPUB or HTML into a new project. Save a whole project as a single .cory file to take it to another computer, where a double-click opens it."),
             "compile": ("Compile to Word, PDF or EPUB",
@@ -274,7 +325,7 @@ STRINGS = {
                         "The interface, spell-check, grammar, thesaurus, repetition and rhyme checks and the read-aloud voices all work in both languages. Each document has its own language, so a Spanish novel gets Spanish quotes, Spanish hyphenation and Spanish checks while the menus stay in English, or the other way round.",
                         "Corylus with its interface in Spanish and a chapter in Spanish open."),
             "assistant": ("A local assistant",
-                          "An assistant panel that answers questions about your own book, using a Qwen3 model that runs on your computer through Ollama. It is a large download, about 4 to 8 GB, and it cannot change your text."),
+                          "An assistant panel that answers questions about your own book, using a Qwen3 model that runs on your computer through Ollama. The model is a download of about 1 to 9 GB, and Corylus suggests one sized to your computer's memory. On Windows it can run on an NVIDIA, AMD or Intel graphics card, which answers much faster; Corylus downloads only the add-on that card needs. It cannot change your text."),
             "mcp": ("AI apps, through MCP",
                     "If you use an AI app that supports MCP, such as Claude Desktop or Claude Code, you can let it read your project and, if you allow it, edit it. You choose per project: nothing, read only, ask before each change, or change freely. Corylus takes a snapshot before every change and keeps a log where you can undo any of them. What the app reads goes to that app's own service, under its terms."),
         },
@@ -386,6 +437,31 @@ STRINGS = {
         "disk_h": "El mismo capítulo, dos veces.",
         "disk_p": "A la izquierda, Corylus. A la derecha, el mismo capítulo como archivo en tu disco, que se abre con cualquier editor de texto.",
         "disk_file": ("Junto al lago.md", "Manuscrito/"),
+        "video_play": "Reproducir «{t}» (carga YouTube)",
+        "video_note": "El vídeo se reproduce desde YouTube, que solo se carga cuando le das a reproducir.",
+        "video_watch": "Verlo en YouTube",
+        "videos_h": "Mira el recorrido",
+        "videos_p": "Vídeos cortos, cada uno sobre una parte de Corylus, grabados con libros de ejemplo. Cada uno está también junto a la parte de esta página que enseña. Los he escrito yo; la voz que narra es sintética.",
+        "videos_playlist": "Abre la lista en YouTube",
+        "videos_link": "El recorrido entero: {n} vídeos cortos",
+        "support_video_h": "Desde el taller",
+        "support_video_p": "De vez en cuando grabo lo que he hecho, lo que se ha roto y lo que todavía no va bien. El último:",
+        "es_video_link": "",
+        "gallery_link": "Abre la galería de fondos",
+        "videos": {
+            "hero": ("El tráiler", "El tráiler: un capítulo en Corylus, ese mismo capítulo como archivo en el disco y el resto del programa, en menos de dos minutos."),
+            "writing": ("La mesa de trabajo", "Pestañas y dos paneles, comentarios, búsqueda en todo el libro y objetivos de palabras: lo que usas a diario."),
+            "structure": ("Doscientas piezas", "La Carpeta, el Tablero y el Esquema sobre los mismos archivos de texto, y cómo traer un libro desde Scrivener o Word."),
+            "bible": ("La Biblia de la historia", "Personajes, lugares y sus relaciones, con el reparto de Frankenstein. El mapa saca sus líneas de las entradas, así que no puede contradecirlas."),
+            "revise": ("Dejas de ver tus propias palabras", "Las marcas de palabras repetidas, ritmo monótono y rimas involuntarias. Todas están apagadas hasta que las enciendes, y ninguna reescribe nada."),
+            "read-aloud": ("En voz alta", "Corylus te lee el capítulo frase a frase y deja iluminada la que está leyendo. Un minuto."),
+            "environment": ("Solo tú y el texto", "El modo sin distracciones, un vídeo detrás de la página, sonidos ambientales, el modo enfoque y los temas. Con Escape vuelve todo a su sitio."),
+            "safety": ("Cuatro formas de perder un libro", "Cuatro fallos, desde que el programa desaparece hasta que el ordenador se muere, y lo que sigue en tu disco después de cada uno."),
+            "finish": ("Compilar", "Las piezas juntas otra vez en el orden de la Carpeta y exportadas a Word, PDF o EPUB, dentro de Corylus y sin instalar nada más."),
+            "languages": ("En español", "Repeticiones contadas por la raíz, rima consonante y asonante, comillas angulares y comprobaciones que solo existen en español."),
+            "extras": ("Las partes opcionales con IA", "El asistente que funciona en tu ordenador, y cómo se conecta a un proyecto una aplicación de IA como Claude, con el permiso que tú das proyecto a proyecto. Las dos están apagadas hasta que las instalas."),
+            "support": ("Diario de taller 2: el mapa que borraba sus propias líneas", "Hasta la versión 1.93.3. Un mapa de relaciones podía borrar relaciones de tus archivos al mover una tarjeta. Por qué pasaba y cómo se arregló."),
+        },
         "tour_h": "Todo lo que hace Corylus",
         "tour_p": (
             "Un recorrido por todo el programa. Todo viene en la descarga gratuita. Algunas "
@@ -469,7 +545,7 @@ STRINGS = {
                            "Corylus lee tu texto frase a frase, desde el cursor o desde lo que hayas seleccionado, y resalta la frase por la que va. Usa las voces de tu sistema o descarga voces naturales en español y en inglés que funcionan en tu ordenador. También puedes guardar la lectura como archivo WAV.",
                            "El reproductor de lectura en voz alta, con la frase que se está leyendo resaltada en el capítulo."),
             "distraction-free": ("Modo sin distracciones",
-                                 "Con un atajo desaparecen la Carpeta, la barra de herramientas y los paneles, y la ventana pasa a pantalla completa. Pon detrás de una página translúcida un vídeo en bucle o una imagen tuya, y elige cuánto se transparenta. Hay una galería de fondos para descargar. Esc lo devuelve todo a su sitio.",
+                                 "Con un atajo desaparecen la Carpeta, la barra de herramientas y los paneles, y la ventana pasa a pantalla completa. Pon detrás de una página translúcida un vídeo en bucle o una imagen tuya, y elige cuánto se transparenta. Hay una galería de fondos, y su botón «Add to Corylus» muestra el tamaño, el crédito y la licencia y pregunta antes de descargar nada. Esc lo devuelve todo a su sitio.",
                                  "El modo sin distracciones: un capítulo sobre una página translúcida delante de un vídeo de fondo, con la barra de controles flotante."),
             "ambient-sounds": ("Sonidos ambientales",
                                "Un mezclador de sonidos de fondo: lluvia, olas, murmullo de cafetería y muchos más, cada uno con su volumen. Guarda las mezclas que te gusten y ponlas o páralas desde la barra de herramientas, también en el modo sin distracciones. Los sonidos son una sola descarga.",
@@ -484,10 +560,10 @@ STRINGS = {
                           "El panel Instantáneas: una lista de versiones guardadas de un capítulo y dos de ellas comparadas, con los cambios marcados."),
             "backups": ("Copias de seguridad",
                         "Corylus guarda una copia del proyecto entero en un archivo ZIP con la frecuencia que elijas, y conserva las más recientes. Los Ajustes te las enseñan, y Restaurar pone la que elijas en una carpeta nueva, nunca encima de los archivos que ya tienes. Cada copia puede ir también a tu cuenta en la nube.",
-                        "Ajustes, Instantáneas y copias: una lista de copias de seguridad con su fecha y un botón Restaurar."),
+                        "Ajustes, Copias e instantáneas: una lista de copias de seguridad con su fecha y un botón Restaurar."),
             "sync": ("Sincronización con tu propia nube",
                      "Si escribes en más de un ordenador, conecta tu cuenta de pCloud, Google Drive, Dropbox, OneDrive, Box o Amazon S3 y Corylus mantiene el proyecto al día en todos. Si dos ordenadores cambian el mismo capítulo, no se pierde ninguna de las dos versiones. Tus archivos van directos a tu cuenta, sin ningún servidor de Corylus por medio.",
-                     "Ajustes, Sincronización en la nube: los servicios que puedes conectar, entre ellos pCloud, Google Drive y Dropbox."),
+                     "Ajustes, Nube: los servicios que puedes conectar, entre ellos pCloud, Google Drive y Dropbox."),
             "moving": ("Traer tu libro y llevártelo",
                        "Importa un manuscrito de Scrivener, Word, EPUB o HTML a un proyecto nuevo. Guarda el proyecto entero en un solo archivo .cory para llevarlo a otro ordenador, donde se abre con doble clic."),
             "compile": ("Compilar a Word, PDF o EPUB",
@@ -497,7 +573,7 @@ STRINGS = {
                         "La interfaz, el corrector, la gramática, los sinónimos, las comprobaciones de repeticiones y de rimas y las voces de lectura funcionan en los dos idiomas. Cada documento tiene su propio idioma, así que una novela en español tiene comillas españolas, partición de palabras española y revisiones en español aunque tengas los menús en inglés, y al revés.",
                         "Corylus con la interfaz en español y un capítulo en español abierto."),
             "assistant": ("Un asistente local",
-                          "Un panel que responde preguntas sobre tu propio libro con un modelo Qwen3 que funciona en tu ordenador a través de Ollama. Es una descarga grande, de 4 a 8 GB, y no puede cambiar tu texto."),
+                          "Un panel que responde preguntas sobre tu propio libro con un modelo Qwen3 que funciona en tu ordenador a través de Ollama. El modelo es una descarga de entre 1 y 9 GB aproximadamente, y Corylus te propone uno ajustado a la memoria de tu ordenador. En Windows puede funcionar en una tarjeta gráfica NVIDIA, AMD o Intel, que responde mucho más deprisa; Corylus descarga solo el complemento que necesita esa tarjeta. No puede cambiar tu texto."),
             "mcp": ("Aplicaciones de IA, por MCP",
                     "Si usas una aplicación de IA compatible con MCP, como Claude Desktop o Claude Code, puedes dejar que lea tu proyecto y, si se lo permites, que lo edite. Lo decides proyecto a proyecto: nada, solo lectura, preguntar antes de cada cambio o cambiar con libertad. Corylus saca una instantánea antes de cada cambio y lleva un registro desde el que puedes deshacer cualquiera. Lo que esa aplicación lee va a su propio servicio, con sus propias condiciones."),
         },
@@ -625,6 +701,61 @@ def shot_img(p, sid, alt, lazy=True, lang="en"):
     return ""
 
 
+PLAY_SVG = ('<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false">'
+            '<path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>')
+
+
+def video(t, p, slot, hero=False):
+    """Click-to-play player: a local poster that is a plain link to YouTube. site.js swaps
+    it for a youtube-nocookie iframe on click, so nothing touches YouTube before that.
+    "" when the slot has no video for this language."""
+    ent = VIDEOS[slot].get(t["lang"])
+    if not ent:
+        return ""
+    vid, length = ent
+    title, caption = t["videos"][slot]
+    rel = f"assets/videos/{t['lang']}/{slot}.webp"
+    path = os.path.join(HERE, *rel.split("/"))
+    if not os.path.exists(path):
+        return ""
+    w, h = webp_size(path)
+    watch = f"https://www.youtube.com/watch?v={vid}"
+    # The hero poster is the page's largest image: eager and high priority; the rest are lazy.
+    load = 'fetchpriority="high"' if hero else 'loading="lazy"'
+    label = t["video_play"].format(t=title)
+    player = (
+        f'<div class="video-frame" data-video="{vid}" data-title="{esc(title)}">'
+        f'<a class="video-play" href="{watch}" aria-label="{esc(label)}">'
+        f'<img src="{p}{rel}" alt="" width="{w}" height="{h}" {load}>'
+        f'<span class="video-btn" aria-hidden="true">{PLAY_SVG}</span>'
+        f'<span class="video-len">{length}</span></a></div>')
+    note = f'<p class="note video-note">{esc(t["video_note"])} <a href="{watch}">{esc(t["video_watch"])}</a></p>'
+    if hero:
+        n = sum(1 for s, _ in TOUR_VIDEOS if VIDEOS[s].get(t["lang"]))
+        more = f'<p class="video-more"><a href="#videos">{esc(t["videos_link"].format(n=n))}</a></p>'
+        return (f'<figure class="video video-hero" id="hero-video">{player}'
+                f'<figcaption><p>{esc(caption)}</p>{note}{more}</figcaption></figure>')
+    return (f'<article class="video video-block">{player}<div class="video-text">'
+            f'<h3>{esc(title)}</h3><p>{esc(caption)}</p>{note}</div></article>')
+
+
+def video_list(t):
+    """The "Watch the tour" block: in-page links to where each player sits. No posters."""
+    items = []
+    for slot, anchor in TOUR_VIDEOS:
+        if VIDEOS[slot].get(t["lang"]):
+            title = t["videos"][slot][0]
+            items.append(f'<li><a href="#{anchor}">{esc(title)}</a> '
+                         f'<span class="len">· {VIDEOS[slot][t["lang"]][1]}</span></li>')
+    return f"""
+      <div class="videos" id="videos">
+        <h3>{esc(t['videos_h'])}</h3>
+        <p>{esc(t['videos_p'])}</p>
+        <ol class="video-list">{''.join(items)}</ol>
+        <p><a href="https://www.youtube.com/playlist?list={PLAYLIST[t['lang']]}" rel="noopener">{esc(t['videos_playlist'])}</a></p>
+      </div>"""
+
+
 def tour(t, p):
     out = []
     for i, (gid, items) in enumerate(TOUR):
@@ -634,12 +765,20 @@ def tour(t, p):
             title, body, *alt = t["feats"][key]
             img = shot_img(p, sid, alt[0], lang=t["lang"]) if sid else ""
             text = f"<h3>{esc(title)}</h3><p>{esc(body)}</p>"
+            if key == "distraction-free":
+                text += f'<p class="feat-link"><a href="{GALLERY}" rel="noopener">{esc(t["gallery_link"])}</a></p>'
             if img:
                 rows.append(f'<div class="feature"><div>{text}</div><figure class="feature-shot">{img}</figure></div>')
+                if key == "read-aloud":
+                    rows.append(f'<div id="read-aloud">{video(t, p, "read-aloud")}</div>')
             else:
                 rest.append(f"<li>{text}</li>")
         lead = f'<p class="lead">{esc(intro)}</p>' if intro else ""
         features = "".join(rows)
+        vid = video(t, p, gid)
+        if gid == "languages" and t["lang"] == "en":
+            vid = (f'<p class="video-more"><a href="https://youtu.be/{EN_SPANISH_VIDEO}" rel="noopener">'
+                   f'{esc(t["es_video_link"])}</a></p>')
         grid = '<ul class="grid two">' + "".join(rest) + "</ul>" if rest else ""
         band = " band" if i % 2 else ""
         out.append(f"""
@@ -647,6 +786,7 @@ def tour(t, p):
     <div class="wrap">
       <h2>{esc(h)}</h2>
       {lead}
+      {vid}
       {features}
       {grid}
     </div>
@@ -666,9 +806,10 @@ def page(t):
     canonical = alt_es if t["lang"] == "es" else alt_en
 
     # The hero falls back to the older editor screenshot until the new capture lands.
-    hero_img = shot_img(p, "editor", t["hero_alt"], lazy=False, lang=t["lang"]) or (
-        f'<img src="{p}assets/editor.png" alt="{esc(t["hero_alt"])}" width="1500" height="900">'
-    )
+    hero_media = video(t, p, "hero", hero=True) or (
+        '<figure class="media">' + (shot_img(p, "editor", t["hero_alt"], lazy=False, lang=t["lang"]) or (
+            f'<img src="{p}assets/editor.png" alt="{esc(t["hero_alt"])}" width="1500" height="900">'
+        )) + "</figure>")
 
     kofi_nav = (f'<a class="kofi" href="{KOFI}" rel="noopener" target="_blank">'
                 f'<span aria-hidden="true">♥</span> {esc(t["nav_kofi"])}</a>') if KOFI else ""
@@ -682,6 +823,10 @@ def page(t):
     )
     cta = (f'<a class="btn" href="{KOFI}" rel="noopener">{esc(t["support_cta"])}</a>'
            if KOFI else esc(t["support_soon"]))
+    diary = video(t, p, "support")
+    if diary:
+        diary = (f'<div class="diary"><h3>{esc(t["support_video_h"])}</h3>'
+                 f'<p>{esc(t["support_video_p"])}</p>{diary}</div>')
     support = f"""
     <section class="band" id="support">
       <div class="wrap narrow">
@@ -689,7 +834,7 @@ def page(t):
         <p>{esc(t['support_p'])}</p>
         <h3 class="costs-h">{esc(t['support_costs_h'])}</h3>
         <ul class="grid two costs">{costs}</ul>
-        <p class="cta">{cta}</p>
+        <p class="cta">{cta}</p>{diary}
       </div>
     </section>"""
 
@@ -701,6 +846,7 @@ def page(t):
 <script src="{p}assets/lang.js"></script>
 <title>{esc(t['title'])}</title>
 <meta name="description" content="{esc(t['description'])}">
+<meta http-equiv="Content-Security-Policy" content="frame-src https://www.youtube-nocookie.com">
 <link rel="canonical" href="{canonical}">
 <link rel="alternate" hreflang="en" href="{alt_en}">
 <link rel="alternate" hreflang="es" href="{alt_es}">
@@ -752,7 +898,7 @@ def page(t):
       {kofi_hero}
     </div>
     <div class="wrap">
-      <figure class="media">{hero_img}</figure>
+      {hero_media}
     </div>
   </section>
 
@@ -787,7 +933,7 @@ def page(t):
   <section class="tour-head" id="tour">
     <div class="wrap narrow">
       <h2>{esc(t['tour_h'])}</h2>
-      <p>{esc(t['tour_p'])}</p>
+      <p>{esc(t['tour_p'])}</p>{video_list(t)}
     </div>
   </section>
 {tour(t, p)}
@@ -842,7 +988,7 @@ PRIVACY = {
         "lang": "en", "dir_prefix": "../", "other": ("../es/privacy/", "Español"),
         "title": "Privacy — Corylus",
         "description": "Corylus collects nothing. No account, no telemetry, no analytics, and no Corylus server.",
-        "h": "Privacy", "updated": "Last updated 21 November 2026.",
+        "h": "Privacy", "updated": "Last updated 22 November 2026.",
         "lead": "Corylus collects no personal data. This page explains what that means in practice, and names every third party your computer talks to because of something Corylus does.",
         "sections": [
             ("What Corylus collects", [
@@ -861,7 +1007,8 @@ PRIVACY = {
                 "Some features are downloads you choose: dictionaries, the thesaurus, language data for the style checks, the grammar engine, the natural voices, the ambient sounds, the sync program and the assistant. Each comes from where its publisher hosts it: GitHub, Hugging Face, languagetool.org, rclone.org or ollama.com. Those servers see the request, as they would for any download. Corylus sends them nothing about you or your writing, and once installed these components run on your computer.",
             ]),
             ("This website", [
-                "This site is hosted on GitHub Pages. It sets no cookies and runs no analytics. GitHub keeps server logs, including IP addresses, under its own privacy policy. The site loads its fonts from Google Fonts, so Google serves those files and sees the request. The download buttons ask GitHub for the current version number. If you pick a language with the site’s language link, your browser stores that choice on your device.",
+                "This site is hosted on GitHub Pages. It sets no cookies of its own and runs no analytics. GitHub keeps server logs, including IP addresses, under its own privacy policy. The site loads its fonts from Google Fonts, so Google serves those files and sees the request. The download buttons ask GitHub for the current version number. If you pick a language with the site’s language link, your browser stores that choice on your device.",
+                "The videos on this site are on YouTube. Until you press play on one, your browser asks YouTube for nothing: the picture you see is a still image stored on this site. When you press play, the player loads from youtube-nocookie.com. YouTube then sees the request and your IP address, and from then on it may store data in your browser under Google’s privacy policy. The links to the playlists open YouTube itself.",
             ]),
             ("Children", ["Corylus is not directed at children and collects no information from anyone, of any age."]),
             ("Contact", ["Questions about this page, or anything else: ludobermejo@gmail.com."]),
@@ -873,7 +1020,7 @@ PRIVACY = {
         "lang": "es", "dir_prefix": "../../", "other": ("../../privacy/", "English"),
         "title": "Privacidad — Corylus",
         "description": "Corylus no recoge nada. Sin cuenta, sin telemetría, sin analítica y sin servidor de Corylus.",
-        "h": "Privacidad", "updated": "Última actualización: 21 de noviembre de 2026.",
+        "h": "Privacidad", "updated": "Última actualización: 22 de noviembre de 2026.",
         "lead": "Corylus no recoge datos personales. Esta página explica qué significa eso en la práctica y nombra a cada tercero con el que tu ordenador habla por algo que haga Corylus.",
         "sections": [
             ("Qué recoge Corylus", [
@@ -892,7 +1039,8 @@ PRIVACY = {
                 "Algunas funciones son descargas que tú eliges: diccionarios, el diccionario de sinónimos, los datos de idioma para las comprobaciones de estilo, el motor gramatical, las voces naturales, los sonidos ambientales, el programa de sincronización y el asistente. Cada una viene de donde la aloja quien la publica: GitHub, Hugging Face, languagetool.org, rclone.org u ollama.com. Esos servidores ven la petición, como en cualquier descarga. Corylus no les envía nada sobre ti ni sobre lo que escribes, y una vez instalados estos componentes funcionan en tu ordenador.",
             ]),
             ("Esta web", [
-                "Este sitio está alojado en GitHub Pages. No pone cookies ni usa analítica. GitHub guarda registros de servidor, con direcciones IP incluidas, según su propia política de privacidad. La web carga sus tipografías de Google Fonts, así que Google sirve esos archivos y ve la petición. Los botones de descarga consultan a GitHub el número de la versión actual. Si eliges idioma con el enlace de idioma de la web, tu navegador guarda esa elección en tu dispositivo.",
+                "Este sitio está alojado en GitHub Pages. No pone cookies propias ni usa analítica. GitHub guarda registros de servidor, con direcciones IP incluidas, según su propia política de privacidad. La web carga sus tipografías de Google Fonts, así que Google sirve esos archivos y ve la petición. Los botones de descarga consultan a GitHub el número de la versión actual. Si eliges idioma con el enlace de idioma de la web, tu navegador guarda esa elección en tu dispositivo.",
+                "Los vídeos de esta web están en YouTube. Hasta que le das a reproducir uno, tu navegador no le pide nada a YouTube: la imagen que ves es una foto fija guardada en esta web. Al darle a reproducir, el reproductor se carga desde youtube-nocookie.com. YouTube ve entonces la petición y tu dirección IP, y a partir de ahí puede guardar datos en tu navegador según la política de privacidad de Google. Los enlaces a las listas abren el propio YouTube.",
             ]),
             ("Menores", ["Corylus no se dirige a menores y no recoge información de nadie, de ninguna edad."]),
             ("Contacto", ["Para dudas sobre esta página, o sobre cualquier otra cosa: ludobermejo@gmail.com."]),

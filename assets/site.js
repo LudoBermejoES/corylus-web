@@ -56,3 +56,36 @@
   dlg.addEventListener("click", function () { dlg.close(); });
   dlg.addEventListener("close", function () { img.removeAttribute("src"); });
 })();
+
+/* Click-to-play videos. Until a poster is clicked the page makes no request to
+ * YouTube: the poster is a local image inside a plain link to the video. A plain
+ * left click, or Space (links only answer Enter), swaps it for a youtube-nocookie
+ * player. With a modifier key, or without JavaScript, the link opens YouTube. */
+(function () {
+  "use strict";
+  function play(a) {
+    var frame = a.parentNode, id = frame.getAttribute("data-video");
+    if (!/^[\w-]{11}$/.test(id)) return;
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&playsinline=1";
+    f.title = frame.getAttribute("data-title") || "";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    f.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.replaceChild(f, a);
+    f.focus();
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a.video-play");
+    if (!a || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    play(a);
+  });
+  document.addEventListener("keydown", function (e) {
+    var a = e.target.closest && e.target.closest("a.video-play");
+    if (a && e.key === " " && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault();
+      play(a);
+    }
+  });
+})();

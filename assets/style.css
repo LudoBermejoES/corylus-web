@@ -300,3 +300,68 @@ header.site nav a.kofi:hover, header.site nav a.kofi:focus-visible { filter: bri
   header.site nav a.kofi { font-size: .85rem; padding: .3rem .65rem; white-space: nowrap; }
   header.site nav a.lang { padding-inline: .6rem !important; }
 }
+
+/* ---- Videos ------------------------------------------------------------
+   A poster is a local image inside a link; the iframe appears only on click
+   (assets/site.js). The frame holds a 16:9 box so nothing shifts on the swap. */
+.video { margin: 0; }
+.video-frame { position: relative; aspect-ratio: 16 / 9; }
+.video-frame iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: 1px solid var(--border); border-radius: 10px; background: var(--night);
+}
+.video-play {
+  position: absolute; inset: 0; display: block; border-radius: 10px;
+  color: var(--on-accent); background: var(--night);
+}
+.video-play img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  border: 1px solid var(--border); border-radius: 10px;
+}
+.video-btn {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%;
+  background: #F7F3EA; color: #2E6A4A; /* parchment and leaf: reads on any poster */
+  box-shadow: 0 0 0 4px rgba(14, 23, 19, .55);
+  transition: transform .15s ease;
+}
+.video-btn svg { margin-left: 3px; width: 30px; height: 30px; }
+.video-play:hover .video-btn, .video-play:focus-visible .video-btn { transform: scale(1.08); }
+.video-play:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 10px; }
+.video-len {
+  position: absolute; right: .6rem; bottom: .6rem;
+  background: rgba(14, 23, 19, .88); color: #F7F3EA; border-radius: 6px;
+  padding: .1rem .5rem; font-size: .85rem; font-weight: 600; line-height: 1.5;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+@media (prefers-reduced-motion: reduce) { .video-btn { transition: none; } }
+@media (forced-colors: active) { .video-btn { border: 2px solid ButtonText; } }
+
+.video-hero { margin-top: clamp(2rem, 5vw, 3rem); }
+.video-hero figcaption { margin-top: .8rem; }
+.video-hero figcaption p, .video-text p { margin-bottom: .5rem; }
+.video-hero figcaption > p:first-child { color: var(--fg-muted); font-size: .95rem; }
+.video-note { font-size: .85rem; }
+.video-more { font-weight: 600; margin: 0; }
+
+.video-block { display: grid; gap: 1rem 2.5rem; align-items: center; margin-top: clamp(1.5rem, 4vw, 2.5rem); }
+.video-text h3 { font-size: 1.3rem; }
+@media (min-width: 860px) {
+  .group .video-block { grid-template-columns: 1.3fr .7fr; }
+}
+#read-aloud { scroll-margin-top: 1rem; }
+.feat-link { margin-top: .75rem; }
+
+/* "Watch the tour": in-page links, no posters. */
+.videos > p:first-of-type { margin-top: .5rem; }
+.videos { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.video-list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0 2rem; }
+@media (min-width: 620px) { .video-list { grid-template-columns: repeat(2, 1fr); } }
+.video-list li { border-bottom: 1px solid var(--border); }
+.video-list a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.video-list .len { color: var(--fg-muted); font-size: .9rem; margin-left: .4rem; font-variant-numeric: tabular-nums lining-nums; }
+
+/* The workshop diary, under the Ko-fi ask. */
+.diary { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.diary > p { margin-bottom: 1.25rem; }
+@media (max-width: 599px) { .video-btn { width: 56px; height: 56px; } .video-btn svg { width: 24px; height: 24px; } }
