@@ -107,7 +107,7 @@ VIDEOS = {
     "writing":    {"en": ("jqCa2NjBkWo", "1:42"), "es": ("AQ-8G3jMrxM", "2:03")},
     "languages":  {"es": ("LZ2FLWUHbE4", "2:30")},
     "read-aloud": {"en": ("ZA-lxCCVUzM", "1:00"), "es": ("QPjC2yXTsQk", "1:08")},
-    "extras":     {},
+    "extras":     {"en": ("gES1MkVjSfg", "2:38"), "es": ("tGTEv6_iLpo", "3:16")},
 }
 PLAYLIST = {"en": "PLM2yuZIkkOv4", "es": "PLAx-paBq5bo8"}
 EN_SPANISH_VIDEO = "LZ2FLWUHbE4"  # linked, not embedded, from the English "languages" group
