@@ -987,13 +987,22 @@ PRIVACY = {
     "en": {
         "lang": "en", "dir_prefix": "../", "other": ("../es/privacy/", "Español"),
         "title": "Privacy — Corylus",
-        "description": "Corylus collects nothing. No account, no telemetry, no analytics, and no Corylus server.",
-        "h": "Privacy", "updated": "Last updated 22 November 2026.",
+        "description": "Corylus collects nothing on its own. No account, no telemetry, no analytics. Diagnostics are sent only when you press the button.",
+        "h": "Privacy", "updated": "Last updated 23 November 2026.",
         "lead": "Corylus collects no personal data. This page explains what that means in practice, and names every third party your computer talks to because of something Corylus does.",
         "sections": [
             ("What Corylus collects", [
-                "Nothing.",
-                "Corylus is a writing app for Mac and Windows. It has no user accounts, no telemetry, no analytics and no crash reporting, and there is no Corylus server for it to send anything to. Your documents are plain Markdown files in a folder you chose, on your own computer, and they stay there.",
+                "Nothing, unless you ask it to.",
+                "Corylus is a writing app for Mac and Windows. It has no user accounts, no telemetry, no analytics, and nothing is ever sent automatically \u2014 not when it crashes, not on a schedule, not at start-up. Your documents are plain Markdown files in a folder you chose, on your own computer, and they stay there.",
+                "There is one exception, and it only happens when you press a button: \u201cSend diagnostics\u201d, in Settings \u2192 About. The section below says exactly what that sends.",
+            ]),
+            ("If you send diagnostics", [
+                "Nothing here happens unless you open Settings \u2192 About, press \u201cSend diagnostics\u201d, and confirm. There is no setting that turns this on permanently, and a crash never triggers it.",
+                "What is in a report. Corylus\u2019s own logs, which record what the app was doing: which files it opened, how it synced, which checks ran. Those records contain the names of your documents and folders, and \u2014 because a log that has been stripped of what it was working on cannot be read \u2014 short fragments of your own text, usually a sentence or less, from whatever the app was handling when something went wrong. The report also carries the Corylus version, your operating system and processor type, which optional features are installed, and counts of things in your project: how many documents, how many words. It carries no document contents beyond those log fragments, and no list of your projects.",
+                "What is never in a report. Your cloud-sync credentials, which is the single most sensitive thing Corylus stores. The search index, which holds the full text of every document. The list of projects you have opened. Any identifier for your computer or your installation: every report carries a fresh random reference and nothing that links it to another one.",
+                "Your name and email are optional and start empty. They exist only so a reply is possible. If you leave them blank the report is still accepted, and there is then nothing at all connecting it to you.",
+                "Where it goes. To a small service run by Corylus\u2019s developer, at corylus-issuer.ludobermejo.es, which turns it into an entry in a private issue tracker that only he can read. Reports are never published. If a technical detail from one is ever quoted in public, it is redacted first.",
+                "How long it is kept. One year, after which the service deletes it without anyone having to remember. You can ask for a report to be deleted sooner by writing to the address below \u2014 quote the reference Corylus showed you when you sent it, or the email address you gave. Without one of those, a report cannot be traced back to you, which is the point, but it also means it cannot be found in order to delete it.",
             ]),
             ("What can leave your computer", [
                 "Only what follows. Each item is something you turn on, or something you can turn off.",
@@ -1019,13 +1028,22 @@ PRIVACY = {
     "es": {
         "lang": "es", "dir_prefix": "../../", "other": ("../../privacy/", "English"),
         "title": "Privacidad — Corylus",
-        "description": "Corylus no recoge nada. Sin cuenta, sin telemetría, sin analítica y sin servidor de Corylus.",
-        "h": "Privacidad", "updated": "Última actualización: 22 de noviembre de 2026.",
+        "description": "Corylus no recoge nada por su cuenta. Sin cuenta, sin telemetría, sin analítica. El diagnóstico se envía solo si pulsas el botón.",
+        "h": "Privacidad", "updated": "Última actualización: 23 de noviembre de 2026.",
         "lead": "Corylus no recoge datos personales. Esta página explica qué significa eso en la práctica y nombra a cada tercero con el que tu ordenador habla por algo que haga Corylus.",
         "sections": [
             ("Qué recoge Corylus", [
-                "Nada.",
-                "Corylus es un programa de escritura para Mac y Windows. No tiene cuentas de usuario, ni telemetría, ni analítica, ni informes de fallos, y no hay ningún servidor de Corylus al que enviar nada. Tus documentos son archivos Markdown normales en una carpeta que tú elegiste, en tu propio ordenador, y ahí se quedan.",
+                "Nada, salvo que se lo pidas.",
+                "Corylus es un programa de escritura para Mac y Windows. No tiene cuentas de usuario, ni telemetría, ni analítica, y nunca envía nada por su cuenta: ni cuando falla, ni cada cierto tiempo, ni al arrancar. Tus documentos son archivos Markdown normales en una carpeta que tú elegiste, en tu propio ordenador, y ahí se quedan.",
+                "Hay una excepción, y solo ocurre cuando pulsas un botón: «Enviar diagnóstico», en Ajustes \u2192 Acerca de. La sección siguiente dice exactamente qué se envía.",
+            ]),
+            ("Si envías un diagnóstico", [
+                "Nada de esto ocurre si no abres Ajustes \u2192 Acerca de, pulsas «Enviar diagnóstico» y confirmas. No hay ningún ajuste que lo deje activado, y un fallo del programa nunca lo dispara.",
+                "Qué lleva el informe. Los registros del propio Corylus, que anotan qué estaba haciendo el programa: qué archivos abrió, cómo sincronizó, qué comprobaciones se ejecutaron. Esos registros contienen los nombres de tus documentos y carpetas y \u2014 porque un registro al que se le quita aquello sobre lo que trabajaba no se puede leer \u2014 fragmentos cortos de tu propio texto, normalmente una frase o menos, de aquello que el programa tenía entre manos cuando algo salió mal. El informe lleva además la versión de Corylus, tu sistema operativo y tipo de procesador, qué componentes opcionales tienes instalados, y recuentos de tu proyecto: cuántos documentos, cuántas palabras. No lleva el contenido de tus documentos más allá de esos fragmentos del registro, ni la lista de tus proyectos.",
+                "Qué no lleva nunca. Las credenciales de tu sincronización en la nube, que es lo más delicado que Corylus guarda. El índice de búsqueda, que contiene el texto completo de todos tus documentos. La lista de proyectos que has abierto. Ningún identificador de tu ordenador ni de tu instalación: cada informe lleva una referencia nueva al azar y nada que lo enlace con otro.",
+                "Tu nombre y tu correo son opcionales y empiezan vacíos. Están solo para poder responderte. Si los dejas en blanco el informe se acepta igual, y entonces no queda absolutamente nada que lo relacione contigo.",
+                "Adónde va. A un pequeño servicio que gestiona el desarrollador de Corylus, en corylus-issuer.ludobermejo.es, que lo convierte en una entrada de un gestor de incidencias privado que solo él puede leer. Los informes no se publican nunca. Si alguna vez se cita en público un detalle técnico de uno, se redacta antes.",
+                "Cuánto se conserva. Un año, pasado el cual el servicio lo borra sin que nadie tenga que acordarse. Puedes pedir que se borre antes escribiendo a la dirección de abajo \u2014 indica la referencia que Corylus te mostró al enviarlo, o el correo que diste. Sin una de las dos, un informe no se puede rastrear hasta ti, que es justo la intención, pero también significa que no se puede encontrar para borrarlo.",
             ]),
             ("Qué puede salir de tu ordenador", [
                 "Solo lo que sigue. Cada cosa es algo que tú activas o que puedes desactivar.",
