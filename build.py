@@ -108,6 +108,7 @@ VIDEOS = {
     "languages":  {"es": ("LZ2FLWUHbE4", "2:30")},
     "read-aloud": {"en": ("ZA-lxCCVUzM", "1:00"), "es": ("QPjC2yXTsQk", "1:08")},
     "extras":     {"en": ("gES1MkVjSfg", "2:38"), "es": ("tGTEv6_iLpo", "3:16")},
+    "diagnostics": {"en": ("scp84f3GiLs", "2:11"), "es": ("2ihtHwCQP_4", "2:36")},
 }
 PLAYLIST = {"en": "PLM2yuZIkkOv4", "es": "PLAx-paBq5bo8"}
 EN_SPANISH_VIDEO = "LZ2FLWUHbE4"  # linked, not embedded, from the English "languages" group
@@ -116,7 +117,7 @@ EN_SPANISH_VIDEO = "LZ2FLWUHbE4"  # linked, not embedded, from the English "lang
 TOUR_VIDEOS = [("hero", "hero-video"), ("safety", "safety"), ("structure", "structure"),
                ("revise", "revise"), ("bible", "bible"), ("environment", "environment"),
                ("finish", "finish"), ("writing", "writing"), ("languages", "languages"),
-               ("read-aloud", "read-aloud"), ("extras", "extras")]
+               ("read-aloud", "read-aloud"), ("extras", "extras"), ("diagnostics", "diagnostics")]
 GALLERY = "https://ludobermejoes.github.io/corylus-distractionfree-wallpaper"
 
 STRINGS = {
@@ -214,7 +215,12 @@ STRINGS = {
             "finish": ("Compile", "The book put back together in Binder order and exported to Word, PDF or EPUB, inside Corylus, with nothing else to install."),
             "extras": ("The optional AI parts", "The assistant that runs on your computer, and how an AI app such as Claude connects to a project, with a permission you set per project. Both stay off until you install them."),
             "support": ("Workshop diary 3: the video that stopped on its last frame", "From 1.94 to 1.96.2. The video behind the page in distraction-free mode could freeze, or stop on its last frame. It took three releases to catch."),
+            "diagnostics": ("Send diagnostics", "How to tell Corylus what went wrong: what a report carries, what it never carries, and what happens when it cannot be sent."),
         },
+        "diagnostics_h": "When something goes wrong",
+        "diagnostics_p": "Settings → About → “Send diagnostics” asks what happened, in your own words, and sends it to Corylus’s developer with the app’s logs. Nothing goes until you press the button, and the window tells you first that some of your own text may go with it.",
+        "diagnostics_link": "Everything a report carries, and how long it is kept",
+        "diagnostics_alt": "The Send diagnostics window: a box for what went wrong, empty name and email fields, and the sentence about what the report contains.",
         "tour_h": "Everything Corylus does",
         "tour_p": (
             "A tour of the whole app. All of it is in the free download. A few parts, such as "
@@ -331,9 +337,9 @@ STRINGS = {
         },
         "private_h": "What stays on your computer",
         "private": [
-            ("No account", "There is nothing to sign up for. Corylus has no server of its own, so there is nowhere for an account to live."),
+            ("No account", "There is nothing to sign up for. Corylus has no accounts and never asks you to make one."),
             ("The AI runs on your computer", "Grammar, the natural voices and the assistant are optional downloads. Once installed they run on your computer, and the text they check, read or answer about stays there."),
-            ("What does go online", "Sync, if you turn it on, sends the project to the cloud account you chose. Some system voices are online ones, and the voice list marks them “(online)”. Corylus checks for a new version at start-up, which you can switch off in Settings. Optional downloads come from their publishers' servers. If you connect an AI app such as Claude Desktop, it reads what you allow, project by project."),
+            ("What does go online", "Sync, if you turn it on, sends the project to the cloud account you chose. Some system voices are online ones, and the voice list marks them “(online)”. Corylus checks for a new version at start-up, which you can switch off in Settings. Optional downloads come from their publishers' servers. If you connect an AI app such as Claude Desktop, it reads what you allow, project by project. If you press “Send diagnostics”, a report goes to a service run by Corylus’s developer; the privacy page lists what it carries."),
             ("Open format", "Markdown, with a short YAML header at the top of each file. Any text editor opens it."),
         ],
         "support_h": "Support Corylus",
@@ -461,7 +467,12 @@ STRINGS = {
             "languages": ("En español", "Repeticiones contadas por la raíz, rima consonante y asonante, comillas angulares y comprobaciones que solo existen en español."),
             "extras": ("Las partes opcionales con IA", "El asistente que funciona en tu ordenador, y cómo se conecta a un proyecto una aplicación de IA como Claude, con el permiso que tú das proyecto a proyecto. Las dos están apagadas hasta que las instalas."),
             "support": ("Diario de taller 3: el vídeo parado en su último fotograma", "De la 1.94 a la 1.96.2. El vídeo de detrás de la página en el modo sin distracciones podía congelarse, o quedarse en su último fotograma. Atraparlo costó tres versiones."),
+            "diagnostics": ("Enviar diagnóstico", "Cómo contarle a Corylus qué ha fallado: qué lleva un informe, qué no lleva nunca y qué pasa cuando no se puede enviar."),
         },
+        "diagnostics_h": "Cuando algo falla",
+        "diagnostics_p": "Ajustes → Acerca de → «Enviar diagnóstico» te pregunta qué ha pasado, con tus palabras, y se lo manda al desarrollador de Corylus junto con los registros del programa. No sale nada hasta que pulsas el botón, y antes la ventana te avisa de que puede ir algo de tu propio texto.",
+        "diagnostics_link": "Todo lo que lleva un informe, y cuánto se guarda",
+        "diagnostics_alt": "La ventana Enviar diagnóstico: un recuadro para contar qué ha fallado, el nombre y el correo vacíos, y la frase que dice qué contiene el informe.",
         "tour_h": "Todo lo que hace Corylus",
         "tour_p": (
             "Un recorrido por todo el programa. Todo viene en la descarga gratuita. Algunas "
@@ -579,9 +590,9 @@ STRINGS = {
         },
         "private_h": "Qué se queda en tu ordenador",
         "private": [
-            ("Sin cuenta", "No hay nada en lo que registrarse. Corylus no tiene servidor propio, así que no hay dónde guardar una cuenta."),
+            ("Sin cuenta", "No hay nada en lo que registrarse. Corylus no tiene cuentas y nunca te pide que crees una."),
             ("La IA funciona en tu ordenador", "La gramática, las voces naturales y el asistente son descargas opcionales. Una vez instalados funcionan en tu ordenador, y el texto que revisan, leen o consultan se queda ahí."),
-            ("Lo que sí sale", "La sincronización, si la activas, envía el proyecto a la cuenta en la nube que elegiste. Algunas voces del sistema funcionan por internet, y la lista las marca como «(en línea)». Corylus comprueba si hay versión nueva al arrancar, y eso se desactiva en los Ajustes. Las descargas opcionales vienen de los servidores de quien las publica. Si conectas una aplicación de IA como Claude Desktop, lee lo que tú le permitas, proyecto a proyecto."),
+            ("Lo que sí sale", "La sincronización, si la activas, envía el proyecto a la cuenta en la nube que elegiste. Algunas voces del sistema funcionan por internet, y la lista las marca como «(en línea)». Corylus comprueba si hay versión nueva al arrancar, y eso se desactiva en los Ajustes. Las descargas opcionales vienen de los servidores de quien las publica. Si conectas una aplicación de IA como Claude Desktop, lee lo que tú le permitas, proyecto a proyecto. Si pulsas «Enviar diagnóstico», un informe va a un servicio que gestiona el desarrollador de Corylus; la página de privacidad dice qué lleva."),
             ("Formato abierto", "Markdown, con una cabecera YAML breve al principio de cada archivo. Cualquier editor de texto lo abre."),
         ],
         "support_h": "Apoya Corylus",
@@ -816,6 +827,14 @@ def page(t):
     kofi_hero = (f'<p class="kofi-line">{esc(t["hero_kofi"])} '
                  f'<a href="#support">{esc(t["hero_kofi_link"])}</a></p>') if KOFI else ""
 
+    # Sending diagnostics: the one thing Corylus sends on its own servers' account, so it
+    # sits with the privacy promises and links to the full list on the privacy page.
+    priv = p + ("es/privacy/" if t["lang"] == "es" else "privacy/")
+    diagnostics = (f'<div class="diary" id="diagnostics"><h3>{esc(t["diagnostics_h"])}</h3>'
+                   f'<p>{esc(t["diagnostics_p"])}</p>{video(t, p, "diagnostics")}'
+                   f'<figure class="media">{shot_img(p, "diagnostics", t["diagnostics_alt"], lang=t["lang"])}</figure>'
+                   f'<p><a href="{priv}">{esc(t["diagnostics_link"])}</a></p></div>')
+
     # Always shown: the costs explain why support is asked for; only the button
     # waits for the Ko-fi address.
     costs = "".join(
@@ -941,7 +960,7 @@ def page(t):
   <section class="band" id="private">
     <div class="wrap">
       <h2>{esc(t['private_h'])}</h2>
-      <ul class="grid two">{private}</ul>
+      <ul class="grid two">{private}</ul>{diagnostics}
     </div>
   </section>
 
@@ -993,16 +1012,18 @@ PRIVACY = {
         "sections": [
             ("What Corylus collects", [
                 "Nothing, unless you ask it to.",
-                "Corylus is a writing app for Mac and Windows. It has no user accounts, no telemetry, no analytics, and nothing is ever sent automatically \u2014 not when it crashes, not on a schedule, not at start-up. Your documents are plain Markdown files in a folder you chose, on your own computer, and they stay there.",
+                "Corylus is a writing app for Mac and Windows. It has no user accounts, no telemetry and no analytics, and it never sends a report on its own: not when it crashes, not on a schedule, not at start-up. Your documents are plain Markdown files in a folder you chose, on your own computer, and they stay there.",
                 "There is one exception, and it only happens when you press a button: \u201cSend diagnostics\u201d, in Settings \u2192 About. The section below says exactly what that sends.",
             ]),
             ("If you send diagnostics", [
                 "Nothing here happens unless you open Settings \u2192 About, press \u201cSend diagnostics\u201d, and confirm. There is no setting that turns this on permanently, and a crash never triggers it.",
-                "What is in a report. Corylus\u2019s own logs, which record what the app was doing: which files it opened, how it synced, which checks ran. Those records contain the names of your documents and folders, and \u2014 because a log that has been stripped of what it was working on cannot be read \u2014 short fragments of your own text, usually a sentence or less, from whatever the app was handling when something went wrong. The report also carries the Corylus version, your operating system and processor type, which optional features are installed, and counts of things in your project: how many documents, how many words. It carries no document contents beyond those log fragments, and no list of your projects.",
+                "What is in a report. Corylus\u2019s own logs, which record what the app was doing: which files it opened, how it synced, which checks ran. Those records contain the names of your project, documents and folders, and \u2014 because a log that has been stripped of what it was working on cannot be read \u2014 short fragments of your own text, usually a sentence or less, from whatever the app was handling when something went wrong. Up to the last 14 days of logs travel condensed, each repeated message once with a count, and the most recent day’s log travels in full unless the report would pass 8 MB. Wherever a path includes your home folder, your account name on the computer is replaced with ~. The report also carries what you typed in the window, the Corylus version, the interface language, your operating system and processor type, which optional parts your copy of Corylus was built with, a fixed list of settings such as the theme, the fonts and which checks are switched on (never a folder path, and never the name of your cloud account), the size of the search index and whether it passed its own check, and, if a project is open, counts of its parts: documents, folders, items in the trash, Story Bible entries, snapshots, backups, total words and the word count of the longest document. It carries no document contents beyond those log fragments, and no list of your projects.",
                 "What is never in a report. Your cloud-sync credentials, which is the single most sensitive thing Corylus stores. The search index, which holds the full text of every document. The list of projects you have opened. Any identifier for your computer or your installation: every report carries a fresh random reference and nothing that links it to another one.",
-                "Your name and email are optional and start empty. They exist only so a reply is possible. If you leave them blank the report is still accepted, and there is then nothing at all connecting it to you.",
-                "Where it goes. To a small service run by Corylus\u2019s developer, at corylus-issuer.ludobermejo.es, which turns it into an entry in a private issue tracker that only he can read. Reports are never published. If a technical detail from one is ever quoted in public, it is redacted first.",
-                "How long it is kept. One year, after which the service deletes it without anyone having to remember. You can ask for a report to be deleted sooner by writing to the address below \u2014 quote the reference Corylus showed you when you sent it, or the email address you gave. Without one of those, a report cannot be traced back to you, which is the point, but it also means it cannot be found in order to delete it.",
+                "Your name and email are optional and start empty. They exist only so a reply is possible. If you leave them blank the report is still accepted, and the report itself then carries no identifier for you or your computer. The service does see the IP address the report comes from, as any web server does, and uses it to limit how many reports one address can send.",
+                "Where it goes. To a small service run by Corylus\u2019s developer, at corylus-issuer.ludobermejo.es. The service keeps the report file on its own server and opens an entry about it in a private repository on GitHub that only the developer can read. That entry holds what you typed, the Corylus version, your system, the report’s reference, and your name and email if you gave them. Reports are never published. If a technical detail from one is ever quoted in public, it is redacted first.",
+                "A copy stays with you. Every report is first saved as a ZIP file in Corylus’s log folder, whether or not it is then sent, so you can open it and read exactly what it holds. A second report on the same day replaces it.",
+                "If it cannot be sent. When you are offline, or the service does not answer, nothing is lost. Corylus shows you the saved file in your file manager and opens an email draft addressed to ludobermejo@gmail.com. Nothing goes until you attach the file and send that email yourself. A report sent that way travels through your email provider to a Gmail inbox, and the automatic deletion below does not apply to it; ask, and it will be deleted. Corylus never tries again in the background, and cancelling the window sends nothing and saves nothing.",
+                "How long it is kept. The report file is deleted one year after it arrives, by the service itself, without anyone having to remember. The entry on GitHub is not deleted automatically. You can ask for a report and its entry to be deleted at any time by writing to the address below \u2014 quote the reference Corylus showed you when you sent it, or the email address you gave. Without one of those, a report cannot be traced back to you, which is the point, but it also means it cannot be found in order to delete it.",
             ]),
             ("What can leave your computer", [
                 "Only what follows. Each item is something you turn on, or something you can turn off.",
@@ -1034,16 +1055,18 @@ PRIVACY = {
         "sections": [
             ("Qué recoge Corylus", [
                 "Nada, salvo que se lo pidas.",
-                "Corylus es un programa de escritura para Mac y Windows. No tiene cuentas de usuario, ni telemetría, ni analítica, y nunca envía nada por su cuenta: ni cuando falla, ni cada cierto tiempo, ni al arrancar. Tus documentos son archivos Markdown normales en una carpeta que tú elegiste, en tu propio ordenador, y ahí se quedan.",
+                "Corylus es un programa de escritura para Mac y Windows. No tiene cuentas de usuario, ni telemetría, ni analítica, y nunca envía un informe por su cuenta: ni cuando falla, ni cada cierto tiempo, ni al arrancar. Tus documentos son archivos Markdown normales en una carpeta que tú elegiste, en tu propio ordenador, y ahí se quedan.",
                 "Hay una excepción, y solo ocurre cuando pulsas un botón: «Enviar diagnóstico», en Ajustes \u2192 Acerca de. La sección siguiente dice exactamente qué se envía.",
             ]),
             ("Si envías un diagnóstico", [
                 "Nada de esto ocurre si no abres Ajustes \u2192 Acerca de, pulsas «Enviar diagnóstico» y confirmas. No hay ningún ajuste que lo deje activado, y un fallo del programa nunca lo dispara.",
-                "Qué lleva el informe. Los registros del propio Corylus, que anotan qué estaba haciendo el programa: qué archivos abrió, cómo sincronizó, qué comprobaciones se ejecutaron. Esos registros contienen los nombres de tus documentos y carpetas y \u2014 porque un registro al que se le quita aquello sobre lo que trabajaba no se puede leer \u2014 fragmentos cortos de tu propio texto, normalmente una frase o menos, de aquello que el programa tenía entre manos cuando algo salió mal. El informe lleva además la versión de Corylus, tu sistema operativo y tipo de procesador, qué componentes opcionales tienes instalados, y recuentos de tu proyecto: cuántos documentos, cuántas palabras. No lleva el contenido de tus documentos más allá de esos fragmentos del registro, ni la lista de tus proyectos.",
+                "Qué lleva el informe. Los registros del propio Corylus, que anotan qué estaba haciendo el programa: qué archivos abrió, cómo sincronizó, qué comprobaciones se ejecutaron. Esos registros contienen los nombres de tu proyecto, tus documentos y tus carpetas y \u2014 porque un registro al que se le quita aquello sobre lo que trabajaba no se puede leer \u2014 fragmentos cortos de tu propio texto, normalmente una frase o menos, de aquello que el programa tenía entre manos cuando algo salió mal. Viajan los registros de hasta los últimos 14 días, resumidos, con cada mensaje repetido una sola vez y las veces que apareció, y el registro del último día entero, salvo que el informe pase de 8 MB. Donde una ruta incluye tu carpeta personal, tu nombre de usuario del ordenador se sustituye por ~. El informe lleva además lo que escribiste en la ventana, la versión de Corylus, el idioma de la interfaz, tu sistema operativo y tipo de procesador, con qué componentes opcionales se compiló tu copia de Corylus, una lista fija de ajustes como el tema, las tipografías y qué comprobaciones tienes activadas (nunca la ruta de una carpeta, y nunca el nombre de tu cuenta en la nube), el tamaño del índice de búsqueda y si ha pasado su propia comprobación, y, si hay un proyecto abierto, recuentos de sus partes: documentos, carpetas, elementos en la papelera, entradas de la Biblia de la historia, instantáneas, copias de seguridad, palabras en total y las palabras del documento más largo. No lleva el contenido de tus documentos más allá de esos fragmentos del registro, ni la lista de tus proyectos.",
                 "Qué no lleva nunca. Las credenciales de tu sincronización en la nube, que es lo más delicado que Corylus guarda. El índice de búsqueda, que contiene el texto completo de todos tus documentos. La lista de proyectos que has abierto. Ningún identificador de tu ordenador ni de tu instalación: cada informe lleva una referencia nueva al azar y nada que lo enlace con otro.",
-                "Tu nombre y tu correo son opcionales y empiezan vacíos. Están solo para poder responderte. Si los dejas en blanco el informe se acepta igual, y entonces no queda absolutamente nada que lo relacione contigo.",
-                "Adónde va. A un pequeño servicio que gestiona el desarrollador de Corylus, en corylus-issuer.ludobermejo.es, que lo convierte en una entrada de un gestor de incidencias privado que solo él puede leer. Los informes no se publican nunca. Si alguna vez se cita en público un detalle técnico de uno, se redacta antes.",
-                "Cuánto se conserva. Un año, pasado el cual el servicio lo borra sin que nadie tenga que acordarse. Puedes pedir que se borre antes escribiendo a la dirección de abajo \u2014 indica la referencia que Corylus te mostró al enviarlo, o el correo que diste. Sin una de las dos, un informe no se puede rastrear hasta ti, que es justo la intención, pero también significa que no se puede encontrar para borrarlo.",
+                "Tu nombre y tu correo son opcionales y empiezan vacíos. Están solo para poder responderte. Si los dejas en blanco el informe se acepta igual, y entonces el propio informe no lleva ningún identificador tuyo ni de tu ordenador. El servicio sí ve la dirección IP desde la que llega, como cualquier servidor web, y la usa para limitar cuántos informes puede mandar una misma dirección.",
+                "Adónde va. A un pequeño servicio que gestiona el desarrollador de Corylus, en corylus-issuer.ludobermejo.es. El servicio guarda el archivo del informe en su propio servidor y abre una entrada sobre él en un repositorio privado de GitHub que solo puede leer el desarrollador. Esa entrada lleva lo que escribiste, la versión de Corylus, tu sistema, la referencia del informe, y tu nombre y tu correo si los diste. Los informes no se publican nunca. Si alguna vez se cita en público un detalle técnico de uno, antes se tacha todo lo personal.",
+                "Una copia se queda contigo. Cada informe se guarda primero como archivo ZIP en la carpeta de registros de Corylus, se envíe o no, así que puedes abrirlo y ver exactamente qué contiene. Un segundo informe el mismo día lo sustituye.",
+                "Si no se puede enviar. Si no tienes conexión, o el servicio no responde, no se pierde nada. Corylus te enseña el archivo guardado en tu gestor de archivos y abre un borrador de correo dirigido a ludobermejo@gmail.com. No sale nada hasta que adjuntas el archivo y envías tú ese correo. Un informe enviado así pasa por tu proveedor de correo hasta un buzón de Gmail, y el borrado automático de abajo no se le aplica; pídelo y se borrará. Corylus nunca vuelve a intentarlo por detrás, y si cancelas la ventana no se envía ni se guarda nada.",
+                "Cuánto se conserva. El archivo del informe se borra un año después de llegar, lo hace el propio servicio y nadie tiene que acordarse. La entrada de GitHub no se borra sola. Puedes pedir que se borren el informe y su entrada cuando quieras escribiendo a la dirección de abajo \u2014 indica la referencia que Corylus te mostró al enviarlo, o el correo que diste. Sin una de las dos, un informe no se puede rastrear hasta ti, que es justo la intención, pero también significa que no se puede encontrar para borrarlo.",
             ]),
             ("Qué puede salir de tu ordenador", [
                 "Solo lo que sigue. Cada cosa es algo que tú activas o que puedes desactivar.",

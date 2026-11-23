@@ -29,6 +29,7 @@ from the e2e dev build with `web/tools/shots.mjs`. The copy refers to them by id
 | `spanish` | The interface in Spanish, with a Spanish chapter ("I. La llegada") and its inspector. |
 | `statistics` | Project Statistics for the Manuscript folder: words, pages, reading time, word frequency. |
 | `methodology` | The Methodology Wizard: plot-structure and character methods. |
+| `diagnostics` | Settings > About with the Send diagnostics dialog on top: the template description ("What I was doing, what I expected, and what happened instead."), name and email empty, the notice about what travels. Never sent: closed with Cancel after capture. |
 
 ## Re-capturing
 
@@ -67,12 +68,12 @@ first run. Proper names the bundled Spanish dictionary lacks (Elizabeth, Londres
 ignored for the session so only the planted misspelling ("inmediatamante") is flagged.
 The run always ends with the app back in English.
 
-The script leaves the app light, English, with every analysis off. 23 Spanish shots: about 2.6 MB.
+The script leaves the app light, English, with every analysis off. 24 Spanish shots: about 2.7 MB.
 
 Each shot is written straight from WebView2 as lossy WebP, quality 85, rendered
 at 1.5x (2208x1242). No post-processing step. `SHOTS_SCALE=2` renders at 2x
 (2944x1656) instead. The script also turns off LCD (ClearType) text antialiasing
-while it captures, so letter edges carry no colour fringes. Total for the 24 shots: about 2.7 MB.
+while it captures, so letter edges carry no colour fringes. Total for the 25 shots: about 2.7 MB.
 
 Side effects, all inside the e2e app's own data: `grammar` starts LanguageTool,
 `sync` starts the rclone engine (it never connects), `ambient-sounds` installs the

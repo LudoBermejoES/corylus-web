@@ -25,6 +25,7 @@ const EN_T = {
   commentReply: 'Agreed. Cut the aside and keep "the words of fate".',
   commentAuthor: 'Margaret', me: 'You',
   backupLabel: 'Before the read-through', snapFirst: 'First draft', snapSecond: 'After the read-through',
+  diagTemplate: 'What I was doing, what I expected, and what happened instead.',
 };
 const T = (k) => (ES && ESB.T[k] !== undefined ? ESB.T[k] : EN_T[k] !== undefined ? EN_T[k] : k);
 
@@ -308,6 +309,12 @@ async function openBible(page, title) {
 
 // ── The shots ────────────────────────────────────────────────────────────────
 
+// Clean-up a shot needs once captured, run even if it failed.
+const AFTER = {
+  diagnostics: (page) => page.evaluate(`(() => { const c = document.querySelector('[data-testid="send-diagnostics-cancel"]'); if (c) c.click();
+    ${STORE('ui')}.closeSettings(); return 'ok'; })()`),
+};
+
 const SHOTS = {
   editor: async (page) => {
     await reset(page);
@@ -589,6 +596,23 @@ const SHOTS = {
     await page.click('[data-testid="settings-cat-snapshots"]').catch(() => {});
     await sleep(1500);
   },
+  // The Send diagnostics dialog over Settings → About: the template description, name and
+  // email empty. Never sends: AFTER.diagnostics closes it with Cancel once captured.
+  diagnostics: async (page) => {
+    await reset(page);
+    await inspector(page, null);
+    await open(page, 'Letter I');
+    await page.evaluate(`(() => { const ui = ${STORE('ui')}; ui.openSettings(); ui.openSettingsCategory('about'); return 'ok'; })()`);
+    await sleep(500);
+    await page.click('[data-testid="settings-cat-about"]').catch(() => {});
+    await sleep(800);
+    await page.evaluate(`(() => { document.querySelector('[data-setting="diagnostics"]').scrollIntoView({ block: 'center' }); document.querySelector('[data-testid="settings-send-diagnostics"]').click(); return 'ok'; })()`);
+    await poll(page, `!!document.querySelector('[data-testid="send-diagnostics-message"]')`, 8000);
+    await page.evaluate(`(() => { const t = document.querySelector('[data-testid="send-diagnostics-message"]');
+      Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(t, ${JSON.stringify(T('diagTemplate'))});
+      t.dispatchEvent(new Event('input', { bubbles: true })); t.blur(); return 'ok'; })()`);
+    await sleep(500);
+  },
   themes: async (page) => {
     await reset(page, { theme: 'catppuccin-mocha', canvas: 'night' });
     await expandBinder(page);
@@ -697,6 +721,8 @@ try {
         console.log(`ok   ${id}`);
       } catch (e) {
         console.log(`FAIL ${id}: ${e.message}`);
+      } finally {
+        if (AFTER[id]) await AFTER[id](page);
       }
     }
     await reset(page, { locale: 'en' });

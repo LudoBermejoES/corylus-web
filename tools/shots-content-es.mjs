@@ -263,5 +263,6 @@ export const T = {
   commentReply: 'De acuerdo. Quito el inciso y me quedo con «las palabras del destino».',
   commentAuthor: 'Margarita', me: 'Yo',
   backupLabel: 'Antes de la relectura',
+  diagTemplate: 'Qué estaba haciendo, qué esperaba y qué pasó en cambio.',
   snapFirst: 'Primera versión', snapSecond: 'Después de la relectura',
 };
