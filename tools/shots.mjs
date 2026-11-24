@@ -466,16 +466,21 @@ const SHOTS = {
   'distraction-free': async (page) => {
     await reset(page);
     await inspector(page, null);
-    const kind = await page.evaluate(`${STORE('settings')}.dfBackgroundKind`);
-    if (kind !== 'video') {
-      const bytes = Array.from(fs.readFileSync(path.join(REPO, 'assets/distractionfree-wallpaper/videos/abstract/18849-297379170_medium.webm')));
-      await run(page, `const name = await invoke('save_df_background_cmd', { bytes: ${JSON.stringify(bytes)}, ext: 'webm' });
-        const s = ${STORE('settings')}; s.dfBackgroundAsset = name; s.dfBackgroundKind = 'video';
-        await ${STORE('theming')}.applyDfBackground();`, 120000);
-    }
+    // The background is the gallery's train (video/vehicles/train-scene-1), added through the
+    // same path as the gallery's «Add to Corylus» link (a public file, 61.8 MB) if not kept yet.
+    await run(page, `const g = ${STORE('galleryLink')}; await g.loadLibrary();
+      let it = (g.library.items || []).find((i) => i.id === 'video/vehicles/train-scene-1');
+      if (!it) { g.offer('video/vehicles/train-scene-1');
+        for (let i = 0; i < 100 && g.phase !== 'confirm' && g.phase !== 'error'; i++) await new Promise((r) => setTimeout(r, 300));
+        if (g.phase !== 'confirm') throw new Error('gallery: ' + g.phase + ' ' + g.errorReason);
+        await g.confirm(true); for (let i = 0; i < 600 && g.phase === 'downloading'; i++) await new Promise((r) => setTimeout(r, 300));
+        if (g.phase !== 'done') throw new Error('gallery download: ' + g.phase); g.close?.();
+        await g.loadLibrary(); it = g.library.items.find((i) => i.id === 'video/vehicles/train-scene-1'); }
+      await g.useFromLibrary(it.file, it.kind);`, 240000);
     await open(page, 'The Spark');
     await page.evaluate(`(() => { const s = ${STORE('settings')}; s.dfPageOpacity = 0.94; ${STORE('theming')}.applyDfPageOpacity(0.94); ${STORE('projectMeta')}.toggleDistractionFree(); return 'ok'; })()`);
-    await sleep(3000);
+    // Mid-motion, not a first or black frame: the train playing, several seconds in.
+    await poll(page, `(() => { const v = document.querySelector('[data-testid="df-background-video"]'); return !!v && !v.paused && v.readyState >= 3 && v.currentTime > 6; })()`, 30000);
     // Wake the HUD: it shows on pointer movement.
     await page.evaluate(`(() => { document.querySelector('.editor-main').dispatchEvent(new MouseEvent('mousemove', { bubbles: true, clientX: 700, clientY: 790 })); return 'ok'; })()`);
     await sleep(600);
