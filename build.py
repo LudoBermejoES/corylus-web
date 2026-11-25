@@ -117,6 +117,7 @@ VIDEOS = {
     "languages":  {"es": ("LZ2FLWUHbE4", "2:30")},
     "read-aloud": {"en": ("ZA-lxCCVUzM", "1:00"), "es": ("QPjC2yXTsQk", "1:08")},
     "extras":     {"en": ("gES1MkVjSfg", "2:38"), "es": ("tGTEv6_iLpo", "3:16")},
+    "assistant-use": {"en": ("bvnpAH46VKI", "2:05"), "es": ("i_W1yQqplP8", "2:36")},
     "diagnostics": {"en": ("scp84f3GiLs", "2:11"), "es": ("2ihtHwCQP_4", "2:36")},
 }
 PLAYLIST = {"en": "PLM2yuZIkkOv4", "es": "PLAx-paBq5bo8"}
@@ -126,7 +127,7 @@ EN_SPANISH_VIDEO = "LZ2FLWUHbE4"  # linked, not embedded, from the English "lang
 TOUR_VIDEOS = [("hero", "hero-video"), ("safety", "safety"), ("structure", "structure"),
                ("revise", "revise"), ("bible", "bible"), ("environment", "environment"),
                ("finish", "finish"), ("writing", "writing"), ("languages", "languages"),
-               ("read-aloud", "read-aloud"), ("extras", "extras"), ("diagnostics", "diagnostics")]
+               ("read-aloud", "read-aloud"), ("extras", "extras"), ("assistant-use", "assistant-use"), ("diagnostics", "diagnostics")]
 GALLERY = "https://ludobermejoes.github.io/corylus-distractionfree-wallpaper"
 
 STRINGS = {
@@ -226,6 +227,7 @@ STRINGS = {
             "environment": ("Just you and the text", "Distraction-free mode, a background from the gallery with a video playing behind the page, ambient sounds, focus mode and themes. Escape brings everything back."),
             "safety": ("Four ways to lose a book", "Four failures, from the app disappearing to a dead computer, and what is still on your disk after each one."),
             "finish": ("Compile", "The book put back together in Binder order and exported to Word, PDF or EPUB, inside Corylus, with nothing else to install."),
+            "assistant-use": ("Ask the mascot", "Ask the assistant to do something in plain words, such as splitting the editor, or ask it about your book: how many words, which chapters mention something, what a chapter says. Anything that would change your text asks you first."),
             "extras": ("The optional AI parts", "The assistant that runs on your computer, and how an AI app such as Claude connects to a project, with a permission you set per project. Both stay off until you install them."),
             "support": ("Workshop diary 3: the video that stopped on its last frame", "From 1.94 to 1.96.2. The video behind the page in distraction-free mode could freeze, or stop on its last frame. It took three releases to catch."),
             "diagnostics": ("Send diagnostics", "How to tell Corylus what went wrong: what a report carries, what it never carries, and what happens when it cannot be sent."),
@@ -344,7 +346,7 @@ STRINGS = {
                         "The interface, spell-check, grammar, thesaurus, repetition and rhyme checks and the read-aloud voices all work in both languages. Each document has its own language, so a Spanish novel gets Spanish quotes, Spanish hyphenation and Spanish checks while the menus stay in English, or the other way round.",
                         "Corylus with its interface in Spanish and a chapter in Spanish open."),
             "assistant": ("A local assistant",
-                          "An assistant panel that answers questions about your own book, using a Qwen3 model that runs on your computer through Ollama. The model is a download of about 1 to 9 GB, and Corylus suggests one sized to your computer's memory. On Windows it can run on an NVIDIA, AMD or Intel graphics card, which answers much faster; Corylus downloads only the add-on that card needs. It cannot change your text."),
+                          "An assistant panel that answers questions about your own book, using a Qwen3 model that runs on your computer through Ollama. The model is a download of about 1 to 9 GB, and Corylus suggests one sized to your computer's memory. On Windows it can run on an NVIDIA, AMD or Intel graphics card, which answers much faster; Corylus downloads only the add-on that card needs. Ask it in plain words and it can also run a Corylus command for you; anything that would change your text asks you first."),
             "mcp": ("AI apps, through MCP",
                     "If you use an AI app that supports MCP, such as Claude Desktop or Claude Code, you can let it read your project and, if you allow it, edit it. You choose per project: nothing, read only, ask before each change, or change freely. Corylus takes a snapshot before every change and keeps a log where you can undo any of them. What the app reads goes to that app's own service, under its terms."),
         },
@@ -482,6 +484,7 @@ STRINGS = {
             "safety": ("Cuatro formas de perder un libro", "Cuatro fallos, desde que el programa desaparece hasta que el ordenador se muere, y lo que sigue en tu disco después de cada uno."),
             "finish": ("Compilar", "Las piezas juntas otra vez en el orden de la Carpeta y exportadas a Word, PDF o EPUB, dentro de Corylus y sin instalar nada más."),
             "languages": ("En español", "Repeticiones contadas por la raíz, rima consonante y asonante, comillas angulares y comprobaciones que solo existen en español."),
+            "assistant-use": ("Pregúntale a la mascota", "Pídele al asistente que haga algo con tus palabras, como dividir el editor, o pregúntale por tu libro: cuántas palabras llevas, qué capítulos mencionan algo, qué dice un capítulo. Todo lo que cambiaría tu texto te pregunta antes."),
             "extras": ("Las partes opcionales con IA", "El asistente que funciona en tu ordenador, y cómo se conecta a un proyecto una aplicación de IA como Claude, con el permiso que tú das proyecto a proyecto. Las dos están apagadas hasta que las instalas."),
             "support": ("Diario de taller 3: el vídeo parado en su último fotograma", "De la 1.94 a la 1.96.2. El vídeo de detrás de la página en el modo sin distracciones podía congelarse, o quedarse en su último fotograma. Atraparlo costó tres versiones."),
             "diagnostics": ("Enviar diagnóstico", "Cómo contarle a Corylus qué ha fallado: qué lleva un informe, qué no lleva nunca y qué pasa cuando no se puede enviar."),
@@ -601,7 +604,7 @@ STRINGS = {
                         "La interfaz, el corrector, la gramática, los sinónimos, las comprobaciones de repeticiones y de rimas y las voces de lectura funcionan en los dos idiomas. Cada documento tiene su propio idioma, así que una novela en español tiene comillas españolas, partición de palabras española y revisiones en español aunque tengas los menús en inglés, y al revés.",
                         "Corylus con la interfaz en español y un capítulo en español abierto."),
             "assistant": ("Un asistente local",
-                          "Un panel que responde preguntas sobre tu propio libro con un modelo Qwen3 que funciona en tu ordenador a través de Ollama. El modelo es una descarga de entre 1 y 9 GB aproximadamente, y Corylus te propone uno ajustado a la memoria de tu ordenador. En Windows puede funcionar en una tarjeta gráfica NVIDIA, AMD o Intel, que responde mucho más deprisa; Corylus descarga solo el complemento que necesita esa tarjeta. No puede cambiar tu texto."),
+                          "Un panel que responde preguntas sobre tu propio libro con un modelo Qwen3 que funciona en tu ordenador a través de Ollama. El modelo es una descarga de entre 1 y 9 GB aproximadamente, y Corylus te propone uno ajustado a la memoria de tu ordenador. En Windows puede funcionar en una tarjeta gráfica NVIDIA, AMD o Intel, que responde mucho más deprisa; Corylus descarga solo el complemento que necesita esa tarjeta. Si se lo pides con tus palabras, también puede ejecutar un comando de Corylus; todo lo que cambiaría tu texto te pregunta antes."),
             "mcp": ("Aplicaciones de IA, por MCP",
                     "Si usas una aplicación de IA compatible con MCP, como Claude Desktop o Claude Code, puedes dejar que lea tu proyecto y, si se lo permites, que lo edite. Lo decides proyecto a proyecto: nada, solo lectura, preguntar antes de cada cambio o cambiar con libertad. Corylus saca una instantánea antes de cada cambio y lleva un registro desde el que puedes deshacer cualquiera. Lo que esa aplicación lee va a su propio servicio, con sus propias condiciones."),
         },
@@ -816,6 +819,8 @@ def tour(t, p):
         lead = f'<p class="lead">{esc(intro)}</p>' if intro else ""
         features = "".join(rows)
         vid = video(t, p, gid)
+        if gid == "extras":  # the introduction first, then the assistant in daily use
+            vid += f'<div id="assistant-use">{video(t, p, "assistant-use")}</div>'
         if gid == "languages" and t["lang"] == "en":
             vid = (f'<p class="video-more"><a href="https://youtu.be/{EN_SPANISH_VIDEO}" rel="noopener">'
                    f'{esc(t["es_video_link"])}</a></p>')
