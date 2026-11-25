@@ -6,6 +6,7 @@
 Writes index.html (English) and es/index.html (Spanish). Edit the copy in
 STRINGS below — never the generated HTML, which is overwritten on every run.
 """
+import hashlib
 import html
 import os
 import struct
@@ -671,6 +672,18 @@ TREES = {
 }
 
 
+def asset_v(name):
+    """Cache-buster for the code assets, as "?v=<hash of the file>".
+
+    One push ships new HTML and new CSS together, but GitHub Pages serves both
+    with max-age=600, and a browser that already holds the stylesheet keeps it.
+    A visitor then gets new markup against a ten-minute-old stylesheet, which
+    is exactly how the goals panel first rendered as bare bullets.
+    """
+    with open(os.path.join(HERE, "assets", name), "rb") as fh:
+        return "?v=" + hashlib.blake2b(fh.read(), digest_size=4).hexdigest()
+
+
 def esc(s):
     return html.escape(s, quote=True)
 
@@ -906,7 +919,7 @@ def page(t):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="{p}assets/lang.js"></script>
+<script src="{p}assets/lang.js{asset_v("lang.js")}"></script>
 <title>{esc(t['title'])}</title>
 <meta name="description" content="{esc(t['description'])}">
 <meta http-equiv="Content-Security-Policy" content="frame-src https://www.youtube-nocookie.com">
@@ -927,7 +940,7 @@ def page(t):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
-<link rel="stylesheet" href="{p}assets/style.css">
+<link rel="stylesheet" href="{p}assets/style.css{asset_v("style.css")}">
 </head>
 <body>
 <a class="skip" href="#main">{esc(t['skip'])}</a>
@@ -1043,7 +1056,7 @@ def page(t):
   </div>
 </footer>
 
-<script src="{p}assets/site.js" defer></script>
+<script src="{p}assets/site.js{asset_v("site.js")}" defer></script>
 </body>
 </html>
 """
@@ -1162,7 +1175,7 @@ def privacy(t):
 <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
-<link rel="stylesheet" href="{p}assets/style.css">
+<link rel="stylesheet" href="{p}assets/style.css{asset_v("style.css")}">
 </head>
 <body>
 <header class="site">
