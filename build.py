@@ -18,6 +18,14 @@ RELEASES_RAW = "https://raw.githubusercontent.com/LudoBermejoES/corylus-releases
 # while it is empty, so the site never ships a dead link.
 KOFI = "https://ko-fi.com/corylus"
 
+# Support goals, in the order Ko-fi money is spent on them: the amounts in
+# euros, the names in each language's dictionary under "goals". RAISED_EUR is
+# the whole pot, filled into the goals in this order, so updating the panel
+# after a Ko-fi payout is one number. These targets are the same ones the
+# support section spells out in "support_costs"; keep the two in step.
+GOAL_EUR = [99, 22, 253]
+RAISED_EUR = 0
+
 # The versions baked into the HTML, used when JavaScript is off: site.js rewrites
 # the links from the live manifests for everyone else. Fetched at build time so
 # they cannot quietly rot - they had drifted two releases behind before this.
@@ -137,6 +145,10 @@ STRINGS = {
         "nav_kofi": "Support Corylus",
         "hero_kofi": "Corylus is free. If it earns a place in your work, you can support it on Ko-fi: it pays for the licences that let it install without warnings.",
         "hero_kofi_link": "See what support pays for",
+        "goals_h": "Support goals",
+        "goals": ["Apple Developer Program", "Google Play account", "Windows signing certificate"],
+        "goals_of": "of",
+        "goals_note": "Ko-fi support goes to these, in this order.",
         "hero_h": "Corylus is the writing app I always wanted to make.",
         "hero_p": (
             "It keeps every chapter as a plain text file in a folder of your own, and it helps "
@@ -385,6 +397,10 @@ STRINGS = {
         "nav_kofi": "Apoya Corylus",
         "hero_kofi": "Corylus es gratis. Si te sirve, puedes apoyarlo en Ko-fi: paga las licencias para que se instale sin avisos.",
         "hero_kofi_link": "Mira qué paga el apoyo",
+        "goals_h": "Objetivos del apoyo",
+        "goals": ["Cuenta de desarrollador de Apple", "Cuenta de Google Play", "Certificado de firma para Windows"],
+        "goals_of": "de",
+        "goals_note": "El apoyo en Ko-fi va a esto, y en este orden.",
         "hero_h": "Corylus es el editor que siempre quise crear.",
         "hero_p": (
             "Guarda cada capítulo como un archivo de texto normal, en una carpeta tuya, y además "
@@ -805,6 +821,34 @@ def tour(t, p):
     return "".join(out)
 
 
+def goals_panel(t):
+    """The support goals, as a bar each, beside the hero copy.
+
+    One pot (RAISED_EUR) fills the goals in order rather than each goal holding
+    its own balance: Ko-fi reports a single total, so this is the only shape
+    that can be updated from what Ko-fi actually tells you.
+    """
+    def eur(n):
+        return f"{n}\u00a0\u20ac" if t["lang"] == "es" else f"\u20ac{n}"
+
+    # zip() would silently drop a goal whose name one language forgot, losing a
+    # bar in that language only - the kind of gap a built page still looks fine with.
+    assert len(t["goals"]) == len(GOAL_EUR), f"{t['lang']}: {len(t['goals'])} goal names for {len(GOAL_EUR)} amounts"
+
+    left, items = RAISED_EUR, []
+    for name, target in zip(t["goals"], GOAL_EUR):
+        got = min(left, target)
+        left -= got
+        items.append(
+            f'<li><p class="goal-name">{esc(name)}</p>'
+            f'<progress max="{target}" value="{got}"></progress>'
+            f'<p class="goal-sum">{eur(got)} {esc(t["goals_of"])} {eur(target)}</p></li>')
+    return (f'<aside class="goals" aria-labelledby="goals-h">'
+            f'<h2 id="goals-h">{esc(t["goals_h"])}</h2>'
+            f'<ul>{"".join(items)}</ul>'
+            f'<p class="note">{esc(t["goals_note"])}</p></aside>')
+
+
 def page(t):
     p = t["dir_prefix"]
     other_href, other_label = t["other"]
@@ -902,6 +946,7 @@ def page(t):
 
   <section class="hero">
     <div class="wrap narrow">
+      <div class="hero-copy">
       <h1>{esc(t['hero_h'])}</h1>
       <p class="lead">{esc(t['hero_p'])}</p>
       <p>{esc(t['hero_p2'])}</p>
@@ -915,6 +960,8 @@ def page(t):
       </p>
       <p class="note">{esc(t['hero_note'])}</p>
       {kofi_hero}
+      </div>
+      {goals_panel(t)}
     </div>
     <div class="wrap">
       {hero_media}
